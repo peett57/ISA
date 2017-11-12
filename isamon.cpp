@@ -194,7 +194,7 @@ int main(int argc, char *argv[]){
 		
 	}
 
-	for(int x = 0; x < sizeof(byte[]); x++){
+	for(int x = 0; x < sizeof(byte); x++){
 		cout << "index " << x << " : " << byte[x] << endl;
 	}
 
