@@ -18,7 +18,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
-#include <vector>
+
 
 
 
@@ -174,20 +174,24 @@ int main(int argc, char *argv[]){
 
 	string str = string(network);
 
-	cout << " index 0" << interface[0] << endl;
-	cout << " index 1" << interface[1] << endl;
-	cout << " index 2" << interface[2] << endl;
+	cout << " index 0" << network[0] << endl;
+	cout << " index 1" << network[1] << endl;
+	cout << " index 2" << network[2] << endl;
 
-	istringstream iss(str);
-	std::vector<std::string> tokens;
-	std::string token;
-	while(std::getline(iss, token, '.')){
-		if(!token.empty())
-			tokens.push_back(token);
+
+	dot_cnt = 0;
+	char byte[][];
+	for(int i = 0 ; i < sizeof(network); i++){
+		if(network[i] == '.'){
+			dot_cnt++;
+		}else{
+			byte[dot_cnt][] = network[i];
+		}
+		
 	}
 
-	for(int i = 0; i < sizeof(tokens); i++){
-		cout << " index  :  " << tokens[i] << endl;
+	for(int x = 0; x < sizeof(byte[]); x++){
+		cout << "index " << x << " : " << byte[x] << endl;
 	}
 
 	return 0;
