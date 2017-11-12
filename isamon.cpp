@@ -172,7 +172,7 @@ int main(int argc, char *argv[]){
 		cout << "tcp" << endl;
 	}
 
-	//string str = string(network);
+	string str = string(network);
 
 	cout << " index 0" << network[0] << endl;
 	cout << " index 1" << network[1] << endl;
@@ -184,16 +184,16 @@ int main(int argc, char *argv[]){
 	size_t index =0;
 	char *str = "192.168.0.1";
 
-	net = str;
+	net = network;
 
-	while(*str){
-		if(isdigit((unsigned char)*str)){
-			value[index] *=10;
-			value[index] += *str - '0';
+	while(*network){
+		if(isdigit((unsigned char)*network)){
+			value[index] *= 10;
+			value[index] += *network - '0';
 		}else{
 			index++;
 		}
-		str++;
+		network++;
 	}
 	cout << "cela ip : " << net << endl;
 	cout << "1 : " << value[0] << endl;
