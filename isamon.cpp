@@ -147,8 +147,8 @@ int main(int argc, char *argv[]){
 
 	cout << "port:" << argumenty.port << endl;
 	cout << "wait:" << argumenty.wait << endl;
-	cout << "int:" << argumenty.interface << endl;
-	cout << "network:" << argumenty.network << endl;
+	cout << "int:" << interface << endl;
+	cout << "network:" << network << endl;
 
 	if(argumenty.u == true){
 		cout << "udp" << endl;
