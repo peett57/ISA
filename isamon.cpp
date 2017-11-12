@@ -66,7 +66,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 		return EXIT_SUCCESS;
 	}
 
-	if(agrc == 1){
+	if(argc == 1){
 		return EXIT_FAILURE;
 	}
 
