@@ -57,6 +57,7 @@ typedef struct{
 	int network;
 	long int port;
 	long int wait;
+	char fault;
 }Arguments;
 
 
@@ -67,6 +68,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	}
 
 	if(argc == 1){
+		arguments->fault = "no args";
 		return EXIT_FAILURE;
 	}
 
@@ -74,28 +76,33 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	for(int i = 1; i < argc; i++){
 		if(!strcmp(argv[i], "-p")){
 			if((je_to_cislo(argv[i+1]) == 0) || arguments->port != 0){
+				arguments->fault = "port not a number";
 				return EXIT_FAILURE;
 			}
 			arguments->port = strtol(argv[i+1],&pEnd, 10);
 			if(arguments->port < 1 || arguments->port > 65535){
+				arguments->fault = "port out of range";
 				return EXIT_FAILURE;
 			}
 			i++;
 		}
 		else if(!strcmp(argv[i], "-t")){
 			if(arguments->t == true){
+				arguments->fault = "repeat of -t";
 				return EXIT_FAILURE;
 			}
 			arguments->t = true;
 		}
 		else if(!strcmp(argv[i], "-u")){
 			if(arguments->u == true){
+				arguments->fault = "repeat of -u";
 				return EXIT_FAILURE;
 			}
 			arguments->u = true;
 		}
 		else if(!strcmp(argv[i], "-w")){
 			if((je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0){
+				arguments->fault = "wait not a number";
 				return EXIT_FAILURE;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
@@ -103,17 +110,20 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 		}
 		else if(!strcmp(argv[i], "-i")){
 			if(arguments->interface != 0){
+				arguments->fault = "interface repeat";
 				return EXIT_FAILURE;
 			}
 			arguments->interface = ++i;
 		}
 		else if(!strcmp(argv[i], "-n")){
 			if(arguments->network != 0){
+				arguments->fault = "netwok repeat";
 				return EXIT_FAILURE;
 			}
 			arguments->network = ++i;
 		}
 		else{
+			arguments->fault = "other";
 			return EXIT_FAILURE;
 		}		
 
@@ -130,11 +140,12 @@ int main(int argc, char *argv[]){
 	argumenty.help = false;
 	argumenty.interface = 0;
 	argumenty.network = 0;
+	argumenty.fault = "";
 
 	//arguments
 	if(arguments(argc,argv, &argumenty)){
-		fprintf((stderr), "Wrong arguments!\n" );
-		return EXIT_FAILURE;
+		fprintf((stderr), "Wrong arguments! - %s \n" , argumenty.fault  );
+		return 1;
 	}
 
 	if(argumenty.help == true){
@@ -157,7 +168,7 @@ int main(int argc, char *argv[]){
 		cout << "tcp" << endl;
 	}
 
-	return EXIT_SUCCESS;
+	return 0;
 
 	
 }
