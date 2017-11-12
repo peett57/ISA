@@ -198,6 +198,8 @@ int main(int argc, char *argv[]){
 	printf("values in \"%s\": %d %d %d %d\n", net,
               value[0], value[1], value[2], value[3]);
 
+	cout << value[0] << endl;
+
 	
 
 	return 0;
