@@ -201,8 +201,8 @@ int main(int argc, char *argv[]){
 
 	
 
-	char value = (char)value[0];
-	cout << value << endl;
+	char val = (char)value[0];
+	cout << val << endl;
 	return 0;
 
 	
