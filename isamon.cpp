@@ -122,7 +122,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 }
 
 int main(int argc, char *argv[]){
-	bool interface = false;
+	bool interface_set = false;
 	Arguments argumenty;
 	argumenty.port = 0;
 	argumenty.wait = 0;
@@ -149,7 +149,7 @@ int main(int argc, char *argv[]){
 	}
 
 	if(argumenty.interface != 0){
-		interface = true;
+		interface_set = true;
 	}
 	char *interface = argv[argumenty.interface];
 	char *network = argv[argumenty.network];
