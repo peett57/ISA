@@ -172,10 +172,10 @@ int main(int argc, char *argv[]){
 	}
 
 	
-	
-	cout << " index 0" << interface[0] << endl;
-	cout << " index 1" << interface[1] << endl;
-	cout << " index 2" << interface[2] << endl;
+
+	cout << " index 0" << network[0] << endl;
+	cout << " index 1" << network[1] << endl;
+	cout << " index 2" << network[2] << endl;
 
 
 	return 0;
