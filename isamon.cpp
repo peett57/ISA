@@ -172,7 +172,7 @@ int main(int argc, char *argv[]){
 		cout << "tcp" << endl;
 	}
 
-	string str = string(network);
+	//string str = string(network);
 
 	cout << " index 0" << network[0] << endl;
 	cout << " index 1" << network[1] << endl;
