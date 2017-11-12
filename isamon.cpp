@@ -62,7 +62,7 @@ typedef struct{
 
 int arguments(int argc, char *argv[], Arguments *arguments){
 	if((argc == 2) && ((!strcmp(argv[1], "-h")) || (!strcmp(argv[1], "--help")))){
-		arguments->help == true;
+		arguments->help = true;
 		return EXIT_SUCCESS;
 	}
 
