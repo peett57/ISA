@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <vector>
 
 
 
@@ -178,9 +179,9 @@ int main(int argc, char *argv[]){
 	cout << " index 2" << interface[2] << endl;
 
 	istringstream iss(str);
-	vector<string> tokens;
-	string token;
-	while(getline(iss, token, '.')){
+	std::vector<std::string> tokens;
+	std::string token;
+	while(std::getline(iss, token, '.')){
 		if(!token.empty())
 			tokens.push_back(token);
 	}
