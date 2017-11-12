@@ -179,8 +179,9 @@ int main(int argc, char *argv[]){
 	cout << " index 2" << network[2] << endl;
 
 
-	dot_cnt = 0;
+	int dot_cnt = 0;
 	char byte[][];
+
 	for(int i = 0 ; i < sizeof(network); i++){
 		if(network[i] == '.'){
 			dot_cnt++;
