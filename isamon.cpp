@@ -180,13 +180,16 @@ int main(int argc, char *argv[]){
 
 
 	int dot_cnt = 0;
+	int array = 0
 	char **byte;
 
 	for(int i = 0 ; i < sizeof(network); i++){
 		if(network[i] == '.'){
 			dot_cnt++;
+			array = 0;
 		}else{
-			byte[dot_cnt][] = network[i];
+			byte[dot_cnt][array] = network[i];
+			array++;
 		}
 		
 	}
