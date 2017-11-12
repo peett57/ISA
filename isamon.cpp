@@ -122,6 +122,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 }
 
 int main(int argc, char *argv[]){
+	bool interface = false;
 	Arguments argumenty;
 	argumenty.port = 0;
 	argumenty.wait = 0;
@@ -137,24 +138,22 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong arguments!\n");
 		return 1;
 	}
+	if(argumenty.network == 0){
+		fprintf((stderr), "Wrong arguments! no network\n");
+		return 1;
+	}
 
 	if(argumenty.help == true){
 		printhelp();
 		return 0;
 	}
 
-	char *interface = 0;
-	char *network = 0;
 	if(argumenty.interface != 0){
-		interface = argv[argumenty.interface];
+		interface = true;
 	}
-	else{
+	char *interface = argv[argumenty.interface];
+	char *network = argv[argumenty.network];
 
-	}
-	if(argumenty.network != 0){
-		network = argv[argumenty.network];
-	}
-	
 	cout << "port:" << argumenty.port << endl;
 	cout << "wait:" << argumenty.wait << endl;
 	cout << "int:" << interface << endl;
