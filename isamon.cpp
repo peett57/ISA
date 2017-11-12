@@ -117,24 +117,24 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 }
 
 int main(int argc, char *argv[]){
-	Arguments arguments;
-	arguments.port = 0;
-	arguments.wait = 0;
-	arguments.u = false;
-	arguments.t = false;
-	arguments.interface = 0;
-	arguments.network = 0;
+	Arguments argumenty;
+	argumenty.port = 0;
+	argumenty.wait = 0;
+	argumenty.u = false;
+	argumenty.t = false;
+	argumenty.interface = 0;
+	argumenty.network = 0;
 
 	//arguments
-	if(arguments(argc,argv, &arguments)){
+	if(arguments(argc,argv, &argumenty)){
 		fprintf((stderr), "Wrong arguments!\n" );
 		return EXIT_FAILURE;
 	}
 
-	cout << "port:" << arguments.port << endl;
-	cout << "wait:" << arguments.wait << endl;
-	cout << "int:" << arguments.interface << endl;
-	cout << "network:" << arguments.network << endl;
+	cout << "port:" << argumenty.port << endl;
+	cout << "wait:" << argumenty.wait << endl;
+	cout << "int:" << argumenty.interface << endl;
+	cout << "network:" << argumenty.network << endl;
 
 	return EXIT_SUCCESS;
 
