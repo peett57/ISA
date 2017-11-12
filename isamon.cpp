@@ -143,9 +143,15 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 
-	char *interface = argv[argumenty.interface];
-	char *network = argv[argumenty.network];
-
+	char *interface = "" ;
+	char *network = "";
+	if(argumenty->interface != 0){
+		interface = argv[argumenty.interface];
+	}
+	if(argumenty->network != 0){
+		network = argv[argumenty.network];
+	}
+	
 	cout << "port:" << argumenty.port << endl;
 	cout << "wait:" << argumenty.wait << endl;
 	cout << "int:" << interface << endl;
