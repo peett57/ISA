@@ -68,7 +68,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	}
 
 	if(argc == 1){
-		arguments->fault = "no args";
+		arguments->fault = 'no args';
 		return EXIT_FAILURE;
 	}
 
