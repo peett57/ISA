@@ -195,11 +195,8 @@ int main(int argc, char *argv[]){
 		}
 		network++;
 	}
-	cout << "cela ip : " << net << endl;
-	cout << "1 : " << value[0] << endl;
-	cout << "2 : " << value[1] << endl;
-	cout << "3 : " << value[2] << endl;
-	cout << "4 : " << value[3] << endl;
+	printf("values in \"%s\": %d %d %d %d\n", str2,
+              value[0], value[1], value[2], value[3]);
 
 	
 
