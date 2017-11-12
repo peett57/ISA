@@ -171,12 +171,23 @@ int main(int argc, char *argv[]){
 		cout << "tcp" << endl;
 	}
 
-	
+	string str = string(network);
 
-	cout << " index 0" << network[0] << endl;
-	cout << " index 1" << network[1] << endl;
-	cout << " index 2" << network[2] << endl;
+	cout << " index 0" << interface[0] << endl;
+	cout << " index 1" << interface[1] << endl;
+	cout << " index 2" << interface[2] << endl;
 
+	istringstream iss(str);
+	std::vector<std::string> tokens;
+	std::string token;
+	while(std::getline(iss, token, '.')){
+		if(!token.empty())
+			tokens.push_back(token);
+	}
+
+	for(int i = 0; i < sizeof(tokens); i++){
+		cout << " index  :  " << tokens[i] << endl;
+	}
 
 	return 0;
 
