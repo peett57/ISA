@@ -182,19 +182,20 @@ int main(int argc, char *argv[]){
 	char *net;
 	unsigned char value[4] = {0};
 	size_t index =0;
+	char *str = "192.168.0.1";
 
-	net = network;
+	net = str;
 
-	while(*network){
-		if(isdigit((unsigned char)*network)){
+	while(*str){
+		if(isdigit((unsigned char)*str)){
 			value[index] *=10;
-			value[index] += *network - '0';
+			value[index] += *str - '0';
 		}else{
 			index++;
 		}
-		network++;
+		str++;
 	}
-	cout << "cela ip : " << network << endl;
+	cout << "cela ip : " << net << endl;
 	cout << "1 : " << value[0] << endl;
 	cout << "2 : " << value[1] << endl;
 	cout << "3 : " << value[2] << endl;
