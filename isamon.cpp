@@ -75,7 +75,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			if(arguments->port < 1 || arguments->port > 65535){
 				return EXIT_FAILURE;
 			}
-			i++
+			i++;
 		}
 		else if(!strcmp(argv[i], "-t")){
 			if(arguments->t == true){
@@ -94,7 +94,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 				return EXIT_FAILURE;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
-			i++
+			i++;
 		}
 		else if(!strcmp(argv[i], "-i")){
 			if(arguments->interface != 0){
@@ -127,8 +127,8 @@ int main(int argc, char *argv[]){
 
 	//arguments
 	if(arguments(argc,argv, &arguments)){
-		fprintf((stderr), "Wrong arguments!\n", );
-		return EXIT_FAILURE
+		fprintf((stderr), "Wrong arguments!\n" );
+		return EXIT_FAILURE;
 	}
 
 	cout << "port:" << arguments.port << endl;
