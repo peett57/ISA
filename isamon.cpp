@@ -13,6 +13,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <string.h>
+#include <sstream>
 #include <errno.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -143,7 +144,7 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 
-	
+
 	if(argumenty.network == 0){
 		fprintf((stderr), "Wrong arguments! no network\n");
 		return 1;
