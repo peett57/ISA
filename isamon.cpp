@@ -180,7 +180,7 @@ int main(int argc, char *argv[]){
 
 
 	int dot_cnt = 0;
-	int array = 0
+	int array = 0;
 	char **byte;
 
 	for(int i = 0 ; i < sizeof(network); i++){
