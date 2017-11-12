@@ -52,6 +52,7 @@ int je_to_cislo(char *s){
 typedef struct{
 	bool u;
 	bool t;
+	bool help;
 	int interface;
 	int network;
 	long int port;
@@ -61,8 +62,12 @@ typedef struct{
 
 int arguments(int argc, char *argv[], Arguments *arguments){
 	if((argc == 2) && ((!strcmp(argv[1], "-h")) || (!strcmp(argv[1], "--help")))){
-		printhelp();
+		arguments->help == true;
 		return EXIT_SUCCESS;
+	}
+
+	if(agrc == 1){
+		return EXIT_FAILURE;
 	}
 
 	char *pEnd;
@@ -122,6 +127,7 @@ int main(int argc, char *argv[]){
 	argumenty.wait = 0;
 	argumenty.u = false;
 	argumenty.t = false;
+	argumenty.help = false;
 	argumenty.interface = 0;
 	argumenty.network = 0;
 
@@ -131,10 +137,25 @@ int main(int argc, char *argv[]){
 		return EXIT_FAILURE;
 	}
 
+	if(argumenty.help == true){
+		printhelp();
+		return 0;
+	}
+
+	char *interface = argv[argumenty.interface];
+	char *network = argv[argumenty.network];
+
 	cout << "port:" << argumenty.port << endl;
 	cout << "wait:" << argumenty.wait << endl;
 	cout << "int:" << argumenty.interface << endl;
 	cout << "network:" << argumenty.network << endl;
+
+	if(argumenty.u == true){
+		cout << "udp" << endl;
+	}
+	if(argumenty.t == true){
+		cout << "tcp" << endl;
+	}
 
 	return EXIT_SUCCESS;
 
