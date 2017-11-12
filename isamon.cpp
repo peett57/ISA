@@ -182,7 +182,7 @@ int main(int argc, char *argv[]){
 	char *net;
 	unsigned char value[4] = {0};
 	size_t index =0;
-	char *str = "192.168.0.1";
+	
 
 	net = network;
 
