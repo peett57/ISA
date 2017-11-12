@@ -17,6 +17,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <socket.h>
 
 
 using namespace std;
@@ -47,6 +48,7 @@ int je_to_cislo(char *s){
 	return 1;
 }
 
+//dsadasdasdasd
 typedef struct{
 	bool u;
 	bool t;
@@ -54,7 +56,7 @@ typedef struct{
 	int network;
 	long int port;
 	long int wait;
-}Arguments
+}Arguments;
 
 
 int arguments(int argc, char *argv[], Arguments *arguments){
@@ -70,6 +72,9 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 				return EXIT_FAILURE;
 			}
 			arguments->port = strtol(argv[i+1],&pEnd, 10);
+			if(arguments->port < 1 || arguments->port > 65535){
+				return EXIT_FAILURE;
+			}
 			i++
 		}
 		else if(!strcmp(argv[i], "-t")){
@@ -125,6 +130,13 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong arguments!\n", );
 		return EXIT_FAILURE
 	}
+
+	cout << "port:" << arguments.port << endl;
+	cout << "wait:" << arguments.wait << endl;
+	cout << "int:" << arguments.interface << endl;
+	cout << "network:" << arguments.network << endl;
+
+	return EXIT_SUCCESS;
 
 	
 }
