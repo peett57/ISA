@@ -86,13 +86,13 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			if(arguments->t == true){
 				return EXIT_FAILURE;
 			}
-			arguments->t == true;
+			arguments->t = true;
 		}
 		else if(!strcmp(argv[i], "-u")){
 			if(arguments->u == true){
 				return EXIT_FAILURE;
 			}
-			arguments->u == true;
+			arguments->u = true;
 		}
 		else if(!strcmp(argv[i], "-w")){
 			if((je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0){
