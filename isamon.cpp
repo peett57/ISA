@@ -180,7 +180,7 @@ int main(int argc, char *argv[]){
 
 
 	int dot_cnt = 0;
-	char byte[][];
+	char **byte;
 
 	for(int i = 0 ; i < sizeof(network); i++){
 		if(network[i] == '.'){
