@@ -188,7 +188,7 @@ int main(int argc, char *argv[]){
 	while(*network){
 		if(isdigit((unsigned char)*network)){
 			value[index] *=10;
-			value[index] +=*str - '0';
+			value[index] += *network - '0';
 		}else{
 			index++;
 		}
