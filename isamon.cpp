@@ -195,7 +195,7 @@ int main(int argc, char *argv[]){
 		}
 		network++;
 	}
-	printf("values in \"%s\": %d %d %d %d\n", str2,
+	printf("values in \"%s\": %d %d %d %d\n", net,
               value[0], value[1], value[2], value[3]);
 
 	
