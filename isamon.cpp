@@ -143,10 +143,13 @@ int main(int argc, char *argv[]){
 		return 0;
 	}
 
-	char *interface;
-	char *network;
+	char *interface = ' ';
+	char *network = ' ';
 	if(argumenty.interface != 0){
 		interface = argv[argumenty.interface];
+	}
+	else{
+
 	}
 	if(argumenty.network != 0){
 		network = argv[argumenty.network];
