@@ -179,24 +179,28 @@ int main(int argc, char *argv[]){
 	cout << " index 2" << network[2] << endl;
 
 
-	int dot_cnt = 0;
-	int array = 0;
-	char **byte;
+	char *net;
+	unsigned char value[4] = {0};
+	size_t index =0;
 
-	for(int i = 0 ; i < sizeof(network); i++){
-		if(network[i] == '.'){
-			dot_cnt++;
-			array = 0;
+	net = network;
+
+	while(*network){
+		if(isdigit((unsigned char)*network)){
+			value[index] *=10;
+			value[index] +=*str - '0';
 		}else{
-			byte[dot_cnt][array] = network[i];
-			array++;
+			index++;
 		}
-		
+		network++;
 	}
+	cout << "cela ip : " << network << endl;
+	cout << "1 : " << value[0] << endl;
+	cout << "2 : " << value[1] << endl;
+	cout << "3 : " << value[2] << endl;
+	cout << "4 : " << value[3] << endl;
 
-	for(int x = 0; x < sizeof(byte); x++){
-		cout << "index " << x << " : " << byte[x] << endl;
-	}
+	
 
 	return 0;
 
