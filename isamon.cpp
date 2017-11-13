@@ -281,43 +281,73 @@ int main(int argc, char *argv[]){
 
 	
 
+	int final1=byte1;
+	int final2=byte2;
+	int final3=byte3;
+	int final3=byte4;
+
+
+	int maska_na_cislo;
+	int mask_help = mask_int;
 	
 
 
 	int mask_byte;
 	
 	if(mask_int <= 8){
-		mask_byte = mask_int;
+		mask_byte = 1;
 	}
 	else if(mask_int <= 16){
-		mask_byte = mask_int -8;
+		mask_byte = 2;
+		mask_help = mask_help - 8;
 	}
 	else if(mask_int <= 24){
-		mask_byte = mask_int -16;
+		mask_byte = 3;
+		mask_help = mask_help - 16;
 	}
 	else{
-		mask_byte = mask_int -24;
+		mask_byte = 4;
+		mask_help = mask_help - 24;
 	}
 
-	int maska_na_cislo;
-	if(mask_byte == 1 ){maska_na_cislo = 127;}
-	else if(mask_byte == 2 ){maska_na_cislo = 63;}
-	else if(mask_byte == 3 ){maska_na_cislo = 31;}
-	else if(mask_byte == 4 ){maska_na_cislo = 15;}
-	else if(mask_byte == 5 ){maska_na_cislo = 7;}
-	else if(mask_byte == 6 ){maska_na_cislo = 3;}
-	else if(mask_byte == 7 ){maska_na_cislo = 1;}
-	else if(mask_byte == 8 ){maska_na_cislo = 0;}
+	if(mask_help == 1 ){maska_na_cislo = 127;}
+	else if(mask_help == 2 ){maska_na_cislo = 63;}
+	else if(mask_help == 3 ){maska_na_cislo = 31;}
+	else if(mask_help == 4 ){maska_na_cislo = 15;}
+	else if(mask_help == 5 ){maska_na_cislo = 7;}
+	else if(mask_help == 6 ){maska_na_cislo = 3;}
+	else if(mask_help == 7 ){maska_na_cislo = 1;}
+	else if(mask_help == 8 ){maska_na_cislo = 0;}
 	else{
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
+	}mask_help
+
+	if(mask_byte = 1){
+		final1 = byte1 - maska_na_cislo;
+	}
+	if(mask_byte = 2){
+		final2 = byte2 - maska_na_cislo;
+	}
+	if(mask_byte = 3){
+		final3 = byte3 - maska_na_cislo;
+	}
+	if(mask_byte = 4){
+		final4 = byte - maska_na_cislo;
 	}
 
+
+	
+
+
+
+
+
 	cout << "mask byte : " << mask_byte << endl;
-	cout << "1  " << byte1 << endl;
-	cout << "2  " << byte2 << endl;
-	cout << "3  " << byte3 << endl;
-	cout << "4  " << byte4 << endl;
+	cout << "1  " << final1 << endl;
+	cout << "2  " << final2 << endl;
+	cout << "3  " << final3 << endl;
+	cout << "4  " << final4 << endl;
 
 	
 	
