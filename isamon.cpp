@@ -182,6 +182,7 @@ int main(int argc, char *argv[]){
 	string ip_address = "jjj" ;
 	string mask ;
 	for(int i = 0; i < sizeof(network) ; i++){
+		cout << "fori" << endl;
 		if(network[i] == '/'){
 			for(int x = 0; x < i ; x++){
 				ip_address += network[x]; 
