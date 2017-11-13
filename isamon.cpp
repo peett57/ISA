@@ -179,27 +179,30 @@ int main(int argc, char *argv[]){
 	cout << " index 2" << network[2] << endl;
 
 
-	char *ip_address;
-	char *mask;
+	string ip_address;
+	string mask;
 	for(int i = 0; i < sizeof(network) ; i++){
 		if(network[i] == '/'){
 			for(int x = 0; x < i ; x++){
-				ip_address[] = network[x];
+				ip_address.append(string(network[x])); 
 			}
-			mask[] = network[i+1];
-			mask[] = network[i+2];
+			mask.append(string(network[i+1]));
+			mask.append(string(network[i+2]));
 		}
 	}
+
+	cout << "ip adresa : " << ip_address << endl;
+	cout << "maska : " << mask << endl;
 	return 0;
 
-	for(int i =0; i< sizeof(ip_address); i++){
+	/*for(int i =0; i< sizeof(ip_address); i++){
 		cout << " ip adresa " << ip_address[i] << endl;
 	}
 
 
 	for(int i =0; i< sizeof(mask); i++){
 		cout << " maska " << mask[i] << endl;
-	}
+	}*/
 
 
 
