@@ -179,9 +179,9 @@ int main(int argc, char *argv[]){
 	cout << " velkost " << strlen(network) << endl;
 
 
-	string ip_address = "jjj" ;
+	string ip_address ;
 	string mask ;
-	for(int i = 0; i < sizeof(network) ; i++){
+	for(int i = 0; i < strlen(network) ; i++){
 		cout << "fori" << endl;
 		cout << network[i] << endl;
 		if(network[i] == '/'){
