@@ -281,20 +281,34 @@ int main(int argc, char *argv[]){
 
 	
 
+	int maska_na_cislo;
+	if(mask_int == 1 ){maska_na_cislo = 127;}
+	else if(mask_int == 2 ){maska_na_cislo = 63;}
+	else if(mask_int == 3 ){maska_na_cislo = 31;}
+	else if(mask_int == 4 ){maska_na_cislo = 15;}
+	else if(mask_int == 5 ){maska_na_cislo = 7;}
+	else if(mask_int == 6 ){maska_na_cislo = 3;}
+	else if(mask_int == 7 ){maska_na_cislo = 1;}
+	else if(mask_int == 8 ){maska_na_cislo = 0;}
+	else{
+		fprintf((stderr), "Wrong Mask\n");
+		return 1;
+	}
+
 
 	int mask_byte;
 	
 	if(mask_int <= 8){
-		mask_byte = 1;
+		mask_byte = mask_int;
 	}
 	else if(mask_int <= 16){
-		mask_byte = 2;
+		mask_byte = mask_int -8;
 	}
 	else if(mask_int <= 24){
-		mask_byte = 3;
+		mask_byte = mask_int -16;
 	}
 	else{
-		mask_byte = 4;
+		mask_byte = mask_int -24;
 	}
 
 	cout << "mask byte : " << mask_byte << endl;
