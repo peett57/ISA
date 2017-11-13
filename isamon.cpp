@@ -179,31 +179,29 @@ int main(int argc, char *argv[]){
 	cout << " index 2" << network[2] << endl;
 
 
-	char *net;
-	unsigned char value[4] = {0};
-	size_t index =0;
-	
-
-	net = network;
-
-	while(*network){
-		if(isdigit((unsigned char)*network)){
-			value[index] *= 10;
-			value[index] += *network - '0';
-		}else{
-			index++;
+	char *ip_address;
+	char *mask;
+	for(int i = 0; i < sizeof(network) ; i++){
+		if(network[i] == '/'){
+			for(int x = 0; x < i ; x++){
+				ip_address[] = network[x];
+			}
+			mask[] = network[i+1];
+			mask[] = network[i+2];
 		}
-		network++;
 	}
-	printf("values in \"%s\": %d %d %d %d\n", net,
-              value[0], value[1], value[2], value[3]);
-
-
-	
-
-	char val = (char)value[0];
-	cout << val << endl;
 	return 0;
+
+	for(int i =0; i< sizeof(ip_address); i++){
+		cout << " ip adresa " << ip_address[i] << endl;
+	}
+
+
+	for(int i =0; i< sizeof(mask); i++){
+		cout << " maska " << mask[i] << endl;
+	}
+
+
 
 	
 }
