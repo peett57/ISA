@@ -376,8 +376,9 @@ int main(int argc, char *argv[]){
 
 	cout << "final  " << final_network << endl;
 
+	const char * network_address = final_network.c_str();
 	
-	
+	cout << "final network char *  " << network_address << endl;
 
 	
 
