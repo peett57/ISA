@@ -185,9 +185,11 @@ int main(int argc, char *argv[]){
 		if(network[i] == '/'){
 			for(int x = 0; x < i ; x++){
 				ip_address += network[x]; 
+				cout << "forx" << endl;
 			}
 			mask += network[i+1];
 			mask += network[i+2];
+			cout << "if" << endl;
 		}
 	}
 
