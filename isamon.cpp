@@ -216,11 +216,16 @@ int main(int argc, char *argv[]){
 
 	cout << "ip adresa koniec : " << ip_str << endl;
 
-	//kontrola ci je maska v rozsahu 1-24
-	if(mask_int < 1 || mask_int > 24){
+	//kontrola ci je maska v rozsahu 1-32
+	if(mask_int < 1 || mask_int > 32){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
+
+	cout << "pole ip_str : 1 - " << ip_str[0] << endl;
+	cout << "pole ip_str : 2 - " << ip_str[1] << endl;
+	cout << "pole ip_str : 3 - " << ip_str[2] << endl;
+	cout << "pole ip_str : 4 - " << ip_str[3] << endl;
 
 
 
