@@ -333,7 +333,7 @@ int main(int argc, char *argv[]){
 		final3 = byte3 - maska_na_cislo;
 	}
 	if(mask_byte = 4){
-		final4 = byte - maska_na_cislo;
+		final4 = byte4 - maska_na_cislo;
 	}
 
 
