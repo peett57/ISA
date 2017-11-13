@@ -288,7 +288,7 @@ int main(int argc, char *argv[]){
 		byte4 = '0';
 
 	}
-	else if(mask_byte < 24){
+	else if(mask_int < 24){
 		mask_byte = 3;
 		mask_int = mask_int - 16;
 		byte4 = '0';
