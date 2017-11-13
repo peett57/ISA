@@ -207,9 +207,9 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	char ip_str[INET_ADDRESTRLEN];
+	char ip_str[INET_ADDRSTRLEN];
 
-	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRESTRLEN);
+	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRSTRLEN);
 
 	cout << "ip adresa koniec : " << ip_str << endl;
 
