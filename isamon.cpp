@@ -284,7 +284,7 @@ int main(int argc, char *argv[]){
 	int final1=byte1;
 	int final2=byte2;
 	int final3=byte3;
-	int final3=byte4;
+	int final4=byte4;
 
 
 	int maska_na_cislo;
@@ -321,7 +321,7 @@ int main(int argc, char *argv[]){
 	else{
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
-	}mask_help
+	}
 
 	if(mask_byte = 1){
 		final1 = byte1 - maska_na_cislo;
