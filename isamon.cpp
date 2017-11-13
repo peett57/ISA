@@ -323,16 +323,16 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	if(mask_byte = 1){
+	if(mask_byte == 1){
 		final1 = byte1 - maska_na_cislo;
 	}
-	if(mask_byte = 2){
+	if(mask_byte == 2){
 		final2 = byte2 - maska_na_cislo;
 	}
-	if(mask_byte = 3){
+	if(mask_byte == 3){
 		final3 = byte3 - maska_na_cislo;
 	}
-	if(mask_byte = 4){
+	if(mask_byte == 4){
 		final4 = byte4 - maska_na_cislo;
 	}
 
