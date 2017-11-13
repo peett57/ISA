@@ -344,16 +344,22 @@ int main(int argc, char *argv[]){
 
 
 	
-
-
-
-
-
 	cout << "mask byte : " << mask_byte << endl;
 	cout << "1  " << final1 << endl;
 	cout << "2  " << final2 << endl;
 	cout << "3  " << final3 << endl;
 	cout << "4  " << final4 << endl;
+
+	string final_network;
+	final_network += final1;
+	final_network += '.';
+	final_network += final2;
+	final_network += '.';
+	final_network += final3;
+	final_network += '.';
+	final_network += final4;
+
+	cout << "final  " << final_network << endl;
 
 	
 	
