@@ -202,7 +202,7 @@ int main(int argc, char *argv[]){
 
 	struct sockaddr_in sa;
 
-	if(inet_pton(AF_INET, ip_address , &(sa.sin_addr)) != 0){
+	if(inet_pton(AF_INET, ip_char , &(sa.sin_addr)) != 0){
 		fprintf((stderr), "Wrong IP Address\n");
 		return 1;
 	}
