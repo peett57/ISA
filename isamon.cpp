@@ -281,19 +281,7 @@ int main(int argc, char *argv[]){
 
 	
 
-	int maska_na_cislo;
-	if(mask_int == 1 ){maska_na_cislo = 127;}
-	else if(mask_int == 2 ){maska_na_cislo = 63;}
-	else if(mask_int == 3 ){maska_na_cislo = 31;}
-	else if(mask_int == 4 ){maska_na_cislo = 15;}
-	else if(mask_int == 5 ){maska_na_cislo = 7;}
-	else if(mask_int == 6 ){maska_na_cislo = 3;}
-	else if(mask_int == 7 ){maska_na_cislo = 1;}
-	else if(mask_int == 8 ){maska_na_cislo = 0;}
-	else{
-		fprintf((stderr), "Wrong Mask\n");
-		return 1;
-	}
+	
 
 
 	int mask_byte;
@@ -309,6 +297,20 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		mask_byte = mask_int -24;
+	}
+
+	int maska_na_cislo;
+	if(mask_byte == 1 ){maska_na_cislo = 127;}
+	else if(mask_byte == 2 ){maska_na_cislo = 63;}
+	else if(mask_byte == 3 ){maska_na_cislo = 31;}
+	else if(mask_byte == 4 ){maska_na_cislo = 15;}
+	else if(mask_byte == 5 ){maska_na_cislo = 7;}
+	else if(mask_byte == 6 ){maska_na_cislo = 3;}
+	else if(mask_byte == 7 ){maska_na_cislo = 1;}
+	else if(mask_byte == 8 ){maska_na_cislo = 0;}
+	else{
+		fprintf((stderr), "Wrong Mask\n");
+		return 1;
 	}
 
 	cout << "mask byte : " << mask_byte << endl;
