@@ -195,6 +195,12 @@ int main(int argc, char *argv[]){
 		}
 	}
 
+	//kontrola validneho argumentu -n zadane lomitko
+	if(lomitko == false){
+		fprintf((stderr), "Wrong -n\n");
+		return 1;
+	}
+
 	int mask_int = atoi(mask.c_str());
 	const char * ip_char = ip_address.c_str();
 
@@ -206,12 +212,8 @@ int main(int argc, char *argv[]){
 
 	struct sockaddr_in sa;
 
-	//kontrola validneho argumentu -n zadane lomitko
-	if(lomitko == false){
-		fprintf((stderr), "Wrong -n\n");
-		return 1;
-	}
 	
+
 	//kontrola validnej IP adresy
 	if(inet_pton(AF_INET, ip_char , &(sa.sin_addr)) != 1){
 		fprintf((stderr), "Wrong IP Address\n");
