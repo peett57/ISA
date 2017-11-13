@@ -232,12 +232,43 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	cout << "pole ip_str : 1 - " << ip_str[0] << endl;
-	cout << "pole ip_str : 2 - " << ip_str[1] << endl;
-	cout << "pole ip_str : 3 - " << ip_str[2] << endl;
-	cout << "pole ip_str : 4 - " << ip_str[3] << endl;
+	int dot1_index = 0;
+	int dot2_index = 0;
+	int dot3_index = 0;
+	for(int i = 0 ; i < strlen(ip_str); i++){
+		if(ip_str[i] == '.'){
+			if(dot1_index == 0){
+				dot1_index = i;
+			}
+			else if(dot2_index == 0){
+				dot2_index = i;
+			}
+			else{
+				dot3_index = i;
+			}
+		}
+	}
+
+	string byte1,byte2,byte3,byte4;
+
+	for(int i = 0; i < dot1_index ; i++){
+		byte1 += ip_str[i];
+	}
+	for(int i = dot1_index + 1; i < dot2_index ; i++){
+		byte2 += ip_str[i];
+	}
+	for(int i = dot2_index + 1; i < dot3_index ; i++){
+		byte3 += ip_str[i];
+	}
+	for(int i = dot3_index + 1; i < strlen(ip_str) ; i++){
+		byte4 += ip_str[i];
+	}
 
 
+	cout << "1  " << byte1 << endl;
+	cout << "2  " << byte2 << endl;
+	cout << "3  " << byte3 << endl;
+	cout << "4  " << byte4 << endl;
 
 
 
