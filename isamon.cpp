@@ -270,8 +270,36 @@ int main(int argc, char *argv[]){
 	cout << "3  " << byte3 << endl;
 	cout << "4  " << byte4 << endl;
 
+	int mask_byte;
+	int maska_na_cislo;
+	if(mask_int < 8){
+		mask_byte = 1;
 
+	}
+	else if(mask_int < 16){
+		mask_byte = 2;
+		mask_int = mask_int - 8;
 
+	}
+	else if(mask_byte <24){
+		mask_byte = 3;
+		mask_int = mask_int - 16;
+	}
+	else{
+		mask_byte = 4;
+		mask_int = mask_int - 24;
+	}
+
+	cout << mask_int << endl;
+
+	if(mask_int == 0 ){maska_na_cislo = 255;}
+	else if(mask_int == 1 ){maska_na_cislo = 127;}
+	else if(mask_int == 2 ){maska_na_cislo = 63;}
+	else if(mask_int == 3 ){maska_na_cislo = 31;}
+	else if(mask_int == 4 ){maska_na_cislo = 15;}
+	else if(mask_int == 5 ){maska_na_cislo = 7;}
+	else if(mask_int == 6 ){maska_na_cislo = 3;}
+	else if(mask_int == 7 ){maska_na_cislo = 1;}
 
 
 
