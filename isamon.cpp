@@ -191,8 +191,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	int mask_int = mask.stoi();
-	char * ip_char = ip_address.c_str();
+	int mask_int = atoi(mask.c_str());
+	const char * ip_char = ip_address.c_str();
 
 	cout << "ip adresa : " << ip_address << endl;
 	cout << "ip adresa char : " << ip_char << endl;
