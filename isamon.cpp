@@ -183,8 +183,10 @@ int main(int argc, char *argv[]){
 
 	string ip_address ;
 	string mask ;
+	bool lomitko = false;
 	for(int i = 0; i < strlen(network) ; i++){
 		if(network[i] == '/'){
+			lomitko = true;
 			for(int x = 0; x < i ; x++){
 				ip_address += network[x]; 
 			}
@@ -204,6 +206,12 @@ int main(int argc, char *argv[]){
 
 	struct sockaddr_in sa;
 
+	//kontrola validneho argumentu -n zadane lomitko
+	if(lomitko == false){
+		fprintf((stderr), "Wrong -n\n");
+		return 1;
+	}
+	
 	//kontrola validnej IP adresy
 	if(inet_pton(AF_INET, ip_char , &(sa.sin_addr)) != 1){
 		fprintf((stderr), "Wrong IP Address\n");
