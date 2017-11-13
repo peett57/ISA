@@ -182,31 +182,48 @@ int main(int argc, char *argv[]){
 	string ip_address ;
 	string mask ;
 	for(int i = 0; i < strlen(network) ; i++){
-		cout << "fori" << endl;
-		cout << network[i] << endl;
 		if(network[i] == '/'){
 			for(int x = 0; x < i ; x++){
 				ip_address += network[x]; 
-				cout << "forx" << endl;
 			}
 			mask += network[i+1];
 			mask += network[i+2];
-			cout << "if" << endl;
 		}
 	}
 
-	cout << "ip adresa : " << ip_address << endl;
-	cout << "maska : " << mask << endl;
-	return 0;
+	int mask_int = stoi(mask);
 
-	/*for(int i =0; i< sizeof(ip_address); i++){
-		cout << " ip adresa " << ip_address[i] << endl;
+	cout << "ip adresa : " << ip_address << endl;
+	cout << "maska : " << mask_int << endl;
+
+
+	struct sockaddr_in sa;
+
+	if(inet_pton(AF_INET, ip_address , &(sa.sin_addr)) != 0){
+		fprintf((stderr), "Wrong IP Address\n");
+		return 1;
 	}
 
+	char ip_str[INET_ADDRESTRLEN];
 
-	for(int i =0; i< sizeof(mask); i++){
-		cout << " maska " << mask[i] << endl;
-	}*/
+	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRESTRLEN);
+
+	cout << "ip adresa koniec : " << ip_str << endl;
+
+
+
+
+
+
+
+
+
+
+
+
+	return 0;
+
+	
 
 
 
