@@ -140,12 +140,14 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong arguments!\n");
 		return 1;
 	}
+
+	//help
 	if(argumenty.help == true){
 		printhelp();
 		return 0;
 	}
 
-
+	//argument network nezadany
 	if(argumenty.network == 0){
 		fprintf((stderr), "Wrong arguments! no network\n");
 		return 1;
@@ -160,10 +162,10 @@ int main(int argc, char *argv[]){
 	char *interface = argv[argumenty.interface];
 	
 
-	cout << "port:" << argumenty.port << endl;
+	/*cout << "port:" << argumenty.port << endl;
 	cout << "wait:" << argumenty.wait << endl;
 	cout << "int:" << interface << endl;
-	cout << "network:" << network << endl;
+	cout << "network:" << network << endl;*/
 
 	if(argumenty.u == true){
 		cout << "udp" << endl;
@@ -174,9 +176,9 @@ int main(int argc, char *argv[]){
 
 	string str = string(network);
 
-	cout << " index 0" << network[0] << endl;
+	/*cout << " index 0" << network[0] << endl;
 	cout << " index 1" << network[1] << endl;
-	cout << " velkost " << strlen(network) << endl;
+	cout << " velkost " << strlen(network) << endl;*/
 
 
 	string ip_address ;
@@ -202,6 +204,7 @@ int main(int argc, char *argv[]){
 
 	struct sockaddr_in sa;
 
+	//kontrola validnej IP adresy
 	if(inet_pton(AF_INET, ip_char , &(sa.sin_addr)) != 1){
 		fprintf((stderr), "Wrong IP Address\n");
 		return 1;
@@ -212,6 +215,12 @@ int main(int argc, char *argv[]){
 	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRSTRLEN);
 
 	cout << "ip adresa koniec : " << ip_str << endl;
+
+	//kontrola ci je maska v rozsahu 1-24
+	if(mask_int < 1 || mask_int > 24){
+		fprintf((stderr), "Wrong Mask\n");
+		return 1;
+	}
 
 
 
