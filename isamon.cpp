@@ -226,7 +226,7 @@ int main(int argc, char *argv[]){
 	cout << "ip adresa koniec : " << ip_str << endl;
 
 	//kontrola ci je maska v rozsahu 1-32
-	if(mask_int < 1 || mask_int > 32){
+	if(mask_int < 1 || mask_int > 31){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
@@ -251,21 +251,27 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	string byte1,byte2,byte3,byte4;
+	string byte1_s,byte2_s,byte3_s,byte4_s;
 
 	for(int i = 0; i < dot1_index ; i++){
-		byte1 += ip_str[i];
+		byte1_s += ip_str[i];
 	}
 	for(int i = dot1_index + 1; i < dot2_index ; i++){
-		byte2 += ip_str[i];
+		byte2_s += ip_str[i];
 	}
 	for(int i = dot2_index + 1; i < dot3_index ; i++){
-		byte3 += ip_str[i];
+		byte3_s += ip_str[i];
 	}
 	for(int i = dot3_index + 1; i < strlen(ip_str) ; i++){
-		byte4 += ip_str[i];
+		byte4_s += ip_str[i];
 	}
 
+
+	int byte1,byte2,byte3,byte4;
+	byte1 = atoi(byte1_s.c_str());
+	byte2 = atoi(byte2_s.c_str());
+	byte3 = atoi(byte3_s.c_str());
+	byte4 = atoi(byte4_s.c_str());
 
 	cout << "1  " << byte1 << endl;
 	cout << "2  " << byte2 << endl;
@@ -277,21 +283,21 @@ int main(int argc, char *argv[]){
 	int maska_na_cislo;
 	if(mask_int <= 8){
 		mask_byte = 1;
-		byte2 = '0';
-		byte3 = '0';
-		byte4 = '0';
+		byte2 = 0;
+		byte3 = 0;
+		byte4 = 0;
 	}
 	else if(mask_int <= 16){
 		mask_byte = 2;
 		mask_int = mask_int - 8;
-		byte3 = '0';
-		byte4 = '0';
+		byte3 = 0;
+		byte4 = 0;
 
 	}
 	else if(mask_int <= 24){
 		mask_byte = 3;
 		mask_int = mask_int - 16;
-		byte4 = '0';
+		byte4 = 0;
 	}
 	else{
 		mask_byte = 4;
@@ -317,6 +323,8 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
+
+
 
 
 
