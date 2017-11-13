@@ -200,7 +200,7 @@ int main(int argc, char *argv[]){
 	cout << "maska : " << mask_int << endl;
 
 
-	/*struct sockaddr_in sa;
+	struct sockaddr_in sa;
 
 	if(inet_pton(AF_INET, ip_address , &(sa.sin_addr)) != 0){
 		fprintf((stderr), "Wrong IP Address\n");
@@ -211,7 +211,7 @@ int main(int argc, char *argv[]){
 
 	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRESTRLEN);
 
-	cout << "ip adresa koniec : " << ip_str << endl;*/
+	cout << "ip adresa koniec : " << ip_str << endl;
 
 
 
