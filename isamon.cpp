@@ -176,7 +176,7 @@ int main(int argc, char *argv[]){
 
 	cout << " index 0" << network[0] << endl;
 	cout << " index 1" << network[1] << endl;
-	cout << " velkost " << sizeof(network) << endl;
+	cout << " velkost " << strlen(network) << endl;
 
 
 	string ip_address = "jjj" ;
