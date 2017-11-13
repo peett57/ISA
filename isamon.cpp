@@ -184,10 +184,10 @@ int main(int argc, char *argv[]){
 	for(int i = 0; i < sizeof(network) ; i++){
 		if(network[i] == '/'){
 			for(int x = 0; x < i ; x++){
-				ip_address.append(string(network[x])); 
+				ip_address += network[x]; 
 			}
-			mask.append(string(network[i+1]));
-			mask.append(string(network[i+2]));
+			mask += network[i+1];
+			mask += network[i+2];
 		}
 	}
 
