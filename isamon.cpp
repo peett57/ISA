@@ -179,8 +179,8 @@ int main(int argc, char *argv[]){
 	cout << " index 2" << network[2] << endl;
 
 
-	string ip_address;
-	string mask;
+	string ip_address = "";
+	string mask = "";
 	for(int i = 0; i < sizeof(network) ; i++){
 		if(network[i] == '/'){
 			for(int x = 0; x < i ; x++){
