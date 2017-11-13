@@ -351,13 +351,13 @@ int main(int argc, char *argv[]){
 	cout << "4  " << final4 << endl;
 
 	string final_network;
-	final_network += final1;
+	final_network += to_string(final1);
 	final_network += '.';
-	final_network += final2;
+	final_network += to_string(final2);
 	final_network += '.';
-	final_network += final3;
+	final_network += to_string(final3);
 	final_network += '.';
-	final_network += final4;
+	final_network += to_string(final4);
 
 	cout << "final  " << final_network << endl;
 
