@@ -321,7 +321,7 @@ int main(int argc, char *argv[]){
 	else{
 		mask_byte = 4;
 		mask_int = mask_int - 24;
-		byte4_end = byte - maska_na_cislo;
+		byte4_end = byte4 - maska_na_cislo;
 	}
 
 	cout << "mask byte : " << mask_byte << endl;
