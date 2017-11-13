@@ -22,7 +22,6 @@
 
 
 
-
 using namespace std;
 
 //help	
@@ -352,13 +351,13 @@ int main(int argc, char *argv[]){
 	cout << "4  " << final4 << endl;
 
 	string final_network;
-	final_network += (char)final1;
+	final_network += final1.str();
 	final_network += '.';
-	final_network += (char)final1;
+	final_network += final2.str();
 	final_network += '.';
-	final_network += (char)final1;
+	final_network += final3.str();
 	final_network += '.';
-	final_network += (char)final1;
+	final_network += final4.str();
 
 	cout << "final  " << final_network << endl;
 
