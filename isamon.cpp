@@ -205,9 +205,8 @@ int main(int argc, char *argv[]){
 	const char * ip_char = ip_address.c_str();
 
 	cout << "ip adresa : " << ip_address << endl;
-	cout << "ip adresa char : " << ip_char << endl;
 
-	cout << "maska : " << mask_int << endl;
+	
 
 
 	struct sockaddr_in sa;
@@ -231,6 +230,9 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
+	cout << "maska : " << mask_int << endl;
+
+
 
 	int dot1_index = 0;
 	int dot2_index = 0;
@@ -269,6 +271,7 @@ int main(int argc, char *argv[]){
 	cout << "2  " << byte2 << endl;
 	cout << "3  " << byte3 << endl;
 	cout << "4  " << byte4 << endl;
+	
 
 	int mask_byte;
 	int maska_na_cislo;
@@ -285,7 +288,7 @@ int main(int argc, char *argv[]){
 		byte4 = '0';
 
 	}
-	else if(mask_byte <24){
+	else if(mask_byte < 24){
 		mask_byte = 3;
 		mask_int = mask_int - 16;
 		byte4 = '0';
@@ -295,6 +298,7 @@ int main(int argc, char *argv[]){
 		mask_int = mask_int - 24;
 	}
 
+	cout << "mask byte : " << mask_byte << endl;
 	cout << "1  " << byte1 << endl;
 	cout << "2  " << byte2 << endl;
 	cout << "3  " << byte3 << endl;
