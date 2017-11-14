@@ -454,8 +454,9 @@ int main(int argc, char *argv[]){
 					cout << "IP address - char: " << char_ip_for_scan << endl;
 
 
+					str_ip_for_scan = "";
+					char_ip_for_scan = str_ip_for_scan.c_str();
 
-					char_ip_for_scan = '';
 
 					
 				}
