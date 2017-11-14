@@ -225,8 +225,8 @@ int main(int argc, char *argv[]){
 
 	cout << "ip adresa koniec : " << ip_str << endl;
 
-	//kontrola ci je maska v rozsahu 1-32
-	if(mask_int < 1 || mask_int > 31){
+	//kontrola ci je maska v rozsahu 4-30
+	if(mask_int < 4 || mask_int > 30){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
@@ -339,7 +339,7 @@ int main(int argc, char *argv[]){
 
 		end2=255;
 		end3=255;
-		end4=254;
+		end4=255;
 	}
 	if(mask_byte == 2){
 		final2 = byte2 & maska_na_cislo;
@@ -347,16 +347,17 @@ int main(int argc, char *argv[]){
 		final4 = 0;
 
 		end3=255;
-		end4=254;
+		end4=255;
 	}
 	if(mask_byte == 3){
 		final3 = byte3 & maska_na_cislo;
 		final4 = 0;
 
-		end4=254;
+		end4=255;
 	}
 	if(mask_byte == 4){
 		final4 = byte4 & maska_na_cislo;
+		end4 = byte4 + (255 - maska_na_cislo);
 	}
 
 
@@ -427,7 +428,7 @@ int main(int argc, char *argv[]){
 	for(int i = final1 ; i <= end1 ; i++){
 		for(int j = final2; j <= end2; j++){
 			for(int k = final3; k <= end3; k++){
-				for(int l = final4; l <= end4 + 1; l++){
+				for(int l = final4; l <= end4 ; l++){
 					//cout << "IP address: " << i << "." << j << "." << k << "." << l << endl; 
 					//vsetky ip adresy ktore mam prechadzat na danom networku 
 					convert << i;
