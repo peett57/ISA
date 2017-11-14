@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <sys/time.h>
 
 
 
@@ -367,7 +368,7 @@ int main(int argc, char *argv[]){
 	cout << "3  " << final3 << endl;
 	cout << "4  " << final4 << endl;
 
-	string final_network;
+	/*string final_network;
 
 	stringstream convert;
 	convert << final1;
@@ -400,15 +401,8 @@ int main(int argc, char *argv[]){
 	//vysledna adresa siete v ktorej sa budu skumat ip adresy
 	const char * network_address = final_network.c_str();
 	
-	cout << "final network char *  " << network_address << endl;
+	cout << "final network char *  " << network_address << endl;*/
 
-	/*sd = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
-	if(sd < 0){
-		fprintf((stderr), "socket()\n");
-		return 1;
-	}
-
-	sin.sin_family = AF_INET;*/
 	
 	// vypis
 	cout << " byte1 - start : " << final1 << " end : " << end1 << endl;
@@ -502,8 +496,17 @@ int main(int argc, char *argv[]){
 		}
 	}
 
+	if(argumenty.wait > 0){
+			struct timeval timeout;
+			timeout.tv_sec = 0.001*atoi(argumenty.wait);
+    		timeout.tv_usec = 0;
+    		cout << timeout << endl;	
+	}
 
-	for(int x = 1 ; x <= 1; x++){
+	/*for(int x = 1 ; x <= 1; x++){
+		if(argumenty.wait > 0){
+
+		}
 		int portno = 22;
 		const char *hostname = "10.190.22.160";
 
@@ -515,6 +518,13 @@ int main(int argc, char *argv[]){
 		if(sockfd < 0 ){
 			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
+		}
+
+		if(argumenty.wait > 0){
+			struct timeval timeout;
+			timeout.tv_sec = 0.001*atoi(argumenty.wait);
+    		timeout.tv_usec = 0;
+    		cout << timeout << endl;	
 		}
 
 		server = gethostbyname(hostname);
@@ -539,7 +549,7 @@ int main(int argc, char *argv[]){
 
 		close(sockfd);
 
-	}
+	}*/
 
 	return 0;
 
