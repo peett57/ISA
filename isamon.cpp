@@ -500,7 +500,7 @@ int main(int argc, char *argv[]){
 	if(argumenty.wait > 0){
 			
 			timeout.tv_sec = argumenty.wait /1000;
-    		timeout.tv_usec = (argumenty.wait % 1000) * 1000	
+    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
 	}
 
 	for(int x = 1 ; x <= 1; x++){
