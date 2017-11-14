@@ -498,7 +498,7 @@ int main(int argc, char *argv[]){
 
 	if(argumenty.wait > 0){
 			struct timeval timeout;
-			timeout.tv_sec = 0.001*atoi(argumenty.wait);
+			timeout.tv_sec = 0.001*argumenty.wait;
     		timeout.tv_usec = 0;
     		cout << timeout.tv_sec << endl;	
 	}
