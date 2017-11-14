@@ -427,6 +427,33 @@ int main(int argc, char *argv[]){
 				for(int l = final4; l <= end4; l++){
 					//cout << "IP address: " << i << "." << j << "." << k << "." << l << endl; 
 					//vsetky ip adresy ktore mam prechadzat na danom networku 
+					convert << i;
+					str_ip_for_scan += convert.str();
+					convert.str("");
+
+					str_ip_for_scan += '.';
+
+					convert << j;
+					str_ip_for_scan += convert.str();
+					convert.str("");
+
+					str_ip_for_scan += '.';
+
+					convert << k;
+					str_ip_for_scan += convert.str();
+					convert.str("");
+
+					str_ip_for_scan += '.';
+
+					convert << l;
+					str_ip_for_scan += convert.str();
+					convert.str("");
+
+					const char * char_ip_for_scan = str_ip_for_scan.c_str();
+
+					cout << "IP address - char: " << char_ip_for_scan << endl;
+
+					
 				}
 			}
 		}
