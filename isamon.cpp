@@ -499,7 +499,7 @@ int main(int argc, char *argv[]){
 	struct timeval timeout;
 	if(argumenty.wait > 0){
 			if(argumenty.wait >= 1000){
-				timeout.tv_sec = 0.001*argumenty.wait;
+				timeout.tv_sec = argumenty.wait/1000;
     			timeout.tv_usec = 0;	
 			}
 			timeout.tv_sec = 0;
