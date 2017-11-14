@@ -410,6 +410,14 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
+
+	struct timeval timeout;
+	if(argumenty.wait > 0){
+			
+			timeout.tv_sec = argumenty.wait /1000;
+    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
+	}
+
 	stringstream convert;
 	string str_ip_for_scan;
 	const char * char_ip_for_scan;
@@ -446,9 +454,12 @@ int main(int argc, char *argv[]){
 
 					//cout << "IP address - char: " << char_ip_for_scan << endl;
 
-					/*for(int x = 1 ; x <= 1; x++){
-						int portno = 22;
-						const char *hostname = "10.190.22.160";
+					for(int x = 1 ; x <= 200; x++){
+						if(argumenty.wait > 0){
+
+						}
+						int portno = x;
+						const char *hostname = char_ip_for_scan;
 
 						int sockfd;
 						struct sockaddr_in serv_addr;
@@ -456,15 +467,25 @@ int main(int argc, char *argv[]){
 
 						sockfd = socket(AF_INET, SOCK_STREAM, 0);
 						if(sockfd < 0 ){
-							fprintf((stderr), "socket: %d.%d.%d.%d - %d\n" , i,j,k,l,x);
+							fprintf((stderr), "socket:  - %d\n" , x);
+							return 1;
+						}
+
+						if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+							fprintf((stderr), "setsockopt:  \n" );
+							return 1;
+						}
+						if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
 						}
 
 						server = gethostbyname(hostname);
 						if(server == NULL){
-							fprintf((stderr), "gethostbyname: %d.%d.%d.%d - %d\n" , i,j,k,l,x);
+							fprintf((stderr), "gethostbyname:  \n" );
 							return 1;
 						}
+						//cout << server << endl;
 
 						bzero((char *) &serv_addr, sizeof(serv_addr));
 						serv_addr.sin_family = AF_INET;
@@ -473,13 +494,15 @@ int main(int argc, char *argv[]){
 
 						serv_addr.sin_port = htons(portno);
 
-						if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) >= 0){
+						if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){
+							;
+						}else{
 							cout << char_ip_for_scan << " TCP " << portno << endl;
 						}
 
 						close(sockfd);
 
-					}*/
+					}
 
 
 
@@ -496,19 +519,14 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	struct timeval timeout;
-	if(argumenty.wait > 0){
-			
-			timeout.tv_sec = argumenty.wait /1000;
-    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
-	}
+	
 
-	for(int x = 1 ; x <= 200; x++){
+	/*for(int x = 1 ; x <= 200; x++){
 		if(argumenty.wait > 0){
 
 		}
 		int portno = x;
-		const char *hostname = "10.190.23.178/22";
+		const char *hostname = "10.190.23.178";
 
 		int sockfd;
 		struct sockaddr_in serv_addr;
@@ -551,7 +569,7 @@ int main(int argc, char *argv[]){
 
 		close(sockfd);
 
-	}
+	}*/
 
 	return 0;
 
