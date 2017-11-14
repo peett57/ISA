@@ -473,7 +473,7 @@ int main(int argc, char *argv[]){
 
 	
 
-	for(int x = 1 ; x <= 65535; x++){
+	for(int x = 1 ; x <= 200; x++){
 		if(argumenty.wait > 0){
 
 		}
