@@ -495,9 +495,10 @@ int main(int argc, char *argv[]){
 			}
 		}
 	}
-
+	
+	struct timeval timeout;
 	if(argumenty.wait > 0){
-			struct timeval timeout;
+			
 			timeout.tv_sec = 0;
     		timeout.tv_usec = 1000*argumenty.wait;	
 	}
