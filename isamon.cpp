@@ -408,7 +408,7 @@ int main(int argc, char *argv[]){
 
 	sin.sin_family = AF_INET;*/
 	
-
+	// vypis
 	cout << " byte1 - start : " << final1 << " end : " << end1 << endl;
 	cout << " byte1 - start : " << final2 << " end : " << end2 << endl;
 	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
