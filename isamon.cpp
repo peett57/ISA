@@ -329,6 +329,7 @@ int main(int argc, char *argv[]){
 
 	if(mask_byte == 1){
 		final1 = byte1 & maska_na_cislo;
+		end1 = byte1 | (255 - maska_na_cislo);
 		final2 = 0;
 		final3 = 0;
 		final4 = 0;
@@ -339,6 +340,7 @@ int main(int argc, char *argv[]){
 	}
 	if(mask_byte == 2){
 		final2 = byte2 & maska_na_cislo;
+		end2 = byte2 | (255 - maska_na_cislo);
 		final3 = 0;
 		final4 = 0;
 
@@ -347,6 +349,7 @@ int main(int argc, char *argv[]){
 	}
 	if(mask_byte == 3){
 		final3 = byte3 & maska_na_cislo;
+		end3 = byte4 | (255 - maska_na_cislo);
 		final4 = 0;
 
 		end4=255;
