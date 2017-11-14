@@ -277,9 +277,6 @@ int main(int argc, char *argv[]){
 	cout << "2  " << byte2 << endl;
 	cout << "3  " << byte3 << endl;
 	cout << "4  " << byte4 << endl;
-	
-
-	
 
 	int final1=byte1;
 	int final2=byte2;
@@ -329,7 +326,6 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	cout << "maska na cislo " << maska_na_cislo << endl;
 
 	if(mask_byte == 1){
 		final1 = byte1 & maska_na_cislo;
@@ -398,15 +394,10 @@ int main(int argc, char *argv[]){
 
 	cout << "final  " << final_network << endl;
 
-	//final - 
-
-
 	//vysledna adresa siete v ktorej sa budu skumat ip adresy
 	const char * network_address = final_network.c_str();
 	
 	cout << "final network char *  " << network_address << endl;
-
-	
 
 	/*sd = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
 	if(sd < 0){
@@ -423,7 +414,7 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
 
-	string str_ip_for_scan;
+	/*string str_ip_for_scan;
 	const char * char_ip_for_scan;
 	for(int i = final1 ; i <= end1 ; i++){
 		for(int j = final2; j <= end2; j++){
@@ -471,7 +462,7 @@ int main(int argc, char *argv[]){
 				}
 			}
 		}
-	}
+	}*/
 
 	return 0;
 
