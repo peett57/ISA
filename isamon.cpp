@@ -530,7 +530,9 @@ int main(int argc, char *argv[]){
 
 		serv_addr.sin_port = htons(portno);
 
-		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) >= 0){
+		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){
+			cout <<  " not connected "  << endl;
+		}else{
 			cout << char_ip_for_scan << " TCP " << portno << endl;
 		}
 
