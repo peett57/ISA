@@ -286,6 +286,11 @@ int main(int argc, char *argv[]){
 	int final3=byte3;
 	int final4=byte4;
 
+	int end1=byte1;
+	int end2=byte2;
+	int end3=byte3;
+	int end4=byte4;
+
 
 	int maska_na_cislo;
 	int mask_help = mask_int;
@@ -328,15 +333,24 @@ int main(int argc, char *argv[]){
 		final2 = 0;
 		final3 = 0;
 		final4 = 0;
+
+		end2=255;
+		end3=255;
+		end4=255;
 	}
 	if(mask_byte == 2){
 		final2 = byte2 - maska_na_cislo;
 		final3 = 0;
 		final4 = 0;
+
+		end3=255;
+		end4=255;
 	}
 	if(mask_byte == 3){
 		final3 = byte3 - maska_na_cislo;
 		final4 = 0;
+
+		end4=255;
 	}
 	if(mask_byte == 4){
 		final4 = byte4 - maska_na_cislo;
@@ -376,15 +390,29 @@ int main(int argc, char *argv[]){
 
 	cout << "final  " << final_network << endl;
 
+	//final - 
+
+
+	//vysledna adresa siete v ktorej sa budu skumat ip adresy
 	const char * network_address = final_network.c_str();
 	
 	cout << "final network char *  " << network_address << endl;
 
 	
 
+	/*sd = socket(AF_INET, SOCK_RAW, IPPROTO_RAW);
+	if(sd < 0){
+		fprintf((stderr), "socket()\n");
+		return 1;
+	}
 
+	sin.sin_family = AF_INET;*/
+	
 
-
+	cout << " byte1 - start : " << final1 << " end : " << end1 << endl;
+	cout << " byte1 - start : " << final2 << " end : " << end2 << endl;
+	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
+	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
 
 
