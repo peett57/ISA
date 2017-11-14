@@ -499,11 +499,10 @@ int main(int argc, char *argv[]){
 	if(argumenty.wait > 0){
 			struct timeval timeout;
 			timeout.tv_sec = 0;
-    		timeout.tv_usec = 1000*argumenty.wait;
-    		cout << timeout.tv_usec << endl;	
+    		timeout.tv_usec = 1000*argumenty.wait;	
 	}
 
-	/*for(int x = 1 ; x <= 1; x++){
+	for(int x = 1 ; x <= 1; x++){
 		if(argumenty.wait > 0){
 
 		}
@@ -520,16 +519,14 @@ int main(int argc, char *argv[]){
 			return 1;
 		}
 
-		if(argumenty.wait > 0){
-			struct timeval timeout;
-			timeout.tv_sec = 0.001*atoi(argumenty.wait);
-    		timeout.tv_usec = 0;
-    		cout << timeout << endl;	
+		if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+			fprintf((stderr), "setsockopt:  \n" );
+			return 1;
 		}
 
 		server = gethostbyname(hostname);
 		if(server == NULL){
-			fprintf((stderr), "gethostbyname:  - %d\n" , x);
+			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
 		cout << server << endl;
@@ -549,7 +546,7 @@ int main(int argc, char *argv[]){
 
 		close(sockfd);
 
-	}*/
+	}
 
 	return 0;
 
