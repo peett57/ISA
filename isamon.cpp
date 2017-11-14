@@ -534,7 +534,7 @@ int main(int argc, char *argv[]){
 			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
-		cout << server << endl;
+		//cout << server << endl;
 
 		bzero((char *) &serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
@@ -544,7 +544,7 @@ int main(int argc, char *argv[]){
 		serv_addr.sin_port = htons(portno);
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){
-			cout <<  " not connected " << x << endl;
+			;
 		}else{
 			cout << char_ip_for_scan << " TCP " << portno << endl;
 		}
