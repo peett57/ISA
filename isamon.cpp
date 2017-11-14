@@ -505,7 +505,7 @@ int main(int argc, char *argv[]){
 
 	for(int x = 1 ; x <= 1; x++){
 		int portno = 22;
-		const char *hostname = "10.190.22.160";
+		const char *hostname = "10.190.23.178";
 
 		int sockfd;
 		struct sockaddr_in serv_addr;
