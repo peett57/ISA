@@ -355,6 +355,8 @@ int main(int argc, char *argv[]){
 	}
 	if(mask_byte == 4){
 		final4 = byte4 - maska_na_cislo;
+
+		end4=255;
 	}
 
 
