@@ -503,11 +503,11 @@ int main(int argc, char *argv[]){
     		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
 	}
 
-	for(int x = 1 ; x <= 1; x++){
+	for(int x = 1 ; x <= 200; x++){
 		if(argumenty.wait > 0){
 
 		}
-		int portno = 22;
+		int portno = x;
 		const char *hostname = "10.190.22.160";
 
 		int sockfd;
@@ -544,7 +544,7 @@ int main(int argc, char *argv[]){
 		serv_addr.sin_port = htons(portno);
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){
-			cout <<  " not connected "  << endl;
+			cout <<  " not connected " << x << endl;
 		}else{
 			cout << char_ip_for_scan << " TCP " << portno << endl;
 		}
