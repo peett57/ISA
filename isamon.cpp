@@ -329,6 +329,8 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
+	cout << "maska na cislo " << maska_na_cislo << endl;
+
 	if(mask_byte == 1){
 		final1 = byte1 & maska_na_cislo;
 		final2 = 0;
