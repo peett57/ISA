@@ -513,13 +513,13 @@ int main(int argc, char *argv[]){
 
 		sockfd = socket(AF_INET, SOCK_STREAM, 0);
 		if(sockfd < 0 ){
-			fprintf((stderr), "socket: %d.%d.%d.%d - %d\n" , i,j,k,l,x);
+			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
 		}
 
 		server = gethostbyname(hostname);
 		if(server == NULL){
-			fprintf((stderr), "gethostbyname: %d.%d.%d.%d - %d\n" , i,j,k,l,x);
+			fprintf((stderr), "gethostbyname:  - %d\n" , x);
 			return 1;
 		}
 
