@@ -316,14 +316,14 @@ int main(int argc, char *argv[]){
 	}
 
 	//zistenie networku podla masky
-	if(mask_help == 8 ){maska_na_cislo = 1;}
-	else if(mask_help == 7 ){maska_na_cislo = 3;}
-	else if(mask_help == 6 ){maska_na_cislo = 7;}
-	else if(mask_help == 5 ){maska_na_cislo = 15;}
-	else if(mask_help == 4 ){maska_na_cislo = 31;}
-	else if(mask_help == 3 ){maska_na_cislo = 63;}
-	else if(mask_help == 2 ){maska_na_cislo = 127;}
-	else if(mask_help == 1 ){maska_na_cislo = 255;}
+	if(mask_help == 8 ){maska_na_cislo = 255;}
+	else if(mask_help == 7 ){maska_na_cislo = 254;}
+	else if(mask_help == 6 ){maska_na_cislo = 252;}
+	else if(mask_help == 5 ){maska_na_cislo = 248;}
+	else if(mask_help == 4 ){maska_na_cislo = 240;}
+	else if(mask_help == 3 ){maska_na_cislo = 224;}
+	else if(mask_help == 2 ){maska_na_cislo = 192;}
+	else if(mask_help == 1 ){maska_na_cislo = 128;}
 	else{
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
