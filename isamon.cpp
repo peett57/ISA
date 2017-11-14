@@ -349,7 +349,7 @@ int main(int argc, char *argv[]){
 	}
 	if(mask_byte == 3){
 		final3 = byte3 & maska_na_cislo;
-		end3 = byte4 | (255 - maska_na_cislo);
+		end3 = byte3 | (255 - maska_na_cislo);
 		final4 = 0;
 
 		end4=255;
@@ -417,7 +417,7 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
 
-	/*string str_ip_for_scan;
+	string str_ip_for_scan;
 	const char * char_ip_for_scan;
 	for(int i = final1 ; i <= end1 ; i++){
 		for(int j = final2; j <= end2; j++){
@@ -465,7 +465,7 @@ int main(int argc, char *argv[]){
 				}
 			}
 		}
-	}*/
+	}
 
 	return 0;
 
