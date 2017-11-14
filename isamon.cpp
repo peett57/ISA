@@ -421,6 +421,7 @@ int main(int argc, char *argv[]){
 
 
 	string str_ip_for_scan;
+	const char * char_ip_for_scan;
 	for(int i = final1 ; i <= end1 ; i++){
 		for(int j = final2; j <= end2; j++){
 			for(int k = final3; k <= end3; k++){
@@ -449,11 +450,16 @@ int main(int argc, char *argv[]){
 					str_ip_for_scan += convert.str();
 					convert.str("");
 
-					const char * char_ip_for_scan = str_ip_for_scan.c_str();
+					//
+					char_ip_for_scan = str_ip_for_scan.c_str();
 
 					cout << "IP address - char: " << char_ip_for_scan << endl;
 
 
+
+
+
+					//vymazanie a priprava na dalsiu IP
 					str_ip_for_scan = "";
 					char_ip_for_scan = str_ip_for_scan.c_str();
 
