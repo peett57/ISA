@@ -522,6 +522,7 @@ int main(int argc, char *argv[]){
 			fprintf((stderr), "gethostbyname:  - %d\n" , x);
 			return 1;
 		}
+		cout << server << endl;
 
 		bzero((char *) &serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
