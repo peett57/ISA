@@ -452,9 +452,9 @@ int main(int argc, char *argv[]){
 
 					//cout << "IP address - char: " << char_ip_for_scan << endl;
 
-					for(int x = 1 ; x <= 200){
-						portno = x;
-						char *hostname = char_ip_for_scan;
+					for(int x = 1 ; x <= 200; x++){
+						int portno = x;
+						const char *hostname = char_ip_for_scan;
 
 						int sockfd;
 						struct sockaddr_in serv_addr;
