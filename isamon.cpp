@@ -473,7 +473,7 @@ int main(int argc, char *argv[]){
 
 	
 
-	for(int x = 1 ; x <= 200; x++){
+	for(int x = 1 ; x <= 65535; x++){
 		if(argumenty.wait > 0){
 
 		}
@@ -516,7 +516,7 @@ int main(int argc, char *argv[]){
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){
 			;
 		}else{
-			cout << char_ip_for_scan << " TCP " << portno << endl;
+			cout << " TCP " << portno << endl;
 		}
 
 		close(sockfd);
