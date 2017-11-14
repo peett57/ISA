@@ -416,6 +416,16 @@ int main(int argc, char *argv[]){
 
 
 
+	for(int i == final1 ; i <= end1 ; i++){
+		for(int j == final2; j <= end2; j++){
+			for(int k == final3; k <= end3; k++){
+				for(int l == final4; l <= end4; l++){
+					cout << "IP address: " << i << "." << j << "." << k << "." << l << endl; 
+				}
+			}
+		}
+	}
+
 	return 0;
 
 	
