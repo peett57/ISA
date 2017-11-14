@@ -50,7 +50,7 @@ int je_to_cislo(char *s){
 	return 1;
 }
 
-//dsadasdasdasd
+//struktura pre argumenty
 typedef struct{
 	bool u;
 	bool t;
@@ -61,7 +61,7 @@ typedef struct{
 	long int wait;
 }Arguments;
 
-
+//funkcia na kontrolu validity argumentov
 int arguments(int argc, char *argv[], Arguments *arguments){
 	if((argc == 2) && ((!strcmp(argv[1], "-h")) || (!strcmp(argv[1], "--help")))){
 		arguments->help = true;
@@ -315,6 +315,7 @@ int main(int argc, char *argv[]){
 		mask_help = mask_help - 24;
 	}
 
+	//zistenie networku podla masky
 	if(mask_help == 1 ){maska_na_cislo = 127;}
 	else if(mask_help == 2 ){maska_na_cislo = 63;}
 	else if(mask_help == 3 ){maska_na_cislo = 31;}
@@ -366,27 +367,31 @@ int main(int argc, char *argv[]){
 
 	string final_network;
 
-	stringstream convert1;
-	convert1 << final1;
-	final_network += convert1.str();
+	stringstream convert;
+	convert << final1;
+	final_network += convert.str();
+	convert.str("");
 
 	final_network += '.';
 
-	stringstream convert2;
-	convert2 << final2;
-	final_network += convert2.str();
+	
+	convert << final2;
+	final_network += convert.str();
+	convert.str("");
 
 	final_network += '.';
 
-	stringstream convert3;
-	convert3 << final3;
-	final_network += convert3.str();
+	
+	convert << final3;
+	final_network += convert.str();
+	convert.str("");
 
 	final_network += '.';
 
-	stringstream convert4;
-	convert4 << final4;
-	final_network += convert4.str();
+	
+	convert << final4;
+	final_network += convert.str();
+	convert.str("");
 
 	cout << "final  " << final_network << endl;
 
@@ -415,12 +420,13 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
 
-
+	string str_ip_for_scan;
 	for(int i = final1 ; i <= end1 ; i++){
 		for(int j = final2; j <= end2; j++){
 			for(int k = final3; k <= end3; k++){
 				for(int l = final4; l <= end4; l++){
-					cout << "IP address: " << i << "." << j << "." << k << "." << l << endl; 
+					//cout << "IP address: " << i << "." << j << "." << k << "." << l << endl; 
+					//vsetky ip adresy ktore mam prechadzat na danom networku 
 				}
 			}
 		}
