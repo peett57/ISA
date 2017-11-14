@@ -316,21 +316,21 @@ int main(int argc, char *argv[]){
 	}
 
 	//zistenie networku podla masky
-	if(mask_help == 1 ){maska_na_cislo = 127;}
-	else if(mask_help == 2 ){maska_na_cislo = 63;}
-	else if(mask_help == 3 ){maska_na_cislo = 31;}
+	if(mask_help == 1 ){maska_na_cislo = 1;}
+	else if(mask_help == 2 ){maska_na_cislo = 3;}
+	else if(mask_help == 3 ){maska_na_cislo = 7;}
 	else if(mask_help == 4 ){maska_na_cislo = 15;}
-	else if(mask_help == 5 ){maska_na_cislo = 7;}
-	else if(mask_help == 6 ){maska_na_cislo = 3;}
-	else if(mask_help == 7 ){maska_na_cislo = 1;}
-	else if(mask_help == 8 ){maska_na_cislo = 0;}
+	else if(mask_help == 5 ){maska_na_cislo = 31;}
+	else if(mask_help == 6 ){maska_na_cislo = 63;}
+	else if(mask_help == 7 ){maska_na_cislo = 127;}
+	else if(mask_help == 8 ){maska_na_cislo = 255;}
 	else{
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
 
 	if(mask_byte == 1){
-		final1 = byte1 - maska_na_cislo;
+		final1 = byte1 & maska_na_cislo;
 		final2 = 0;
 		final3 = 0;
 		final4 = 0;
@@ -340,7 +340,7 @@ int main(int argc, char *argv[]){
 		end4=255;
 	}
 	if(mask_byte == 2){
-		final2 = byte2 - maska_na_cislo;
+		final2 = byte2 & maska_na_cislo;
 		final3 = 0;
 		final4 = 0;
 
@@ -348,13 +348,13 @@ int main(int argc, char *argv[]){
 		end4=255;
 	}
 	if(mask_byte == 3){
-		final3 = byte3 - maska_na_cislo;
+		final3 = byte3 & maska_na_cislo;
 		final4 = 0;
 
 		end4=255;
 	}
 	if(mask_byte == 4){
-		final4 = byte4 - maska_na_cislo;
+		final4 = byte4 & maska_na_cislo;
 	}
 
 
