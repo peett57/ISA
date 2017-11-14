@@ -410,7 +410,7 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
-
+	stringstream convert;
 	string str_ip_for_scan;
 	const char * char_ip_for_scan;
 	for(int i = final1 ; i <= end1 ; i++){
@@ -500,7 +500,7 @@ int main(int argc, char *argv[]){
 			struct timeval timeout;
 			timeout.tv_sec = 0.001*atoi(argumenty.wait);
     		timeout.tv_usec = 0;
-    		cout << timeout << endl;	
+    		cout << timeout.tv_sec << endl;	
 	}
 
 	/*for(int x = 1 ; x <= 1; x++){
