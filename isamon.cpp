@@ -495,7 +495,7 @@ int main(int argc, char *argv[]){
 			}
 		}
 	}
-	
+
 	struct timeval timeout;
 	if(argumenty.wait > 0){
 			
@@ -521,6 +521,10 @@ int main(int argc, char *argv[]){
 		}
 
 		if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+			fprintf((stderr), "setsockopt:  \n" );
+			return 1;
+		}
+		if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 			fprintf((stderr), "setsockopt:  \n" );
 			return 1;
 		}
