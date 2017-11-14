@@ -450,7 +450,41 @@ int main(int argc, char *argv[]){
 					//
 					char_ip_for_scan = str_ip_for_scan.c_str();
 
-					cout << "IP address - char: " << char_ip_for_scan << endl;
+					//cout << "IP address - char: " << char_ip_for_scan << endl;
+
+					for(int x = 1 ; x <= 200){
+						portno = x;
+						char *hostname = char_ip_for_scan;
+
+						int sockfd;
+						struct sockaddr_in serv_addr;
+						struct hostent *server;
+
+						sockfd = socket(AF_INET, SOCK_STREAM, 0);
+						if(sockfd < 0 ){
+							fprintf((stderr), "socket: %d.%d.%d.%d - %d\n" , i,j,k,l,x);
+							return 1;
+						}
+
+						server = gethostbyname(hostname);
+						if(server == NULL){
+							fprintf((stderr), "gethostbyname: %d.%d.%d.%d - %d\n" , i,j,k,l,x);
+							return 1;
+						}
+
+						bzero((char *) &serv_addr, sizeof(serv_addr));
+						serv_addr.sin_family = AF_INET;
+						bcopy((char * )&serv_addr.sin_addr.s_addr, server->h_length);
+
+						serv_addr.sin_port = htons(portno);
+
+						if(connect(sockfd, (scruct sockaddr *) &serv_addr, sizeof(serv_addr)) >= 0){
+							fprintf(stdout, "%s TCP %d \n", str_ip_for_scan , portno);
+						}
+
+						close(sockfd);
+
+					}
 
 
 
