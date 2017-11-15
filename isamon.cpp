@@ -503,7 +503,7 @@ int main(int argc, char *argv[]){
 		}
 		int portno = x;
 		const char *hostname = "10.190.22.160";
-		const char *protocol = "tcp"
+		const char *protocol = "tcp";
 
 		int sockfd;
 		struct sockaddr_in serv_addr;
