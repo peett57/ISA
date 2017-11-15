@@ -560,9 +560,9 @@ int main(int argc, char *argv[]){
 			cout << "TCP " << x << endl;
 			
 		}
-		else{
+		/*else{
 			cout << "TCP no here " << x << endl;
-		}
+		}*/
 			
 		
 
