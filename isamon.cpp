@@ -513,9 +513,7 @@ int main(int argc, char *argv[]){
 	}
 
 	for(int x = port_start ; x <= port_end; x++){
-		if(argumenty.wait > 0){
-
-		}
+		
 		int portno = x;
 		const char *hostname = "10.190.22.160";
 		const char *protocol = "tcp";
