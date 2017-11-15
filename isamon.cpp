@@ -532,12 +532,12 @@ int main(int argc, char *argv[]){
 
 		bzero(&serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
-		serv_addr.sin_addr = *((struct in_addr *)server->h_addr)
+		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
 
 		serv_addr.sin_port = htons(portno);
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
-			serv_port = gerservbyport(htons(x), protoc[1]);
+			serv_port = getservbyport(htons(x), 'tcp');
 			if(serv_port != NULL){
 				cout << "TCP " << serv_port->s_name << endl;
 			}
