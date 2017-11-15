@@ -505,7 +505,7 @@ int main(int argc, char *argv[]){
 	//http://www.matveev.se/cpp/portscaner.htm
 
 	int port_start = 1;
-	int port_end = 22;
+	int port_end = 200;
 
 	if(argumenty.port != 0){
 		port_start = argumenty.port;
@@ -529,14 +529,15 @@ int main(int argc, char *argv[]){
 			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
 		}
-
-		if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
-			fprintf((stderr), "setsockopt:  \n" );
-			return 1;
-		}
-		if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
-			fprintf((stderr), "setsockopt:  \n" );
-			return 1;
+		if(argumenty.wait > 0){
+			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+				fprintf((stderr), "setsockopt:  \n" );
+				return 1;
+			}
+			if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+				fprintf((stderr), "setsockopt:  \n" );
+				return 1;
+			}
 		}
 
 		server = gethostbyname(hostname);
@@ -552,6 +553,8 @@ int main(int argc, char *argv[]){
 
 		serv_addr.sin_port = htons(portno);
 
+
+
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
 			/*struct servent *srvport = getservbyport(htons(x), protocol);
 			if(srvport != NULL){
@@ -561,7 +564,7 @@ int main(int argc, char *argv[]){
 			
 		}
 		
-		//cout << "here " << x << endl;
+		
 			
 		
 
