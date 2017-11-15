@@ -540,7 +540,7 @@ int main(int argc, char *argv[]){
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
 			struct servent *srvport = getservbyport(htons(x), protocol);
 			if(srvport != NULL){
-				cout << "TCP " << srvport->s_name << endl;
+				cout << "TCP " << srvport->s_port << endl;
 			}
 			
 		}
