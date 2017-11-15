@@ -159,6 +159,9 @@ int main(int argc, char *argv[]){
 	argumenty.interface = 0;
 	argumenty.network = 0;
 
+	/*int port_start = 1;
+	int port_end = 200;*/
+
 
 	//arguments
 	if(arguments(argc,argv, &argumenty)){
@@ -171,6 +174,10 @@ int main(int argc, char *argv[]){
 		printhelp();
 		return 0;
 	}
+
+	/*if(argumenty.port != 0){
+
+	}*/
 
 	//argument network nezadany
 	if(argumenty.network == 0){
@@ -497,7 +504,15 @@ int main(int argc, char *argv[]){
 
 	//http://www.matveev.se/cpp/portscaner.htm
 
-	for(int x = 1 ; x <= 200; x++){
+	int port_start = 1;
+	int port_end = 200;
+
+	if(argumenty.port != 0){
+		port_start = argumenty.port;
+		port_end = argumenty.port;
+	}
+
+	for(int x = port_start ; x <= port_end; x++){
 		if(argumenty.wait > 0){
 
 		}
