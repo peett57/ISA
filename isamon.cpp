@@ -503,6 +503,7 @@ int main(int argc, char *argv[]){
 		}
 		int portno = x;
 		const char *hostname = "10.190.22.160";
+		const char *protocol = "tcp"
 
 		int sockfd;
 		struct sockaddr_in serv_addr;
@@ -537,9 +538,9 @@ int main(int argc, char *argv[]){
 		serv_addr.sin_port = htons(portno);
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
-			serv_port = getservbyport(htons(x), 'tcp');
-			if(serv_port != NULL){
-				cout << "TCP " << serv_port->s_name << endl;
+			srvport = getservbyport(htons(x), protocol);
+			if(srvport != NULL){
+				cout << "TCP " << srvport->s_name << endl;
 			}
 			
 		}
