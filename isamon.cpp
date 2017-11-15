@@ -20,10 +20,34 @@
 #include <ctype.h>
 #include <sys/time.h>
 
+#include <netinet/ip.h> 
+#include <sys/ioctl.h>  
+#include <bits/ioctls.h>  
+#include <net/if.h> 
+#include <linux/if_ether.h>
+#include <linux/if_packet.h>
+#include <net/ethernet.h>
+
 
 
 
 using namespace std;
+
+
+// struktura pre arp hlavicku
+typedef struct _arp_hdr arp_hdr;
+struct _arp_hdr {
+  uint16_t htype;
+  uint16_t ptype;
+  uint8_t hlen;
+  uint8_t plen;
+  uint16_t opcode;
+  uint8_t sender_mac[6];
+  uint8_t sender_ip[4];
+  uint8_t target_mac[6];
+  uint8_t target_ip[4];
+};
+
 
 //help	
 void printhelp(){
@@ -471,14 +495,14 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	
+	//http://www.matveev.se/cpp/portscaner.htm
 
 	for(int x = 1 ; x <= 200; x++){
 		if(argumenty.wait > 0){
 
 		}
 		int portno = x;
-		const char *hostname = "10.190.23.178";
+		const char *hostname = "10.190.22.160";
 
 		int sockfd;
 		struct sockaddr_in serv_addr;
@@ -504,24 +528,29 @@ int main(int argc, char *argv[]){
 			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
-		//cout << server << endl;
+		
 
-		bzero((char *) &serv_addr, sizeof(serv_addr));
+		bzero(&serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
-		bcopy((char * )&server->h_addr,
-			(char *)&serv_addr.sin_addr.s_addr, server->h_length);
+		serv_addr.sin_addr = *((struct in_addr *)server->h_addr)
 
 		serv_addr.sin_port = htons(portno);
 
-		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0){
-			;
-		}else{
-			cout << " TCP " << portno << endl;
+		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
+			serv_port = gerservbyport(htons(x), protoc[1]);
+			if(serv_port != NULL){
+				cout << "TCP " << serv_port->s_name << endl;
+			}
+			
 		}
+			
+		
 
 		close(sockfd);
 
 	}
+
+	
 
 	return 0;
 
