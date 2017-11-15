@@ -505,7 +505,7 @@ int main(int argc, char *argv[]){
 	//http://www.matveev.se/cpp/portscaner.htm
 
 	int port_start = 1;
-	int port_end = 200;
+	int port_end = 22;
 
 	if(argumenty.port != 0){
 		port_start = argumenty.port;
