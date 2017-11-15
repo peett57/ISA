@@ -564,6 +564,7 @@ int main(int argc, char *argv[]){
 			//cout << "TCP no here " << x << endl;
 			;
 		}
+		cout << "here " << x << endl;
 			
 		
 
