@@ -575,7 +575,7 @@ int main(int argc, char *argv[]){
 
 			        // vytvorenie raw socketu na request
 			        if ((sd = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0) {
-					    fprintf((stderr), "socket:  \n" );
+					    fprintf((stderr), "socket:  %d.%d.%d.%d\n", i,j,k,l );
 						return 1;
 					}
 
@@ -596,7 +596,7 @@ int main(int argc, char *argv[]){
 					ret = sendto(sd, buffer, 42, 0, (struct  sockaddr*)&socket_address, sizeof(socket_address));
 			        if (ret == -1)
 			        {
-			            fprintf((stderr), "sendto:  \n" );
+			            fprintf((stderr), "sendto:  %d.%d.%d.%d\n", i,j,k,l );
 						return 1;
 			        }
 
@@ -606,7 +606,7 @@ int main(int argc, char *argv[]){
 			       	while(1){
 			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 		                if (length == -1){
-		                    fprintf((stderr), "receive:  \n" );
+		                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 							return 1;
 		                }
 		                if(htons(rcv_resp->h_proto) == PROTO_ARP){
