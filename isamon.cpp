@@ -543,12 +543,14 @@ int main(int argc, char *argv[]){
 			return 1;
 		}
 		
+		char *test = gethostbyaddr(server);
+		cout << x <<" test " << test << endl;
 
 		bzero(&serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
 
-		cout << x << " server " << server->h_name << endl; 
+
 
 		serv_addr.sin_port = htons(portno);
 
