@@ -31,6 +31,8 @@
 #include <asm/types.h>
 #include <math.h>
 
+#include <fcntl.h>
+
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
@@ -583,8 +585,8 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 
-					
-					if(argumenty.wait > 0){
+
+					/*if(argumenty.wait > 0){
 						if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
@@ -593,7 +595,20 @@ int main(int argc, char *argv[]){
 							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
 						}
+					}*/
+
+					if((long arg = fcntl(sd, F_GETFL, NULL)) < 0){
+						fprintf((stderr), "fcntl 1:  %d.%d.%d.%d\n", i,j,k,l );
+						return 1;
 					}
+					arg |= O_NONBLOCK;
+					if(fcntl(sd, F_SETFL, arg) < 0){
+						fprintf((stderr), "fcntl 2:  %d.%d.%d.%d\n", i,j,k,l );
+						return 1;
+					}
+
+
+
 
 					buffer[32] = 0x00;
 
@@ -609,6 +624,8 @@ int main(int argc, char *argv[]){
 
 			       	//prijatie odpovedi
 			       	while(1){
+			       		
+
 			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
 			       		
