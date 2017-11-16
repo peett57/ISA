@@ -610,15 +610,14 @@ int main(int argc, char *argv[]){
 			       	while(1){
 			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
-			       		if (length == 0){
-		                    break;
-		                }
+			       		
 
 		                if (length == -1){
 		                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 							return 1;
 		                }
 		                if(htons(rcv_resp->h_proto) == PROTO_ARP){
+		                	cout << "length " << length << endl;
 		                	if(arp_resp->sender_ip[0] == i){
 		                		if(arp_resp->sender_ip[1] == j){
 		                			if(arp_resp->sender_ip[2] == k){
