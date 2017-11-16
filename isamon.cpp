@@ -122,7 +122,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			arguments->u = true;
 		}
 		else if(!strcmp(argv[i], "-w")){
-			if((je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0 || argc == i +1){
+			if(argc == i +1 || (je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0  ){
 				return EXIT_FAILURE;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
