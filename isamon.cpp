@@ -511,7 +511,10 @@ int main(int argc, char *argv[]){
 	for(int x = port_start ; x <= port_end; x++){
 		
 		int portno = x;
-		const char *hostname = "10.190.22.160";
+		//const char *hostname = "10.190.22.160";
+
+		// ip_char je ip adresa z masky
+		const char *hostname = ip_char;
 		const char *protocol = "tcp";
 
 		int sockfd;
