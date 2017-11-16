@@ -46,7 +46,7 @@ int main()
         int sd;
         unsigned char buffer[BUF_SIZE];
         unsigned char source_ip[4] = {10,190,23,178};
-        unsigned char target_ip[4] = {10,190,20,0};
+        unsigned char target_ip[4] = {10,190,23,178};
         struct ifreq ifr;
         struct ethhdr *send_req = (struct ethhdr *)buffer;
         struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
