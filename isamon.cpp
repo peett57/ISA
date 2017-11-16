@@ -498,6 +498,23 @@ int main(int argc, char *argv[]){
 		}
 	}
 
+
+	struct hostent *he;
+	struct in_addr **addr_list;
+	
+	if((he = gethostbyname("localhost")) == NULL){
+		fprintf((stderr), "gethostbyname:  \n" );
+		return 1;
+	}
+
+	string test;
+	addr_list = (struct in_addr **) he->h_addr_list;
+	for(int i = 0; addr_list[i] != NULL; i++){
+		test = inet_ntoa(*addr_list[i]);
+	}
+	cout << "test :" << test << endl;
+
+
 	//http://www.matveev.se/cpp/portscaner.htm
 
 	int port_start = 1;
