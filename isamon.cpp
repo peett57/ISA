@@ -613,6 +613,8 @@ int main(int argc, char *argv[]){
 		                	cout << char_ip_for_scan << endl;
 		                }
 
+		                break;
+
 			       	}
 
 
