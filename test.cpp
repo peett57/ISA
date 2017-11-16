@@ -46,7 +46,7 @@ int main()
         int sd;
         unsigned char buffer[BUF_SIZE];
         unsigned char source_ip[4] = {10,190,23,178};
-        unsigned char target_ip[4] = {10,190,22,160};
+        unsigned char target_ip[4] = {10,190,20,0};
         struct ifreq ifr;
         struct ethhdr *send_req = (struct ethhdr *)buffer;
         struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
@@ -62,7 +62,7 @@ memset(buffer,0x00,60);
                 perror("socket():");
                 exit(1);
         }
-        strcpy(ifr.ifr_name,"eth0");
+        strcpy(ifr.ifr_name,"eth1");
     /*retrieve ethernet interface index*/
     if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
         perror("SIOCGIFINDEX");
