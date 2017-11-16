@@ -565,7 +565,7 @@ int main(int argc, char *argv[]){
 			        arp_req->hardware_len = MAC_LENGTH;
 			        arp_req->protocol_len =IPV4_LENGTH;
 			        arp_req->opcode = htons(ARP_REQUEST);
-			        for(index=0;index<5;index++)
+			        for(int index=0;index<5;index++)
 			        {
 			                arp_req->sender_ip[index]=(unsigned char)source_ip[index];
 			                arp_req->target_ip[index]=(unsigned char)target_ip[index];
