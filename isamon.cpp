@@ -122,7 +122,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			arguments->u = true;
 		}
 		else if(!strcmp(argv[i], "-w")){
-			if((je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0){
+			if((je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0 || argc == i +1){
 				return EXIT_FAILURE;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
@@ -548,7 +548,7 @@ int main(int argc, char *argv[]){
 		serv_addr.sin_family = AF_INET;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
 
-		
+
 
 		serv_addr.sin_port = htons(portno);
 
