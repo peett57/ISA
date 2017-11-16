@@ -100,7 +100,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	char *pEnd;
 	for(int i = 1; i < argc; i++){
 		if(!strcmp(argv[i], "-p")){
-			if((je_to_cislo(argv[i+1]) == 0) || arguments->port != 0){
+			if(argc == i +1 || (je_to_cislo(argv[i+1]) == 0) || arguments->port != 0){
 				return EXIT_FAILURE;
 			}
 			arguments->port = strtol(argv[i+1],&pEnd, 10);
@@ -129,13 +129,13 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			i++;
 		}
 		else if(!strcmp(argv[i], "-i")){
-			if(arguments->interface != 0){
+			if(argc == i +1 || arguments->interface != 0){
 				return EXIT_FAILURE;
 			}
 			arguments->interface = ++i;
 		}
 		else if(!strcmp(argv[i], "-n")){
-			if(arguments->network != 0){
+			if(argc == i +1 || arguments->network != 0){
 				return EXIT_FAILURE;
 			}
 			arguments->network = ++i;
