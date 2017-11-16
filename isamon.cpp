@@ -24,7 +24,6 @@
 #include <netinet/ip.h> 
 #include <sys/ioctl.h>  
 #include <bits/ioctls.h>  
-#include <net/if.h> 
 #include <linux/if_ether.h>
 #include <linux/if_packet.h>
 #include <linux/if_arp.h>
