@@ -15,6 +15,31 @@
 #include <linux/if_ether.h>
 #include <linux/if_arp.h>
 
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <netdb.h>
+#include <iostream>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <string.h>
+#include <sstream>
+#include <errno.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <ctype.h>
+#include <sys/time.h>
+
+#include <netinet/ip.h> 
+#include <sys/ioctl.h>  
+#include <bits/ioctls.h>  
+#include <net/if.h> 
+#include <linux/if_ether.h>
+#include <linux/if_packet.h>
+#include <net/ethernet.h>
+
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
