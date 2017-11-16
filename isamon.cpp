@@ -496,8 +496,7 @@ int main(int argc, char *argv[]){
 					//cout << "IP address - char: " << char_ip_for_scan << endl;
 
 					if(i == 10 && j == 190 && k == 23 && l == 253 ){
-						l++;
-						l++;
+						break;
 					}	
 
 					int sd;
