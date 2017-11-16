@@ -596,8 +596,8 @@ int main(int argc, char *argv[]){
 							return 1;
 						}
 					}*/
-
-					if((long arg = fcntl(sd, F_GETFL, NULL)) < 0){
+					long arg;
+					if((arg = fcntl(sd, F_GETFL, NULL)) < 0){
 						fprintf((stderr), "fcntl 1:  %d.%d.%d.%d\n", i,j,k,l );
 						return 1;
 					}
@@ -624,7 +624,7 @@ int main(int argc, char *argv[]){
 
 			       	//prijatie odpovedi
 			       	while(1){
-			       		
+
 
 			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
