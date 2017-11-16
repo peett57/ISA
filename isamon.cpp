@@ -31,8 +31,6 @@
 #include <asm/types.h>
 #include <math.h>
 
-#include <fcntl.h>
-
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
@@ -585,7 +583,7 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 
-					fcntl(sd, F_SETFL, O_NONBLOCK);
+					
 					if(argumenty.wait > 0){
 						if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 							fprintf((stderr), "setsockopt:  \n" );
