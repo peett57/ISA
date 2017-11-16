@@ -570,6 +570,17 @@ int main(int argc, char *argv[]){
 			                arp_req->target_ip[index]=(unsigned char)target_ip[index];
 			        }
 
+			        if(argumenty.wait > 0){
+						if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+							fprintf((stderr), "setsockopt:  \n" );
+							return 1;
+						}
+						if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+							fprintf((stderr), "setsockopt:  \n" );
+							return 1;
+						}
+					}
+
 
 			        // vytvorenie raw socketu na request
 			        if ((sd = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0) {
