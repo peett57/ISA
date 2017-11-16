@@ -19,6 +19,7 @@
 #include <stdbool.h>
 #include <ctype.h>
 #include <sys/time.h>
+#include <signal.h>
 
 #include <netinet/ip.h> 
 #include <sys/ioctl.h>  
@@ -26,7 +27,21 @@
 #include <net/if.h> 
 #include <linux/if_ether.h>
 #include <linux/if_packet.h>
+#include <linux/if_arp.h>
 #include <net/ethernet.h>
+#include <asm/types.h>
+#include <math.h>
+
+#define PROTO_ARP 0x0806
+#define ETH2_HEADER_LEN 14
+#define HW_TYPE 1
+#define PROTOCOL_TYPE 0x800
+#define MAC_LENGTH 6
+#define IPV4_LENGTH 4
+#define ARP_REQUEST 0x01
+#define ARP_REPLY 0x02
+#define BUF_SIZE 60
+
 
 
 
@@ -35,17 +50,17 @@ using namespace std;
 
 
 // struktura pre arp hlavicku
-typedef struct _arp_hdr arp_hdr;
-struct _arp_hdr {
-  uint16_t htype;
-  uint16_t ptype;
-  uint8_t hlen;
-  uint8_t plen;
-  uint16_t opcode;
-  uint8_t sender_mac[6];
-  uint8_t sender_ip[4];
-  uint8_t target_mac[6];
-  uint8_t target_ip[4];
+struct arp_header
+{
+        unsigned short hardware_type;
+        unsigned short protocol_type;
+        unsigned char hardware_len;
+        unsigned char  protocol_len;
+        unsigned short opcode;
+        unsigned char sender_mac[MAC_LENGTH];
+        unsigned char sender_ip[IPV4_LENGTH];
+        unsigned char target_mac[MAC_LENGTH];
+        unsigned char target_ip[IPV4_LENGTH];
 };
 
 
@@ -481,10 +496,112 @@ int main(int argc, char *argv[]){
 
 					//cout << "IP address - char: " << char_ip_for_scan << endl;
 
-					
+					int sd;
+					unsigned char buffer[BUF_SIZE];
+					unsigned char source_ip[4] = {10,190,23,178};
+					unsigned char target_ip[4] = {i,j,k,l};
+					struct ifreq ifr;
+					struct ethhdr *send_req = (struct ethhdr *)buffer;
+					struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
+					struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
+					struct arp_header *arp_resp = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
+					struct sockaddr_ll socket_address;
+					int ret,length=0,ifindex;
+
+					memset(buffer,0x00,60);
+
+					//open socket
+					sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+					if (sd == -1) {
+                		fprintf((stderr), "socket:  - \n" );
+						return 1;
+        			}
+
+        			//bude sa robit na eth1
+        			strcpy(ifr.ifr_name,"eth1");
+
+        			//ethernet index
+        			if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
+       					fprintf((stderr), "SIOCGIFINDEX  - \n" );
+						return 1;
+    				}
+    				ifindex = ifr.ifr_ifindex;
+
+    				// ziskanie MAC
+        			if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
+                		perror("SIOCGIFINDEX");
+                		exit(1);
+        			}
+
+        			close(sd);
+
+        			for (int index = 0; index < 6; index++){
+        				send_req->h_dest[index] = (unsigned char)0xff;
+        				arp_req->target_mac[index] = (unsigned char)0x00;
+        				// doplnenie source MAC do hlavicky
+        				send_req->h_source[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
+                		arp_req->sender_mac[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
+                		socket_address.sll_addr[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
+
+        			}
 
 
+        			//priprava sockaddr_ll
+        			socket_address.sll_family = AF_PACKET;
+			        socket_address.sll_protocol = htons(ETH_P_ARP);
+			        socket_address.sll_ifindex = ifindex;
+			        socket_address.sll_hatype = htons(ARPHRD_ETHER);
+			        socket_address.sll_pkttype = (PACKET_BROADCAST);
+			        socket_address.sll_halen = MAC_LENGTH;
+			        socket_address.sll_addr[6] = 0x00;
+			        socket_address.sll_addr[7] = 0x00;
 
+			        // protocol pre packet
+			        send_req->h_proto = htons(ETH_P_ARP);
+
+			        //vytvorenie arp requestu
+			        arp_req->hardware_type = htons(HW_TYPE);
+			        arp_req->protocol_type = htons(ETH_P_IP);
+			        arp_req->hardware_len = MAC_LENGTH;
+			        arp_req->protocol_len =IPV4_LENGTH;
+			        arp_req->opcode = htons(ARP_REQUEST);
+			        for(index=0;index<5;index++)
+			        {
+			                arp_req->sender_ip[index]=(unsigned char)source_ip[index];
+			                arp_req->target_ip[index]=(unsigned char)target_ip[index];
+			        }
+
+
+			        // vytvorenie raw socketu na request
+			        if ((sd = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0) {
+					    fprintf((stderr), "socket:  \n" );
+						return 1;
+					}
+
+					buffer[32] = 0x00;
+
+					//odoslanie arp requestu 
+					ret = sendto(sd, buffer, 42, 0, (struct  sockaddr*)&socket_address, sizeof(socket_address));
+			        if (ret == -1)
+			        {
+			            fprintf((stderr), "sendto:  \n" );
+						return 1;
+			        }
+
+			       	memset(buffer,0x00,60);
+
+			       	//prijatie odpovedi
+			       	while(1){
+			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
+		                if (length == -1){
+		                    fprintf((stderr), "receive:  \n" );
+							return 1;
+		                }
+		                if(htons(rcv_resp->h_proto) == PROTO_ARP){
+		                	cout << char_ip_for_scan << endl;
+		                }
+
+			       	}
 
 
 					//vymazanie a priprava na dalsiu IP
