@@ -208,10 +208,6 @@ int main(int argc, char *argv[]){
 
 	string str = string(network);
 
-	/*cout << " index 0" << network[0] << endl;
-	cout << " index 1" << network[1] << endl;
-	cout << " velkost " << strlen(network) << endl;*/
-
 
 	string ip_address ;
 	string mask ;
@@ -554,10 +550,10 @@ int main(int argc, char *argv[]){
 
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
-			/*struct servent *srvport = getservbyport(htons(x), protocol);
+			struct servent *srvport = getservbyport(htons(x), protocol);
 			if(srvport != NULL){
-				cout << "TCP " << srvport->s_port << endl;
-			}*/
+				cout << "TCP " << srvport->s_name << endl;
+			}
 			cout << "TCP " << x << endl;
 			
 		}
