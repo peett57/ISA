@@ -618,6 +618,7 @@ int main(int argc, char *argv[]){
 		                }
 		                if(htons(rcv_resp->h_proto) == PROTO_ARP){
 		                	cout << "length " << length << endl;
+		                	cout << "test " << char_ip_for_scan << endl;
 		                	if(arp_resp->sender_ip[0] == i){
 		                		if(arp_resp->sender_ip[1] == j){
 		                			if(arp_resp->sender_ip[2] == k){
