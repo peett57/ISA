@@ -586,7 +586,7 @@ int main(int argc, char *argv[]){
 					}
 
 
-					/*if(argumenty.wait > 0){
+					if(argumenty.wait > 0){
 						if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
@@ -595,17 +595,8 @@ int main(int argc, char *argv[]){
 							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
 						}
-					}*/
-					long arg;
-					if((arg = fcntl(sd, F_GETFL, NULL)) < 0){
-						fprintf((stderr), "fcntl 1:  %d.%d.%d.%d\n", i,j,k,l );
-						return 1;
 					}
-					arg |= O_NONBLOCK;
-					if(fcntl(sd, F_SETFL, arg) < 0){
-						fprintf((stderr), "fcntl 2:  %d.%d.%d.%d\n", i,j,k,l );
-						return 1;
-					}
+					
 
 
 
