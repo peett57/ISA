@@ -610,6 +610,10 @@ int main(int argc, char *argv[]){
 			       	while(1){
 			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
+			       		if (length == 0){
+		                    break;
+		                }
+
 		                if (length == -1){
 		                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 							return 1;
@@ -620,7 +624,6 @@ int main(int argc, char *argv[]){
 		                			if(arp_resp->sender_ip[2] == k){
 		                				if(arp_resp->sender_ip[3] == l){
 		                					cout << char_ip_for_scan << endl;
-		                					cout << "length : " << length << endl;
 		                				}
 		                			}
 		                		}
