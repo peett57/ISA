@@ -62,7 +62,7 @@ memset(buffer,0x00,60);
                 perror("socket():");
                 exit(1);
         }
-        //strcpy(ifr.ifr_name,"eth1");
+        strcpy(ifr.ifr_name,"eth0");
     /*retrieve ethernet interface index*/
     if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
         perror("SIOCGIFINDEX");
