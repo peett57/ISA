@@ -514,7 +514,7 @@ int main(int argc, char *argv[]){
 		//const char *hostname = "10.190.22.160";
 
 		// ip_char je ip adresa z masky
-		const char *hostname = ip_char;
+		const char *hostname = "localhost";
 		const char *protocol = "tcp";
 
 		int sockfd;
