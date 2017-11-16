@@ -512,7 +512,7 @@ int main(int argc, char *argv[]){
 					//open socket
 					sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 					if (sd == -1) {
-                		fprintf((stderr), "socket:  - \n" );
+                		fprintf((stderr), "socket:  - %d.%d.%d.%d\n", i,j,k,l );
 						return 1;
         			}
 
