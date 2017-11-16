@@ -31,6 +31,8 @@
 #include <asm/types.h>
 #include <math.h>
 
+#include <fcntl.h>
+
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
