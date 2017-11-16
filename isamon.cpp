@@ -583,6 +583,7 @@ int main(int argc, char *argv[]){
 						return 1;
 					}
 
+					fcntl(sd, F_SETFL, O_NONBLOCK);
 					if(argumenty.wait > 0){
 						if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 							fprintf((stderr), "setsockopt:  \n" );
@@ -617,8 +618,7 @@ int main(int argc, char *argv[]){
 							return 1;
 		                }
 		                if(htons(rcv_resp->h_proto) == PROTO_ARP){
-		                	cout << "length " << length << endl;
-		                	cout << "test " << char_ip_for_scan << endl;
+
 		                	if(arp_resp->sender_ip[0] == i){
 		                		if(arp_resp->sender_ip[1] == j){
 		                			if(arp_resp->sender_ip[2] == k){
