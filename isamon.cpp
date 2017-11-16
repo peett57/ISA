@@ -495,6 +495,10 @@ int main(int argc, char *argv[]){
 
 					//cout << "IP address - char: " << char_ip_for_scan << endl;
 
+					if(i == 10 && j == 190 && k == 23 && l == 253 ){
+						l++;
+					}	
+
 					int sd;
 					unsigned char buffer[BUF_SIZE];
 					unsigned char source_ip[4] = {10,190,23,178};
