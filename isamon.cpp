@@ -720,19 +720,25 @@ int main(int argc, char *argv[]){
 
 				       		//length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 				       		if(argumenty.wait > 0){
-				       			FD_ZERO(&fds);
-    							FD_SET(sd, &fds);
-					       		if(select(fd + 1, &fds, NULL, NULL, &timeout) > 0){
-					       			recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
+				       			fd_set set;
+				       			FD_ZERO(&set);
+				       			FD_SET(sd, &set);
 
-					       		}
-					       		else if(!FD_ISSET(sd, &fds)){
-					       			fprintf((stderr), "FD_ISSET:  %d.%d.%d.%d\n", i,j,k,l );
+				       			int rv = select(sd + 1 , &set, NULL, NULL, &timeout);
+				       			if(rv == -1){
+				       				fprintf((stderr), "select -1:  %d.%d.%d.%d\n", i,j,k,l );
 									return 1;
-					       		}else{
-					       			fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
-									return 1;
-					       		}
+				       			}
+				       			else if(rv == 0){
+				       				break;
+				       			}else{
+				       				length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
+
+				       				if (length == -1){
+					                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
+										return 1;
+					                }
+				       			}
 				       		}else{
 				       			length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
