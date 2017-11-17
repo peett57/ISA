@@ -637,6 +637,11 @@ int main(int argc, char *argv[]){
 	byte3_myaddr = atoi(byte3_s.c_str());
 	byte4_myaddr = atoi(byte4_s.c_str());
 
+	cout<< byte1_myaddr << endl;
+	cout<< byte2_myaddr << endl;
+	cout<< byte3_myaddr << endl;
+	cout<< byte4_myaddr << endl;
+
 
 
 
@@ -692,7 +697,7 @@ int main(int argc, char *argv[]){
 
 						/*int sd;
 						unsigned char buffer[BUF_SIZE];*/
-						unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
+						unsigned char source_ip[4] = {10,190,23,178};
 						unsigned char target_ip[4] = {i,j,k,l};
 						/*struct ifreq ifr;
 						struct ethhdr *send_req = (struct ethhdr *)buffer;
