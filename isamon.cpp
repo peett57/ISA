@@ -123,6 +123,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 	//http://www.matveev.se/cpp/portscaner.htm
 
 	struct timeval timeout;
+	cout << wait << endl;
 	if(wait > 0){
 			
 			timeout.tv_sec = wait /1000;
