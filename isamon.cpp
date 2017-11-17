@@ -637,7 +637,12 @@ int main(int argc, char *argv[]){
 	    				}
 	    				ifindex = ifr.ifr_ifindex;
 
-	    				fprintf((stderr), "%s  - \n" , inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+	    				if (ioctl(sd, SIOCGIFADDR, &ifr) == -1) {
+	       					fprintf((stderr), "SIOCGIFINDEX  - \n" );
+							return 1;
+	    				}
+	    				printf("%s\n", inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+
 
 	    				// ziskanie MAC
 	        			if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
