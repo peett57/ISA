@@ -767,6 +767,7 @@ int main(int argc, char *argv[]){
 								return 1;
 			                }*/
 			                if(htons(rcv_resp->h_proto) == PROTO_ARP){
+			                	cout << arp_resp->sender_ip[0] << "." << arp_resp->sender_ip[1] << "." << arp_resp->sender_ip[2] << "." << arp_resp->sender_ip[3] << "." << endl;
 				                if(arp_resp->sender_ip[0] == i){
 			                		if(arp_resp->sender_ip[1] == j){
 			                			if(arp_resp->sender_ip[2] == k){
