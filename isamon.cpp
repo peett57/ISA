@@ -642,7 +642,7 @@ int main(int argc, char *argv[]){
 							return 1;
 	    				}
 	    				char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
-						for(int index == 0 ; index < 5 ; index++){
+						for(int index = 0 ; index < 5 ; index++){
 							cout << my_addr[index]; endl;
 						}
 
