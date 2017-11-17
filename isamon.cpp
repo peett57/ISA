@@ -600,13 +600,13 @@ int main(int argc, char *argv[]){
 
 	//ethernet index
 	if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
-			fprintf((stderr), "SIOCGIFINDEX  - \n" );
+		fprintf((stderr), "SIOCGIFINDEX  - index interfacu - -i \n" );
 		return 1;
 	}
 	ifindex = ifr.ifr_ifindex;
 
 	if (ioctl(sd, SIOCGIFADDR, &ifr) == -1) {
-			fprintf((stderr), "SIOCGIFINDEX  - \n" );
+		fprintf((stderr), "SIOCGIFINDEX  - moja ip adresa na interface\n" );
 		return 1;
 	}
 	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
@@ -616,7 +616,7 @@ int main(int argc, char *argv[]){
 
 	// ziskanie MAC
 	if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
-		perror("SIOCGIFINDEX");
+		perror("SIOCGIFINDEX - ziskanie MAC na interface");
 		exit(1);
 	}
 
