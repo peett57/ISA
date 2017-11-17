@@ -197,6 +197,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		close(sockfd);
 
 	}
+	cout << "end tcp" << endl;
 	return 0;
 }
 
