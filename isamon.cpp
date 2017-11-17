@@ -637,6 +637,8 @@ int main(int argc, char *argv[]){
 	    				}
 	    				ifindex = ifr.ifr_ifindex;
 
+	    				fprintf((stderr), "%s  - \n" , inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr));
+
 	    				// ziskanie MAC
 	        			if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
 	                		perror("SIOCGIFINDEX");
@@ -767,7 +769,7 @@ int main(int argc, char *argv[]){
 								return 1;
 			                }*/
 			                if(htons(rcv_resp->h_proto) == PROTO_ARP){
-			                	
+
 				                if(arp_resp->sender_ip[0] == i){
 			                		if(arp_resp->sender_ip[1] == j){
 			                			if(arp_resp->sender_ip[2] == k){
