@@ -568,7 +568,7 @@ int main(int argc, char *argv[]){
 
 	sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (sd == -1) {
-		fprintf((stderr), "socket:  - %d.%d.%d.%d\n", i,j,k,l );
+		fprintf((stderr), "socket:  \n");
 		return 1;
 	}
 
@@ -652,10 +652,10 @@ int main(int argc, char *argv[]){
 						}*/	
 
 						/*int sd;
-						unsigned char buffer[BUF_SIZE];
+						unsigned char buffer[BUF_SIZE];*/
 						unsigned char source_ip[4] = {10,190,23,178};
 						unsigned char target_ip[4] = {i,j,k,l};
-						struct ifreq ifr;
+						/*struct ifreq ifr;
 						struct ethhdr *send_req = (struct ethhdr *)buffer;
 						struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
 						struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
