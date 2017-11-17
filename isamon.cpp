@@ -618,16 +618,16 @@ int main(int argc, char *argv[]){
 	string byte1_s_myaddr,byte2_s_myaddr,byte3_s_myaddr,byte4_s_myaddr;
 
 	for(int i = 0; i < dot1_index ; i++){
-		byte1_s_myaddr += ip_str[i];
+		byte1_s_myaddr += my_addr[i];
 	}
 	for(int i = dot1_index + 1; i < dot2_index ; i++){
-		byte2_s_myaddr += ip_str[i];
+		byte2_s_myaddr += my_addr[i];
 	}
 	for(int i = dot2_index + 1; i < dot3_index ; i++){
-		byte3_s_myaddr += ip_str[i];
+		byte3_s_myaddr += my_addr[i];
 	}
 	for(int i = dot3_index + 1; i < strlen(ip_str) ; i++){
-		byte4_s_myaddr += ip_str[i];
+		byte4_s_myaddr += my_addr[i];
 	}
 
 
