@@ -774,7 +774,6 @@ int main(int argc, char *argv[]){
 														return 1;
 			                						}
 			                					}
-			                					break;
 			                				}
 			                			}
 			                		}
@@ -783,7 +782,7 @@ int main(int argc, char *argv[]){
 			                }
 			               	close(sd);
 			               	
-		                	
+		                	break;
 
 			                
 
