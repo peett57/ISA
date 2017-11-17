@@ -120,7 +120,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 
 
 	//http://www.matveev.se/cpp/portscaner.htm
-	cout << "tcp entry" << endl;
+
 	struct timeval timeout;
 	if(wait > 0){
 			
@@ -729,6 +729,21 @@ int main(int argc, char *argv[]){
 		                		if(arp_resp->sender_ip[1] == j){
 		                			if(arp_resp->sender_ip[2] == k){
 		                				if(arp_resp->sender_ip[3] == l){
+		                					cout << char_ip_for_scan << endl;
+		                					if(argumenty.t == true){
+		                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+		                							fprintf((stderr), "TCP  \n" );
+													return 1;
+		                						}
+		                					}
+		                				}
+		                			}
+		                		}
+		                	}
+		                	if(10 == i){
+		                		if(190 == j){
+		                			if(23 == k){
+		                				if(178 == l){
 		                					cout << char_ip_for_scan << endl;
 		                					if(argumenty.t == true){
 		                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
