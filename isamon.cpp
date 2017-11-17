@@ -731,8 +731,9 @@ int main(int argc, char *argv[]){
 				       			}
 				       			else if(rv == 0){
 				       				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
-				       				break;
 				       				close(sd);
+				       				break;
+
 				       			}else{
 				       				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
 
