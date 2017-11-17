@@ -642,9 +642,7 @@ int main(int argc, char *argv[]){
 							return 1;
 	    				}
 	    				char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
-						for(int index = 0 ; index < sizeof(my_addr)  ; index++){
-							cout << my_addr[index] <<  endl;
-						}
+						cout << my_addr << endl;
 
 
 	    				// ziskanie MAC
