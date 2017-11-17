@@ -325,6 +325,13 @@ int main(int argc, char *argv[]){
 		cout << "tcp" << endl;
 	}
 
+	struct timeval timeout;
+	if(argumenty.wait > 0){
+			
+			timeout.tv_sec = argumenty.wait /1000;
+    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
+	}
+
 	string str = string(network);
 
 
@@ -513,42 +520,6 @@ int main(int argc, char *argv[]){
 	cout << "2  " << final2 << endl;
 	cout << "3  " << final3 << endl;
 	cout << "4  " << final4 << endl;
-
-	/*string final_network;
-
-	stringstream convert;
-	convert << final1;
-	final_network += convert.str();
-	convert.str("");
-
-	final_network += '.';
-
-	
-	convert << final2;
-	final_network += convert.str();
-	convert.str("");
-
-	final_network += '.';
-
-	
-	convert << final3;
-	final_network += convert.str();
-	convert.str("");
-
-	final_network += '.';
-
-	
-	convert << final4;
-	final_network += convert.str();
-	convert.str("");
-
-	cout << "final  " << final_network << endl;
-
-	//vysledna adresa siete v ktorej sa budu skumat ip adresy
-	const char * network_address = final_network.c_str();
-	
-	cout << "final network char *  " << network_address << endl;*/
-
 	
 	// vypis
 	cout << " byte1 - start : " << final1 << " end : " << end1 << endl;
@@ -556,6 +527,7 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
+// ziskanie IP adresy MAC z daneho interfacu pre arp scan
 	int sd;
 	unsigned char buffer[BUF_SIZE];
 	struct ifreq ifr;
@@ -641,17 +613,51 @@ int main(int argc, char *argv[]){
 	cout<< byte2_myaddr << endl;
 	cout<< byte3_myaddr << endl;
 	cout<< byte4_myaddr << endl;*/
+	bool lokalna_adresa = true;
+	if(lokalna_adresa == true){
+		for (int index = 0; index < 6; index++){
+			send_req->h_dest[index] = (unsigned char)0xff;
+			arp_req->target_mac[index] = (unsigned char)0x00;
+			// doplnenie source MAC do hlavicky
+			send_req->h_source[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
+			arp_req->sender_mac[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
+			socket_address.sll_addr[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
+
+		}
 
 
+		//priprava sockaddr_ll
+		socket_address.sll_family = AF_PACKET;
+		socket_address.sll_protocol = htons(ETH_P_ARP);
+		socket_address.sll_ifindex = ifindex;
+		socket_address.sll_hatype = htons(ARPHRD_ETHER);
+		socket_address.sll_pkttype = (PACKET_BROADCAST);
+		socket_address.sll_halen = MAC_LENGTH;
+		socket_address.sll_addr[6] = 0x00;
+		socket_address.sll_addr[7] = 0x00;
 
+		// protocol pre packet
+		send_req->h_proto = htons(ETH_P_ARP);
 
+		//vytvorenie arp requestu
+		arp_req->hardware_type = htons(HW_TYPE);
+		arp_req->protocol_type = htons(ETH_P_IP);
+		arp_req->hardware_len = MAC_LENGTH;
+		arp_req->protocol_len =IPV4_LENGTH;
+		arp_req->opcode = htons(ARP_REQUEST);
+		unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
 
-	struct timeval timeout;
-	if(argumenty.wait > 0){
-			
-			timeout.tv_sec = argumenty.wait /1000;
-    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
+		for(int index=0;index<5;index++)
+	    {
+	            arp_req->sender_ip[index]=(unsigned char)source_ip[index];
+	    }
 	}
+
+
+
+
+
+	
 
 	bool vypnutie = false;
 	if(vypnutie == false){
@@ -689,91 +695,19 @@ int main(int argc, char *argv[]){
 						//
 						char_ip_for_scan = str_ip_for_scan.c_str();
 
-						//cout << "IP address - char: " << char_ip_for_scan << endl;
+						
 
-						/*if(i == 10 && j == 190 && k == 23 && l == 253 ){
-							break;
-						}*/	
-
-						/*int sd;
-						unsigned char buffer[BUF_SIZE];*/
-						unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
+						
+						
 						unsigned char target_ip[4] = {i,j,k,l};
-						/*struct ifreq ifr;
-						struct ethhdr *send_req = (struct ethhdr *)buffer;
-						struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
-						struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
-						struct arp_header *arp_resp = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
-						struct sockaddr_ll socket_address;
-						int ret,length=0,ifindex;*/
+						
 						int ret,length = 0;
 
 
 						memset(buffer,0x00,60);
 
-						//open socket
-						/*sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
-						if (sd == -1) {
-	                		fprintf((stderr), "socket:  - %d.%d.%d.%d\n", i,j,k,l );
-							return 1;
-	        			}
 
-	        			//bude sa robit na eth1
-	        			strcpy(ifr.ifr_name, interface);
-
-	        			//ethernet index
-	        			if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
-	       					fprintf((stderr), "SIOCGIFINDEX  - \n" );
-							return 1;
-	    				}
-	    				ifindex = ifr.ifr_ifindex;
-
-	    				if (ioctl(sd, SIOCGIFADDR, &ifr) == -1) {
-	       					fprintf((stderr), "SIOCGIFINDEX  - \n" );
-							return 1;
-	    				}
-	    				char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
-						cout << my_addr << endl;
-
-
-	    				// ziskanie MAC
-	        			if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
-	                		perror("SIOCGIFINDEX");
-	                		exit(1);
-	        			}
-
-	        			close(sd);*/
-
-	        			for (int index = 0; index < 6; index++){
-	        				send_req->h_dest[index] = (unsigned char)0xff;
-	        				arp_req->target_mac[index] = (unsigned char)0x00;
-	        				// doplnenie source MAC do hlavicky
-	        				send_req->h_source[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
-	                		arp_req->sender_mac[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
-	                		socket_address.sll_addr[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
-
-	        			}
-
-
-	        			//priprava sockaddr_ll
-	        			socket_address.sll_family = AF_PACKET;
-				        socket_address.sll_protocol = htons(ETH_P_ARP);
-				        socket_address.sll_ifindex = ifindex;
-				        socket_address.sll_hatype = htons(ARPHRD_ETHER);
-				        socket_address.sll_pkttype = (PACKET_BROADCAST);
-				        socket_address.sll_halen = MAC_LENGTH;
-				        socket_address.sll_addr[6] = 0x00;
-				        socket_address.sll_addr[7] = 0x00;
-
-				        // protocol pre packet
-				        send_req->h_proto = htons(ETH_P_ARP);
-
-				        //vytvorenie arp requestu
-				        arp_req->hardware_type = htons(HW_TYPE);
-				        arp_req->protocol_type = htons(ETH_P_IP);
-				        arp_req->hardware_len = MAC_LENGTH;
-				        arp_req->protocol_len =IPV4_LENGTH;
-				        arp_req->opcode = htons(ARP_REQUEST);
+	        			// doplnenie target ip adresy do arp requestu
 				        for(int index=0;index<5;index++)
 				        {
 				                arp_req->sender_ip[index]=(unsigned char)source_ip[index];
@@ -788,24 +722,7 @@ int main(int argc, char *argv[]){
 						    fprintf((stderr), "socket:  %d.%d.%d.%d\n", i,j,k,l );
 							return 1;
 						}
-						
-
-
-						/*if(argumenty.wait > 0){
-							if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
-								fprintf((stderr), "setsockopt:  \n" );
-								return 1;
-							}
-							if (setsockopt (sd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
-								fprintf((stderr), "setsockopt:  \n" );
-								return 1;
-							}
-						}*/
-						
-
-
-
-
+							
 						buffer[32] = 0x00;
 
 						//odoslanie arp requestu 
