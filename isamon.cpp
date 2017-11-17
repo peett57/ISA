@@ -770,23 +770,24 @@ int main(int argc, char *argv[]){
 			                			}
 			                		}
 			                	}
-			                	if(10 == i){
-			                		if(190 == j){
-			                			if(23 == k){
-			                				if(178 == l){
-			                					cout << char_ip_for_scan << endl;
-			                					if(argumenty.t == true){
-			                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
-			                							fprintf((stderr), "TCP  \n" );
-														return 1;
-			                						}
-			                					}
-			                				}
-			                			}
-			                		}
-			                	}
-			                	break;
+			                	
 			                }
+			                if(10 == i){
+		                		if(190 == j){
+		                			if(23 == k){
+		                				if(178 == l){
+		                					cout << char_ip_for_scan << endl;
+		                					if(argumenty.t == true){
+		                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+		                							fprintf((stderr), "TCP  \n" );
+													return 1;
+		                						}
+		                					}
+		                				}
+		                			}
+		                		}
+		                	}
+		                	break;
 
 			                
 
