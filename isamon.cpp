@@ -141,9 +141,9 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 	for(int x = port_start ; x <= port_end; x++){
 		
 		int portno = x;
-		//const char *hostname = "10.190.22.160";
+		
 
-		// ip_char je ip adresa z masky
+		
 		const char *hostname = ip;
 		const char *protocol = "tcp";
 
@@ -202,6 +202,52 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 }
 
 int udp_check(const char * ip, long int port_arg, long int wait){
+	//open UDP socket
+	/*int sendsd, recvsd;
+	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
+		fprintf((stderr), "socket: DGRAM - %d\n" , x);
+		return 1;
+	}
+	//open receive socket pre ICMP response packet
+	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
+		fprintf((stderr), "socket: RAW - %d\n" , x);
+		return 1;
+	}
+
+	int port_start = 1;
+	int port_end = 200;
+
+	if(port_arg != 0){
+		port_start = port_arg;
+		port_end = port_arg;
+	}
+
+	for(int x = port_start ; x <= port_end; x++){
+		int portno = x;
+		
+		const char *hostname = ip;
+
+		struct sockaddr_in serv_addr;
+		struct hostent *server;
+
+		server = gethostbyname(hostname);
+		if(server == NULL){
+			fprintf((stderr), "gethostbyname:  \n" );
+			return 1;
+		}
+
+		bzero(&serv_addr, sizeof(serv_addr));
+		serv_addr.sin_family = AF_INET;
+		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
+
+
+
+		serv_addr.sin_port = htons(portno);
+
+		if(sendto())
+
+		
+	}*/
 	cout << "UDP" << endl;
 	return 0;
 }
@@ -549,7 +595,7 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	//bude sa robit na eth1
+	//bude sa robit na konkretnom interface
 	strcpy(ifr.ifr_name, interface);
 
 	//ethernet index
