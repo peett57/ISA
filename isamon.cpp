@@ -102,7 +102,7 @@ typedef struct{
 	long int wait;
 }Arguments;
 
-void tpc_check(const char * ip){
+int tpc_check(const char * ip, long int port_arg, long int wait){
 	struct hostent *he;
 	struct in_addr **addr_list;
 	
@@ -121,12 +121,19 @@ void tpc_check(const char * ip){
 
 	//http://www.matveev.se/cpp/portscaner.htm
 
+	struct timeval timeout;
+	if(wait > 0){
+			
+			timeout.tv_sec = wait /1000;
+    		timeout.tv_usec = (wait % 1000) * 1000;	
+	}
+
 	int port_start = 1;
 	int port_end = 200;
 
-	if(argumenty.port != 0){
-		port_start = argumenty.port;
-		port_end = argumenty.port;
+	if(port_arg != 0){
+		port_start = port_arg;
+		port_end = port_arg;
 	}
 
 	for(int x = port_start ; x <= port_end; x++){
@@ -147,7 +154,7 @@ void tpc_check(const char * ip){
 			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
 		}
-		if(argumenty.wait > 0){
+		if(wait > 0){
 			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 				fprintf((stderr), "setsockopt:  \n" );
 				return 1;
@@ -189,6 +196,7 @@ void tpc_check(const char * ip){
 		close(sockfd);
 
 	}
+	return 0;
 }
 
 
@@ -723,7 +731,10 @@ int main(int argc, char *argv[]){
 		                				if(arp_resp->sender_ip[3] == l){
 		                					cout << char_ip_for_scan << endl;
 		                					if(argumenty.t == true){
-		                						tpc_check(char_ip_for_scan);
+		                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+		                							fprintf((stderr), "TCP  \n" );
+													return 1;
+		                						}
 		                					}
 		                				}
 		                			}
