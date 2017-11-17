@@ -730,20 +730,17 @@ int main(int argc, char *argv[]){
 									return 1;
 				       			}
 				       			else if(rv == 0){
-				       				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
+				       				fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
 				       				break;
 				       			}else{
-				       				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
+				       				fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
 				       				length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
 				       				if (length == -1){
 					                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 										return 1;
 					                }
-					                if (length == 0){
-					                    fprintf((stderr), "receive 0 :  %d.%d.%d.%d\n", i,j,k,l );
-										break;
-					                }
+					            
 				       			}
 				       		}else{
 				       			length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
