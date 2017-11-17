@@ -137,9 +137,8 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		port_end = port_arg;
 	}
 
-	cout << "tcp pred for" << endl;
 	for(int x = port_start ; x <= port_end; x++){
-		cout << "tcp for " << x << endl;
+		
 		int portno = x;
 		//const char *hostname = "10.190.22.160";
 
@@ -156,6 +155,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
 		}
+		cout << "socket" << endl;
 		if(wait > 0){
 			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 				fprintf((stderr), "setsockopt:  \n" );
@@ -172,6 +172,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
+		cout << "gethostbyname" << endl;
 		
 
 		bzero(&serv_addr, sizeof(serv_addr));
@@ -190,6 +191,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 			cout << ip << " TCP " << x << endl;
 			
 		}
+		cout << "connect" << endl;
 		
 		
 			
@@ -198,7 +200,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		close(sockfd);
 
 	}
-	cout << "end tcp" << endl;
+
 	return 0;
 }
 
