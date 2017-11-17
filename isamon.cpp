@@ -813,12 +813,12 @@ int main(int argc, char *argv[]){
 						char_ip_for_scan = str_ip_for_scan.c_str();
 
 
-						if(closed == false){
+						/*if(closed == false){
 							fprintf((stderr), "not closed:  %d.%d.%d.%d\n", i,j,k,l );
 						}
 						else{
 							fprintf((stderr), "closed:  %d.%d.%d.%d\n", i,j,k,l );
-						}
+						}*/
 					}
 				}
 			}
