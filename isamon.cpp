@@ -782,7 +782,7 @@ int main(int argc, char *argv[]){
 			                }
 			               	close(sd);
 			               	
-		                	//break;
+		                	break;
 
 			                
 
