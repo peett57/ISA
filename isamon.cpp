@@ -710,8 +710,7 @@ int main(int argc, char *argv[]){
 	        			// doplnenie target ip adresy do arp requestu
 				        for(int index=0;index<5;index++)
 				        {
-				                arp_req->sender_ip[index]=(unsigned char)source_ip[index];
-				                arp_req->target_ip[index]=(unsigned char)target_ip[index];
+			                arp_req->target_ip[index]=(unsigned char)target_ip[index];
 				        }
 
 
