@@ -130,7 +130,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 	}
 
 	int port_start = 1;
-	int port_end = 120;
+	int port_end = 200;
 
 	if(port_arg != 0){
 		port_start = port_arg;
@@ -143,8 +143,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		//const char *hostname = "10.190.22.160";
 
 		// ip_char je ip adresa z masky
-		//const char *hostname = ip;
-		const char *hostname = "10.190.20.159";
+		const char *hostname = ip;
 		const char *protocol = "tcp";
 
 		int sockfd;
@@ -156,7 +155,6 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
 		}
-		cout << "socket" << endl;
 		if(wait > 0){
 			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 				fprintf((stderr), "setsockopt:  \n" );
@@ -173,29 +171,24 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
-		cout << "gethostbyname" << endl;
 		
 
 		bzero(&serv_addr, sizeof(serv_addr));
-		cout << "bzero" << endl;
 		serv_addr.sin_family = AF_INET;
-		cout << "sin family" << endl;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
-		cout << "sin addr" << endl;
 
 
 
 		serv_addr.sin_port = htons(portno);
 
 
-		cout << "pred connect" << endl;
+
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
 			struct servent *srvport = getservbyport(htons(x), protocol);
 			 
 			cout << ip << " TCP " << x << endl;
 			
 		}
-		cout << "connect" << endl;
 		
 		
 			
@@ -204,7 +197,6 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		close(sockfd);
 
 	}
-
 	return 0;
 }
 
@@ -777,11 +769,15 @@ int main(int argc, char *argv[]){
 			                				if(arp_resp->sender_ip[3] == l){
 			                					cout << char_ip_for_scan << endl;
 			                					if(argumenty.t == true){
-			                						
-			                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
-			                							fprintf((stderr), "TCP  \n" );
-														return 1;
-			                						}
+			                						// HP nejake random tu mam
+			                						if(i == 10 && j == 190 && k == 20 && l == 159){
+			                							;
+			                						}else{
+				                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+				                							fprintf((stderr), "TCP  \n" );
+															return 1;
+				                						}
+				                					}
 			                					}
 			                				}
 			                			}
