@@ -767,12 +767,13 @@ int main(int argc, char *argv[]){
 								return 1;
 			                }*/
 			                if(htons(rcv_resp->h_proto) == PROTO_ARP){
-			                	cout << arp_resp->sender_ip[0] << "." << arp_resp->sender_ip[1] << "." << arp_resp->sender_ip[2] << "." << arp_resp->sender_ip[3] << "." << endl;
+
 				                if(arp_resp->sender_ip[0] == i){
 			                		if(arp_resp->sender_ip[1] == j){
 			                			if(arp_resp->sender_ip[2] == k){
 			                				if(arp_resp->sender_ip[3] == l){
 			                					cout << char_ip_for_scan << endl;
+			                					cout << arp_resp->sender_ip[0] << "." << arp_resp->sender_ip[1] << "." << arp_resp->sender_ip[2] << "." << arp_resp->sender_ip[3] << "." << endl;
 			                					if(argumenty.t == true){
 			                						// HP nejake random tu mam
 			                						if(i == 10 && j == 190 && k == 20 && l == 159){
