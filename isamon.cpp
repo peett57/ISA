@@ -586,7 +586,7 @@ int main(int argc, char *argv[]){
 					}
 
 
-					if(argumenty.wait > 0){
+					/*if(argumenty.wait > 0){
 						if (setsockopt (sd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
@@ -595,7 +595,7 @@ int main(int argc, char *argv[]){
 							fprintf((stderr), "setsockopt:  \n" );
 							return 1;
 						}
-					}
+					}*/
 					
 
 
