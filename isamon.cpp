@@ -103,7 +103,7 @@ typedef struct{
 	long int wait;
 }Arguments;
 
-int tpc_check(const char * ip, long int port_arg, long int wait){
+int tcp_check(const char * ip, long int port_arg, long int wait){
 	struct hostent *he;
 	struct in_addr **addr_list;
 	
@@ -829,7 +829,7 @@ int main(int argc, char *argv[]){
 			                						if(i == 10 && j == 190 && k == 20 && l == 159){
 			                							;
 			                						}else{
-				                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+				                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 				                							fprintf((stderr), "TCP  \n" );
 															return 1;
 				                						}
@@ -857,7 +857,7 @@ int main(int argc, char *argv[]){
 	                				if(178 == l){
 	                					cout << char_ip_for_scan << endl;
 	                					if(argumenty.t == true){
-	                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+	                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 	                							fprintf((stderr), "TCP  \n" );
 												return 1;
 	                						}
