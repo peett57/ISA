@@ -587,7 +587,7 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
-	cout << my_addr << endl;
+	
 
 
 	// ziskanie MAC
@@ -597,6 +597,45 @@ int main(int argc, char *argv[]){
 	}
 
 	close(sd);
+
+	dot1_index = 0;
+	dot2_index = 0;
+	dot3_index = 0;
+	for(int i = 0 ; i < strlen(my_addr); i++){
+		if(ip_str[i] == '.'){
+			if(dot1_index == 0){
+				dot1_index = i;
+			}
+			else if(dot2_index == 0){
+				dot2_index = i;
+			}
+			else{
+				dot3_index = i;
+			}
+		}
+	}
+
+	string byte1_s_myaddr,byte2_s_myaddr,byte3_s_myaddr,byte4_s_myaddr;
+
+	for(int i = 0; i < dot1_index ; i++){
+		byte1_s_myaddr += ip_str[i];
+	}
+	for(int i = dot1_index + 1; i < dot2_index ; i++){
+		byte2_s_myaddr += ip_str[i];
+	}
+	for(int i = dot2_index + 1; i < dot3_index ; i++){
+		byte3_s_myaddr += ip_str[i];
+	}
+	for(int i = dot3_index + 1; i < strlen(ip_str) ; i++){
+		byte4_s_myaddr += ip_str[i];
+	}
+
+
+	int byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr;
+	byte1_myaddr = atoi(byte1_s.c_str());
+	byte2_myaddr = atoi(byte2_s.c_str());
+	byte3_myaddr = atoi(byte3_s.c_str());
+	byte4_myaddr = atoi(byte4_s.c_str());
 
 
 
@@ -653,7 +692,7 @@ int main(int argc, char *argv[]){
 
 						/*int sd;
 						unsigned char buffer[BUF_SIZE];*/
-						unsigned char source_ip[4] = {10,190,23,178};
+						unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
 						unsigned char target_ip[4] = {i,j,k,l};
 						/*struct ifreq ifr;
 						struct ethhdr *send_req = (struct ethhdr *)buffer;
