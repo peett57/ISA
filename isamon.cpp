@@ -32,6 +32,7 @@
 #include <math.h>
 
 #include <fcntl.h>
+#include <sys/select.h>
 
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
@@ -559,7 +560,7 @@ int main(int argc, char *argv[]){
     		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
 	}
 
-	bool vypnutie = true;
+	bool vypnutie = false;
 	if(vypnutie == false){
 		stringstream convert;
 		string str_ip_for_scan;
@@ -717,14 +718,35 @@ int main(int argc, char *argv[]){
 				       	while(1){
 
 
-				       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
+				       		//length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
+				       		if(argumenty.wait > 0){
+				       			FD_ZERO(&fds);
+    							FD_SET(sd, &fds);
+					       		if(select(fd + 1, &fds, NULL, NULL, &timeout) > 0){
+					       			recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
-				       		
+					       		}
+					       		else if(!FD_ISSET(sd, &fds)){
+					       			fprintf((stderr), "FD_ISSET:  %d.%d.%d.%d\n", i,j,k,l );
+									return 1;
+					       		}else{
+					       			fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
+									return 1;
+					       		}
+				       		}else{
+				       			length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
-			                if (length == -1){
+					       		if (length == -1){
+				                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
+									return 1;
+				                }
+
+				       		}
+
+			                /*if (length == -1){
 			                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 								return 1;
-			                }
+			                }*/
 			                if(htons(rcv_resp->h_proto) == PROTO_ARP){
 
 			                	if(arp_resp->sender_ip[0] == i){
@@ -782,92 +804,8 @@ int main(int argc, char *argv[]){
 	}
 
 
-	/*struct hostent *he;
-	struct in_addr **addr_list;
 	
-	if((he = gethostbyname("localhost")) == NULL){
-		fprintf((stderr), "gethostbyname:  \n" );
-		return 1;
-	}
 
-	string test;
-	addr_list = (struct in_addr **) he->h_addr_list;
-	for(int i = 0; addr_list[i] != NULL; i++){
-		test = inet_ntoa(*addr_list[i]);
-	}
-	cout << "test :" << test << endl;
-
-
-	//http://www.matveev.se/cpp/portscaner.htm
-
-	int port_start = 1;
-	int port_end = 200;
-
-	if(argumenty.port != 0){
-		port_start = argumenty.port;
-		port_end = argumenty.port;
-	}
-
-	for(int x = port_start ; x <= port_end; x++){
-		
-		int portno = x;
-		//const char *hostname = "10.190.22.160";
-
-		// ip_char je ip adresa z masky
-		const char *hostname = ip_char;
-		const char *protocol = "tcp";
-
-		int sockfd;
-		struct sockaddr_in serv_addr;
-		struct hostent *server;
-
-		sockfd = socket(AF_INET, SOCK_STREAM, 0);
-		if(sockfd < 0 ){
-			fprintf((stderr), "socket:  - %d\n" , x);
-			return 1;
-		}
-		if(argumenty.wait > 0){
-			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
-				fprintf((stderr), "setsockopt:  \n" );
-				return 1;
-			}
-			if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
-				fprintf((stderr), "setsockopt:  \n" );
-				return 1;
-			}
-		}
-
-		server = gethostbyname(hostname);
-		if(server == NULL){
-			fprintf((stderr), "gethostbyname:  \n" );
-			return 1;
-		}
-		
-
-		bzero(&serv_addr, sizeof(serv_addr));
-		serv_addr.sin_family = AF_INET;
-		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
-
-
-
-		serv_addr.sin_port = htons(portno);
-
-
-
-		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
-			struct servent *srvport = getservbyport(htons(x), protocol);
-			
-			cout << "TCP " << x << endl;
-			
-		}
-		
-		
-			
-		
-
-		close(sockfd);
-
-	}*/
 
 	
 
