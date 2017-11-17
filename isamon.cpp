@@ -265,7 +265,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 }
 
 int main(int argc, char *argv[]){
-	bool interface_set = false;
+	//bool interface_set = false;
 	Arguments argumenty;
 	argumenty.port = 0;
 	argumenty.wait = 0;
@@ -304,8 +304,11 @@ int main(int argc, char *argv[]){
 
 	
 
-	if(argumenty.interface != 0){
-		interface_set = true;
+	if(argumenty.interface == 0){
+		//interface_set = true;
+		//zatial takto
+		fprintf((stderr), "Wrong arguments! no interface\n");
+		return 1;
 	}
 	char *interface = argv[argumenty.interface];
 	
@@ -625,7 +628,7 @@ int main(int argc, char *argv[]){
 	        			}
 
 	        			//bude sa robit na eth1
-	        			strcpy(ifr.ifr_name,"eth1");
+	        			strcpy(ifr.ifr_name, interface);
 
 	        			//ethernet index
 	        			if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
