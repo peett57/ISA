@@ -685,7 +685,7 @@ int main(int argc, char *argv[]){
 						    fprintf((stderr), "socket:  %d.%d.%d.%d\n", i,j,k,l );
 							return 1;
 						}
-						bool closed = false;
+						
 
 
 						/*if(argumenty.wait > 0){
@@ -774,6 +774,7 @@ int main(int argc, char *argv[]){
 														return 1;
 			                						}
 			                					}
+			                					break;
 			                				}
 			                			}
 			                		}
@@ -781,14 +782,14 @@ int main(int argc, char *argv[]){
 			                	
 			                }
 			               	close(sd);
-			               	closed = true;
-		                	break;
+			               	
+		                	
 
 			                
 
 				       	}
 				       	close(sd);
-				       	closed = true;
+				       	
 
 				       	if(10 == i){
 	                		if(190 == j){
@@ -813,12 +814,7 @@ int main(int argc, char *argv[]){
 						char_ip_for_scan = str_ip_for_scan.c_str();
 
 
-						/*if(closed == false){
-							fprintf((stderr), "not closed:  %d.%d.%d.%d\n", i,j,k,l );
-						}
-						else{
-							fprintf((stderr), "closed:  %d.%d.%d.%d\n", i,j,k,l );
-						}*/
+						
 					}
 				}
 			}
