@@ -556,6 +556,51 @@ int main(int argc, char *argv[]){
 	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
 	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
 
+	int sd;
+	unsigned char buffer[BUF_SIZE];
+	struct ifreq ifr;
+	struct ethhdr *send_req = (struct ethhdr *)buffer;
+	struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
+	struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
+	struct arp_header *arp_resp = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
+	struct sockaddr_ll socket_address;
+	int ifindex;
+
+	sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+	if (sd == -1) {
+		fprintf((stderr), "socket:  - %d.%d.%d.%d\n", i,j,k,l );
+		return 1;
+	}
+
+	//bude sa robit na eth1
+	strcpy(ifr.ifr_name, interface);
+
+	//ethernet index
+	if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
+			fprintf((stderr), "SIOCGIFINDEX  - \n" );
+		return 1;
+	}
+	ifindex = ifr.ifr_ifindex;
+
+	if (ioctl(sd, SIOCGIFADDR, &ifr) == -1) {
+			fprintf((stderr), "SIOCGIFINDEX  - \n" );
+		return 1;
+	}
+	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
+	cout << my_addr << endl;
+
+
+	// ziskanie MAC
+	if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
+		perror("SIOCGIFINDEX");
+		exit(1);
+	}
+
+	close(sd);
+
+
+
+
 
 	struct timeval timeout;
 	if(argumenty.wait > 0){
@@ -606,7 +651,7 @@ int main(int argc, char *argv[]){
 							break;
 						}*/	
 
-						int sd;
+						/*int sd;
 						unsigned char buffer[BUF_SIZE];
 						unsigned char source_ip[4] = {10,190,23,178};
 						unsigned char target_ip[4] = {i,j,k,l};
@@ -616,12 +661,14 @@ int main(int argc, char *argv[]){
 						struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
 						struct arp_header *arp_resp = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
 						struct sockaddr_ll socket_address;
-						int ret,length=0,ifindex;
+						int ret,length=0,ifindex;*/
+						int ret,length = 0;
+
 
 						memset(buffer,0x00,60);
 
 						//open socket
-						sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
+						/*sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 						if (sd == -1) {
 	                		fprintf((stderr), "socket:  - %d.%d.%d.%d\n", i,j,k,l );
 							return 1;
@@ -651,7 +698,7 @@ int main(int argc, char *argv[]){
 	                		exit(1);
 	        			}
 
-	        			close(sd);
+	        			close(sd);*/
 
 	        			for (int index = 0; index < 6; index++){
 	        				send_req->h_dest[index] = (unsigned char)0xff;
