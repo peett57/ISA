@@ -120,7 +120,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 
 
 	//http://www.matveev.se/cpp/portscaner.htm
-
+	cout << "tcp entry" << endl;
 	struct timeval timeout;
 	if(wait > 0){
 			
