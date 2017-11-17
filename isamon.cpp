@@ -730,7 +730,7 @@ int main(int argc, char *argv[]){
 									return 1;
 				       			}
 				       			else if(rv == 0){
-				       				break;
+				       				fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
 				       			}else{
 				       				length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
