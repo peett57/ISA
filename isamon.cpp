@@ -632,9 +632,9 @@ int main(int argc, char *argv[]){
 	}
 
 	if(local_network == true){
-		cout << "lokalna siet" << endl;
+		cout << "lokalna siet - arp scan" << endl;
 	}else{
-		cout << "mimo lokalnu siet" << endl;;
+		cout << "mimo lokalnu siet - icmp scan" << endl;;
 	}
 	
 
