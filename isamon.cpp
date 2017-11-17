@@ -143,7 +143,8 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		//const char *hostname = "10.190.22.160";
 
 		// ip_char je ip adresa z masky
-		const char *hostname = ip;
+		//const char *hostname = ip;
+		const char *hostname = "10.190.20.159";
 		const char *protocol = "tcp";
 
 		int sockfd;
@@ -176,15 +177,18 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		
 
 		bzero(&serv_addr, sizeof(serv_addr));
+		cout << "bzero" << endl;
 		serv_addr.sin_family = AF_INET;
+		cout << "sin family" << endl;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
+		cout << "sin addr" << endl;
 
 
 
 		serv_addr.sin_port = htons(portno);
 
 
-
+		cout << "pred connect" << endl;
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
 			struct servent *srvport = getservbyport(htons(x), protocol);
 			 
