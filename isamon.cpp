@@ -201,6 +201,11 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 	return 0;
 }
 
+int udp_check(const char * ip, long int port_arg, long int wait){
+	cout << "UDP" << endl;
+	return 0;
+}
+
 
 //funkcia na kontrolu validity argumentov
 int arguments(int argc, char *argv[], Arguments *arguments){
@@ -881,7 +886,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 	}
 
 
