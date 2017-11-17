@@ -130,7 +130,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 	}
 
 	int port_start = 1;
-	int port_end = 200;
+	int port_end = 120;
 
 	if(port_arg != 0){
 		port_start = port_arg;
@@ -769,7 +769,7 @@ int main(int argc, char *argv[]){
 			                				if(arp_resp->sender_ip[3] == l){
 			                					cout << char_ip_for_scan << endl;
 			                					if(argumenty.t == true){
-			                						cout<< "tcp ///" << endl;
+			                						
 			                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 			                							fprintf((stderr), "TCP  \n" );
 														return 1;
