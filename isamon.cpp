@@ -626,16 +626,16 @@ int main(int argc, char *argv[]){
 	for(int i = dot2_index + 1; i < dot3_index ; i++){
 		byte3_s_myaddr += my_addr[i];
 	}
-	for(int i = dot3_index + 1; i < strlen(ip_str) ; i++){
+	for(int i = dot3_index + 1; i < strlen(my_addr) ; i++){
 		byte4_s_myaddr += my_addr[i];
 	}
 
 
 	int byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr;
-	byte1_myaddr = atoi(byte1_s.c_str());
-	byte2_myaddr = atoi(byte2_s.c_str());
-	byte3_myaddr = atoi(byte3_s.c_str());
-	byte4_myaddr = atoi(byte4_s.c_str());
+	byte1_myaddr = atoi(byte1_s_myaddr.c_str());
+	byte2_myaddr = atoi(byte2_s_myaddr.c_str());
+	byte3_myaddr = atoi(byte3_s_myaddr.c_str());
+	byte4_myaddr = atoi(byte4_s_myaddr.c_str());
 
 	cout<< byte1_myaddr << endl;
 	cout<< byte2_myaddr << endl;
