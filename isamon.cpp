@@ -559,7 +559,7 @@ int main(int argc, char *argv[]){
     		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
 	}
 
-	bool vypnutie == true;
+	bool vypnutie = true;
 	if(vypnutie == false){
 		stringstream convert;
 		string str_ip_for_scan;
