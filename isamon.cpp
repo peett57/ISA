@@ -644,6 +644,7 @@ int main(int argc, char *argv[]){
 			       	}
 
 
+			       	close(sd);
 					//vymazanie a priprava na dalsiu IP
 					str_ip_for_scan = "";
 					char_ip_for_scan = str_ip_for_scan.c_str();
