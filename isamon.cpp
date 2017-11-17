@@ -102,6 +102,96 @@ typedef struct{
 	long int wait;
 }Arguments;
 
+void tpc_check(const char * ip){
+	struct hostent *he;
+	struct in_addr **addr_list;
+	
+	/*if((he = gethostbyname(ip)) == NULL){
+		fprintf((stderr), "gethostbyname: TCP  \n" );
+		return 1;
+	}
+
+	string test;
+	addr_list = (struct in_addr **) he->h_addr_list;
+	for(int i = 0; addr_list[i] != NULL; i++){
+		test = inet_ntoa(*addr_list[i]);
+	}
+	cout << "test :" << test << endl;*/
+
+
+	//http://www.matveev.se/cpp/portscaner.htm
+
+	int port_start = 1;
+	int port_end = 200;
+
+	if(argumenty.port != 0){
+		port_start = argumenty.port;
+		port_end = argumenty.port;
+	}
+
+	for(int x = port_start ; x <= port_end; x++){
+		
+		int portno = x;
+		//const char *hostname = "10.190.22.160";
+
+		// ip_char je ip adresa z masky
+		const char *hostname = ip;
+		const char *protocol = "tcp";
+
+		int sockfd;
+		struct sockaddr_in serv_addr;
+		struct hostent *server;
+
+		sockfd = socket(AF_INET, SOCK_STREAM, 0);
+		if(sockfd < 0 ){
+			fprintf((stderr), "socket:  - %d\n" , x);
+			return 1;
+		}
+		if(argumenty.wait > 0){
+			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+				fprintf((stderr), "setsockopt:  \n" );
+				return 1;
+			}
+			if (setsockopt (sockfd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
+				fprintf((stderr), "setsockopt:  \n" );
+				return 1;
+			}
+		}
+
+		server = gethostbyname(hostname);
+		if(server == NULL){
+			fprintf((stderr), "gethostbyname:  \n" );
+			return 1;
+		}
+		
+
+		bzero(&serv_addr, sizeof(serv_addr));
+		serv_addr.sin_family = AF_INET;
+		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
+
+
+
+		serv_addr.sin_port = htons(portno);
+
+
+
+		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
+			struct servent *srvport = getservbyport(htons(x), protocol);
+			 
+			cout << ip << " TCP " << x << endl;
+			
+		}
+		
+		
+			
+		
+
+		close(sockfd);
+
+	}
+}
+
+
 //funkcia na kontrolu validity argumentov
 int arguments(int argc, char *argv[], Arguments *arguments){
 	if((argc == 2) && ((!strcmp(argv[1], "-h")) || (!strcmp(argv[1], "--help")))){
@@ -615,7 +705,7 @@ int main(int argc, char *argv[]){
 
 			       	//prijatie odpovedi
 			       	while(1){
-			       		
+
 
 			       		length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
@@ -632,6 +722,9 @@ int main(int argc, char *argv[]){
 		                			if(arp_resp->sender_ip[2] == k){
 		                				if(arp_resp->sender_ip[3] == l){
 		                					cout << char_ip_for_scan << endl;
+		                					if(argumenty.t == true){
+		                						tpc_check(char_ip_for_scan);
+		                					}
 		                				}
 		                			}
 		                		}
