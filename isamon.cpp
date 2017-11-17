@@ -123,7 +123,7 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 	//http://www.matveev.se/cpp/portscaner.htm
 
 	struct timeval timeout;
-	cout << wait << endl;
+
 	if(wait > 0){
 			
 			timeout.tv_sec = wait /1000;
@@ -738,7 +738,7 @@ int main(int argc, char *argv[]){
 				       				break;
 
 				       			}else{
-				       				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
+				       				fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
 
 				       				length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
