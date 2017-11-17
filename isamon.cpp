@@ -723,8 +723,8 @@ int main(int argc, char *argv[]){
 				       			fd_set set;
 				       			FD_ZERO(&set);
 				       			FD_SET(sd, &set);
-
-				       			int rv = select(sd + 1 , &set, NULL, NULL, &timeout);
+				       			int rv = 0;
+				       			rv = select(sd + 1 , &set, NULL, NULL, &timeout);
 				       			if(rv == -1){
 				       				fprintf((stderr), "select -1:  %d.%d.%d.%d\n", i,j,k,l );
 									return 1;
