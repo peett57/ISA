@@ -774,29 +774,32 @@ int main(int argc, char *argv[]){
 			                	}
 			                	
 			                }
-			                if(10 == i){
-		                		if(190 == j){
-		                			if(23 == k){
-		                				if(178 == l){
-		                					cout << char_ip_for_scan << endl;
-		                					if(argumenty.t == true){
-		                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
-		                							fprintf((stderr), "TCP  \n" );
-													return 1;
-		                						}
-		                					}
-		                				}
-		                			}
-		                		}
-		                	}
+			               
 		                	break;
 
 			                
 
 				       	}
-
-
 				       	close(sd);
+				       	
+				       	if(10 == i){
+	                		if(190 == j){
+	                			if(23 == k){
+	                				if(178 == l){
+	                					cout << char_ip_for_scan << endl;
+	                					if(argumenty.t == true){
+	                						if(tpc_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+	                							fprintf((stderr), "TCP  \n" );
+												return 1;
+	                						}
+	                					}
+	                				}
+	                			}
+	                		}
+	                	}
+
+
+				       	
 						//vymazanie a priprava na dalsiu IP
 						str_ip_for_scan = "";
 						char_ip_for_scan = str_ip_for_scan.c_str();
