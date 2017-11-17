@@ -734,12 +734,14 @@ int main(int argc, char *argv[]){
 				       				break;
 				       			}else{
 				       				fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
+				       				
 				       				length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
-
+				       				cout << length << endl;
 				       				if (length == -1){
 					                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 										return 1;
 					                }
+					                
 					            
 				       			}
 				       		}else{
