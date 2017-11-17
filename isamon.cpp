@@ -527,10 +527,10 @@ int main(int argc, char *argv[]){
 	cout << "4  " << final4 << endl;
 	
 	// vypis
-	cout << " byte1 - start : " << final1 << " end : " << end1 << endl;
-	cout << " byte1 - start : " << final2 << " end : " << end2 << endl;
-	cout << " byte1 - start : " << final3 << " end : " << end3 << endl;
-	cout << " byte1 - start : " << final4 << " end : " << end4 << endl;
+	cout << "byte1 - start : " << final1 << " end : " << end1 << endl;
+	cout << "byte1 - start : " << final2 << " end : " << end2 << endl;
+	cout << "byte1 - start : " << final3 << " end : " << end3 << endl;
+	cout << "byte1 - start : " << final4 << " end : " << end4 << endl;
 
 // ziskanie IP adresy MAC z daneho interfacu pre arp scan
 	int sd;
@@ -618,49 +618,24 @@ int main(int argc, char *argv[]){
 	cout<< byte2_myaddr << endl;
 	cout<< byte3_myaddr << endl;
 	cout<< byte4_myaddr << endl;*/
-
-		for (int index = 0; index < 6; index++){
-			send_req->h_dest[index] = (unsigned char)0xff;
-			arp_req->target_mac[index] = (unsigned char)0x00;
-			// doplnenie source MAC do hlavicky
-			send_req->h_source[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
-			arp_req->sender_mac[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
-			socket_address.sll_addr[index] = (unsigned char)ifr.ifr_hwaddr.sa_data[index];
-
+	bool local_network = false;
+	for(int i = final1 ; i <= end1 ; i++){
+		for(int j = final2; j <= end2; j++){
+			for(int k = final3; k <= end3; k++){
+				for(int l = final4; l <= end4 ; l++){
+					if(i == byte1_myaddr && j == byte2_myaddr && k == byte3_myaddr && l == byte4_myaddr){
+						local_network = true;
+					}
+				}
+			}
 		}
+	}
 
-
-		//priprava sockaddr_ll
-		socket_address.sll_family = AF_PACKET;
-		socket_address.sll_protocol = htons(ETH_P_ARP);
-		socket_address.sll_ifindex = ifindex;
-		socket_address.sll_hatype = htons(ARPHRD_ETHER);
-		socket_address.sll_pkttype = (PACKET_BROADCAST);
-		socket_address.sll_halen = MAC_LENGTH;
-		socket_address.sll_addr[6] = 0x00;
-		socket_address.sll_addr[7] = 0x00;
-
-		// protocol pre packet
-		send_req->h_proto = htons(ETH_P_ARP);
-
-		//vytvorenie arp requestu
-		arp_req->hardware_type = htons(HW_TYPE);
-		arp_req->protocol_type = htons(ETH_P_IP);
-		arp_req->hardware_len = MAC_LENGTH;
-		arp_req->protocol_len =IPV4_LENGTH;
-		arp_req->opcode = htons(ARP_REQUEST);
-		unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
-
-		for(int index=0;index<5;index++)
-	    {
-	            arp_req->sender_ip[index]=(unsigned char)source_ip[index];
-	    }
-	
-
-
-
-
-
+	if(local_network == true){
+		cout << "lokalna siet";
+	}else{
+		cout << "mimo lokalnu siet";
+	}
 	
 
 	bool vypnutie = true;
@@ -699,9 +674,7 @@ int main(int argc, char *argv[]){
 						//
 						char_ip_for_scan = str_ip_for_scan.c_str();
 
-						
-
-						
+												
 						
 						unsigned char target_ip[4] = {i,j,k,l};
 						
