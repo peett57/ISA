@@ -611,6 +611,7 @@ int main(int argc, char *argv[]){
 	}
 	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
 	
+	cout << my_addr << endl;
 
 
 	// ziskanie MAC
