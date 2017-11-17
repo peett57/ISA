@@ -137,8 +137,9 @@ int tpc_check(const char * ip, long int port_arg, long int wait){
 		port_end = port_arg;
 	}
 
+	cout << "tcp pred for" << endl;
 	for(int x = port_start ; x <= port_end; x++){
-		
+		cout << "tcp for " << x << endl;
 		int portno = x;
 		//const char *hostname = "10.190.22.160";
 
