@@ -658,7 +658,7 @@ int main(int argc, char *argv[]){
 
 	
 
-	bool vypnutie = false;
+	bool vypnutie = true;
 	if(vypnutie == false){
 		stringstream convert;
 		string str_ip_for_scan;
@@ -742,7 +742,7 @@ int main(int argc, char *argv[]){
 					    {
 					            arp_req->sender_ip[index]=(unsigned char)source_ip[index];
 					    }
-						
+
 	        			// doplnenie target ip adresy do arp requestu
 				        for(int index=0;index<5;index++)
 				        {
@@ -881,7 +881,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		cout << "close" << endl; 
+		tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 	}
 
 
