@@ -758,7 +758,7 @@ int main(int argc, char *argv[]){
 			                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
 								return 1;
 			                }*/
-			                /*if(htons(rcv_resp->h_proto) == PROTO_ARP){*/
+			                if(htons(rcv_resp->h_proto) == PROTO_ARP){
 				                if(arp_resp->sender_ip[0] == i){
 			                		if(arp_resp->sender_ip[1] == j){
 			                			if(arp_resp->sender_ip[2] == k){
@@ -775,7 +775,7 @@ int main(int argc, char *argv[]){
 			                		}
 			                	}
 			                	
-			                //}
+			                }
 			               
 		                	break;
 
