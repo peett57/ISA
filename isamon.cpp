@@ -817,6 +817,9 @@ int main(int argc, char *argv[]){
 						if(closed == false){
 							fprintf((stderr), "not closed:  %d.%d.%d.%d\n", i,j,k,l );
 						}
+						else{
+							fprintf((stderr), "closed:  %d.%d.%d.%d\n", i,j,k,l );
+						}
 					}
 				}
 			}
