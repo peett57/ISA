@@ -263,7 +263,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		memset(buffer,0x00,60);
 
-		buffer[32] = 0x00;
+		
 
 		if(sendto(sendsd, buffer, BUF_SIZE, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
 			fprintf((stderr), "sendto: udp %d \n", x );
@@ -290,17 +290,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 
 		while(1){
-			if(wait > 0){
-					
-					timeout.tv_sec = wait /1000;
-		    		timeout.tv_usec = (wait % 1000) * 1000;	
 
-		    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-			}
-			else{
-				fprintf((stderr), "pri UDP musi byt wait:   \n");
-				return 1;
-			}
 
     		struct servent *srvport;
     		fd_set set;
