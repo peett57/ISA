@@ -290,9 +290,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 
 		while(1){
-			if(x == 7){
-				cout << buffer << endl;
-			}
+
 
     		struct servent *srvport;
     		fd_set set;
@@ -326,6 +324,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 					return 1;
                 }
             }
+            if(x == 2){
+				cout << buffer << endl;
+			}
 
             struct ip *iphdr = (struct ip *)buffer;
     		int iplen = iphdr->ip_hl << 2;
