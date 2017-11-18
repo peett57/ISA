@@ -34,6 +34,8 @@
 #include <fcntl.h>
 #include <sys/select.h>
 
+#include <ip_icmp.h>
+
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
@@ -82,7 +84,7 @@ void printhelp(){
 }
 
 //funkcia na zistenie ci je argument cislo
-int je_to_cislo(char *s){
+int jetocislo(char *s){
 	int i;
 	while(*s != 0){
 		if (!isdigit(*s++)){
@@ -203,7 +205,8 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 
 int udp_check(const char * ip, long int port_arg, long int wait){
 	//open UDP socket
-	/*int sendsd, recvsd;
+	unsigned char buffer[BUF_SIZE];
+	int sendsd, recvsd;
 	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
 		fprintf((stderr), "socket: DGRAM - %d\n" , x);
 		return 1;
@@ -244,10 +247,51 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		serv_addr.sin_port = htons(portno);
 
-		if(sendto())
+		memset(buffer,0x00,60);
+
+		if(sendto(sendsd, buffer, sizeof(buffer), 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+			fprintf((stderr), "sendto: udp %d \n", x );
+			return 1;
+		}
+
+
+
+		struct timeval timeout;
+		if(wait > 0){
+				
+				timeout.tv_sec = wait /1000;
+	    		timeout.tv_usec = (wait % 1000) * 1000;	
+		}
+
+		while(1){
+			int length = 0;
+
+    		
+    		length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
+    		if(length == -1){
+    			fprintf((stderr), "recvfrom:  %d \n", x );
+				return 1;
+    		}
+    		
+    		
+    		
+    		struct iphdr *iphdr = (struct ip *)buffer;
+    		int iplen = iphdr->ip_hl << 2;
+
+    		struct icmphdr *icmp = (struct icmp *)(buffer + iplen);
+
+    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
+    			break;
+    		}else{
+    			cout << ip << " UDP " << x << endl;
+    		}
+
+      			
+
+		}
 
 		
-	}*/
+	}
 	cout << "UDP" << endl;
 	return 0;
 }
@@ -267,7 +311,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	char *pEnd;
 	for(int i = 1; i < argc; i++){
 		if(!strcmp(argv[i], "-p")){
-			if(argc == i +1 || (je_to_cislo(argv[i+1]) == 0) || arguments->port != 0){
+			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->port != 0){
 				return EXIT_FAILURE;
 			}
 			arguments->port = strtol(argv[i+1],&pEnd, 10);
@@ -289,7 +333,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			arguments->u = true;
 		}
 		else if(!strcmp(argv[i], "-w")){
-			if(argc == i +1 || (je_to_cislo(argv[i+1]) == 0) || arguments->wait != 0  ){
+			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->wait != 0  ){
 				return EXIT_FAILURE;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
@@ -369,12 +413,12 @@ int main(int argc, char *argv[]){
 	cout << "int:" << interface << endl;
 	cout << "network:" << network << endl;*/
 
-	if(argumenty.u == true){
+	/*if(argumenty.u == true){
 		cout << "udp" << endl;
 	}
 	if(argumenty.t == true){
 		cout << "tcp" << endl;
-	}
+	}*/
 
 	struct timeval timeout;
 	if(argumenty.wait > 0){
