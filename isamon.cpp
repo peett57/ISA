@@ -222,10 +222,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		return 1;
 	}
 	//open receive socket pre ICMP response packet
-	/*if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
+	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
 		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
-	}*/
+	}
 	const char *protocol = "udp";
 
 	int port_start = 1;
@@ -251,11 +251,6 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 
 	for(int x = port_start ; x <= port_end; x++){
-
-		if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
-			fprintf((stderr), "socket: RAW - \n" );
-			return 1;
-		}
 		int portno = x;
 		
 		const char *hostname = ip;
@@ -302,7 +297,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
-   			else if(!FD_ISSET(recvsd, &set)){
+   			else if(/*!FD_ISSET(recvsd, &set*/ rv == 0)){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
    				
@@ -341,12 +336,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
       			
 
 		}
-		close(recvsd);
+		
 
 		
 	}
 	close(sendsd);
-	
+	close(recvsd);
 	cout << "UDP" << endl;
 	return 0;
 }
