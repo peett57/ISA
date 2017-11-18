@@ -965,7 +965,7 @@ int main(int argc, char *argv[]){
         fprintf((stderr), "getifaddrs  \n" );
 		return 1;
    }
-   int cnt = 0;
+   
    for(ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++){
 
    	if(ifa->ifa_addr == NULL){
@@ -977,11 +977,11 @@ int main(int argc, char *argv[]){
    		char *help;
    		cout << ifa->ifa_name << endl;
    		for(int i = 0; i < strlen(ifa->ifa_name) ; i++){
-   			help[i] = ifa->ifa_name[i];
+   			interfaces[i] = ifa->ifa_name[i];
 
-   			interfaces[cnt] = help;
+   			
    		}
-   		cnt++;
+   		
    	}
 
 
@@ -992,7 +992,7 @@ int main(int argc, char *argv[]){
 	
   
    for(int i = 0; i < sizeof(interfaces) ; i++){
-   	cout << "interface : " << i << " - " << interfaces[i] << endl;
+   	cout << interfaces << endl;
    }
 	
 
