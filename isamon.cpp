@@ -215,12 +215,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
 	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
-		fprintf((stderr), "socket: DGRAM - %d\n" , x);
+		fprintf((stderr), "socket: DGRAM - \n" );
 		return 1;
 	}
 	//open receive socket pre ICMP response packet
 	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
-		fprintf((stderr), "socket: RAW - %d\n" , x);
+		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
 	}
 
@@ -300,7 +300,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
     		fd_set set;
    			FD_ZERO(&set);
-   			FD_SET(sd, &set);
+   			FD_SET(recvsd, &set);
    			int rv = 0;
    			rv = select(recvsd + 1 , &set, NULL, NULL, &timeout);
    			if(rv == -1){
@@ -319,14 +319,14 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
 
    				if (length == -1){
-                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
+                    fprintf((stderr), "receive: %d\n", x );
 					return 1;
                 }
 
-                struct iphdr *iphdr = (struct ip *)buffer;
+                struct ip *iphdr = (struct ip *)buffer;
 	    		int iplen = iphdr->ip_hl << 2;
 
-	    		struct icmphdr *icmp = (struct icmp *)(buffer + iplen);
+	    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
 
 	    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
 	    			break;
