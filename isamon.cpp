@@ -332,6 +332,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     			cout << x << " Unreachable" << endl; 
     			break;              
         
+			}else{
+				cout << x << " reachable" << endl; 
+    			break; 
 			}
    			
 
