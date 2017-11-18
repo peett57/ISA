@@ -303,7 +303,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			FD_ZERO(&set);
    			FD_SET(recvsd, &set);
    			int rv = 0;
-   			/*rv = select(recvsd + 1 , &set, NULL, NULL, &timeout);
+   			rv = select(recvsd + 1 , &set, NULL, NULL, &timeout);
    			if(rv == -1){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
@@ -315,7 +315,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				
    				break;
 
-   			}else{*/
+   			}else{
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
 
    				length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
@@ -338,7 +338,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	    		}
                 
             
-   			//}
+   			}
 
       			
 
@@ -466,6 +466,11 @@ int main(int argc, char *argv[]){
 		interface_set = true;
 		interface = argv[argumenty.interface];
 		
+	}
+
+	if(argumenty.port != 0 && argumenty.t == false && argumenty.u == false ){
+		fprintf((stderr), "Wrong arguments! -p bez protokolu TCP alebo UDP\n");
+		return 1;
 	}
 		
 	
@@ -1022,9 +1027,9 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
+		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
-		//cout << "closed" << endl;
+		cout << "closed" << endl;
 	}
 
 
