@@ -361,7 +361,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 }
 
 int main(int argc, char *argv[]){
-	//bool interface_set = false;
+	bool interface_set = false;
 	Arguments argumenty;
 	argumenty.port = 0;
 	argumenty.wait = 0;
@@ -401,17 +401,15 @@ int main(int argc, char *argv[]){
 	
 	char *interface;
 	if(argumenty.interface == 0){
-		//interface_set = true;
+		interface_set = false;
 		//zatial takto
 		cout << "nezadany interface - nastavenie defaultneho int na eth1" << endl;
-		interface[0] = 'e';
-		interface[1] = 't';
-		interface[2] = 'h';
-		interface[3] = '1';
-		cout << interface <<endl;
+		
+		
 	}else{
+		interface_set = true;
 		interface = argv[argumenty.interface];
-		cout << interface <<endl;
+		
 	}
 		
 	
@@ -642,7 +640,12 @@ int main(int argc, char *argv[]){
 	}
 
 	//bude sa robit na konkretnom interface
-	strcpy(ifr.ifr_name, interface);
+	if(interface_set == true){
+		strcpy(ifr.ifr_name, interface);
+	}else{
+		strcpy(ifr.ifr_name, "eth1");
+	}
+	
 
 	//ethernet index
 	if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
