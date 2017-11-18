@@ -330,7 +330,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
             struct ip *iphdr = (struct ip *)buffer;
             //cout << iphdr->ip_hl << endl;
-    		int iplen = iphdr->ip_hl << 4;
+    		unsigned char iplen = iphdr->ip_hl << 2;
     		//cout << iplen << endl;
 
 
