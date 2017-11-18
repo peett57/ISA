@@ -291,9 +291,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     		fd_set set;
    			FD_ZERO(&set);
    			FD_SET(recvsd, &set);
-   			int rv = 0;
-   			rv = select(recvsd + 1 , &set, NULL, NULL, &timeout);
-   			if(rv == -1){
+   			
+   			
+   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
