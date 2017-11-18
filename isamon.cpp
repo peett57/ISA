@@ -271,11 +271,11 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 
-		struct timeval timeout;
+		struct timeval tout;
 		if(wait > 0){
 				
-				timeout.tv_sec = wait /1000;
-	    		timeout.tv_usec = (wait % 1000) * 1000;	
+				tout.tv_sec = wait /1000;
+	    		tout.tv_usec = (wait % 1000) * 1000;	
 
 	    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
 		}
@@ -298,7 +298,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			FD_SET(recvsd, &set);
    			
    			
-   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
+   			if((select(recvsd + 1 , &set, NULL, NULL, &tout)) < 0 ){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
@@ -1041,25 +1041,14 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//udp_check("10.190.23.178",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 		//udp_check("192.168.2.1",argumenty.port,argumenty.wait);
 
-		udp_check("10.190.22.250",1,argumenty.wait); 
-		udp_check("10.190.22.250",17,argumenty.wait); 
-		udp_check("10.190.22.250",44,argumenty.wait); 
-		udp_check("10.190.22.250",69,argumenty.wait); 
-		udp_check("10.190.22.250",55,argumenty.wait); 
-		udp_check("10.190.22.250",93,argumenty.wait); 
-		udp_check("10.190.22.250",147,argumenty.wait); 
-		udp_check("10.190.22.250",248,argumenty.wait); 
-		udp_check("10.190.22.250",111,argumenty.wait); 
-		udp_check("10.190.22.250",48,argumenty.wait); 
-		udp_check("10.190.22.250",96,argumenty.wait); 
-		udp_check("10.190.22.250",158,argumenty.wait); 
+		
 
 
 	}
