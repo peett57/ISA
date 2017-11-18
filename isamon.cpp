@@ -1041,12 +1041,27 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//udp_check("10.190.23.178",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 		//udp_check("192.168.2.1",argumenty.port,argumenty.wait);
+
+		udp_check("10.190.22.250",1,argumenty.wait); 
+		udp_check("10.190.22.250",17,argumenty.wait); 
+		udp_check("10.190.22.250",44,argumenty.wait); 
+		udp_check("10.190.22.250",68,argumenty.wait); 
+		udp_check("10.190.22.250",55,argumenty.wait); 
+		udp_check("10.190.22.250",93,argumenty.wait); 
+		udp_check("10.190.22.250",147,argumenty.wait); 
+		udp_check("10.190.22.250",248,argumenty.wait); 
+		udp_check("10.190.22.250",111,argumenty.wait); 
+		udp_check("10.190.22.250",48,argumenty.wait); 
+		udp_check("10.190.22.250",96,argumenty.wait); 
+		udp_check("10.190.22.250",158,argumenty.wait); 
+
+
 	}
 
 
