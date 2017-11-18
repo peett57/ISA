@@ -506,8 +506,11 @@ int main(int argc, char *argv[]){
 			for(int x = 0; x < i ; x++){
 				ip_address += network[x]; 
 			}
-			mask += network[i+1];
-			mask += network[i+2];
+			for(int y = i; y < strlen(network) ; y++){
+				mask += network[y];
+				
+			}
+				
 		}
 	}
 
