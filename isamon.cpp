@@ -283,7 +283,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 
-		fcntl(recvsd, F_SETFL, O_NONBLOCK); 
+		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 		while(1){
 			
 
@@ -1029,7 +1029,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		udp_check("10.190.23.178",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
