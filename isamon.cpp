@@ -976,7 +976,7 @@ int main(int argc, char *argv[]){
    	if(family == AF_INET){
    		
    		cout << ifa->ifa_name << endl;
-   		interfaces += ifa->ifa_name;
+   		interfaces = ifa->ifa_name;
    		
    	}
 
