@@ -959,7 +959,7 @@ int main(int argc, char *argv[]){
 	struct ifaddrs *ifaddr, *ifa;
 	int family, s, n;
 	char host_test[NI_MAXHOST];
-	char *interfaces;
+	char **interfaces;
 
 	if (getifaddrs(&ifaddr) == -1) {
         fprintf((stderr), "getifaddrs  \n" );
@@ -974,7 +974,7 @@ int main(int argc, char *argv[]){
    	family = ifa->ifa_addr->sa_family;
    	
    	if(family == AF_INET){
-   		interfaces[n] = ifa->ifa_name;
+   		interfaces[n][n] = ifa->ifa_name;
    	}
 
 
@@ -984,7 +984,7 @@ int main(int argc, char *argv[]){
 
 	
    for(int i = 0 ; i < sizeof(interfaces) ; i++ ){
-   	cout << interfaces[i] << endl;
+   	cout << interfaces[i][i] << endl;
    }
 
 	
