@@ -971,7 +971,7 @@ int main(int argc, char *argv[]){
    		continue;
    	}
    	family = ifa->ifa_addr->sa_family;
-   	cout << ifa->name << endl;
+   	cout << ifa->ifa_name << endl;
    }
 
 	
