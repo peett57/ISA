@@ -271,18 +271,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 
-		struct timeval timeout;
-		if(wait > 0){
-				
-				timeout.tv_sec = wait /1000;
-	    		timeout.tv_usec = (wait % 1000) * 1000;	
-
-	    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-		}
-		else{
-			fprintf((stderr), "pri UDP musi byt wait:   \n");
-			return 1;
-		}
+		
 
 		memset(buffer,0x00,60);
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
@@ -296,6 +285,20 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     		fd_set set;
    			FD_ZERO(&set);
    			FD_SET(recvsd, &set);
+
+
+   			struct timeval timeout;
+			if(wait > 0){
+					
+					timeout.tv_sec = wait /1000;
+		    		timeout.tv_usec = (wait % 1000) * 1000;	
+
+		    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
+			}
+			else{
+				fprintf((stderr), "pri UDP musi byt wait:   \n");
+				return 1;
+			}
    			
    			
    			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
@@ -351,17 +354,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
       			
 
 		}
-		if(wait > 0){
-				
-				timeout.tv_sec = wait /1000;
-	    		timeout.tv_usec = (wait % 1000) * 1000;	
 
-	    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-		}
-		else{
-			fprintf((stderr), "pri UDP musi byt wait:   \n");
-			return 1;
-		}
 
 		
 
