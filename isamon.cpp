@@ -241,6 +241,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
+
+		if(x == 8){
+			cout << "8 - 1" << endl;
+		}
 		
 		const char *hostname = ip;
 
@@ -288,7 +292,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 		while(1){
 			
-
+			if(x == 8){
+				cout << "8 - while" << endl;
+			}
     		struct servent *srvport;
     		fd_set set;
    			FD_ZERO(&set);
@@ -303,7 +309,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
    				
-
+   				if(x == 8){
+					cout << "8 - FD_ISSET" << endl;
+				}
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
    					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
@@ -313,13 +321,18 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    			}else{
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
-
+   				if(x == 8){
+					cout << "8 - pred rcv" << endl;
+				}
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
 
    				if (length == -1){
                     fprintf((stderr), "receive: %d\n", x );
 					return 1;
                 }
+                if(x == 8){
+					cout << "8 - po rcv" << endl;
+				}
             }
 
             struct ip *iphdr = (struct ip *)buffer;
