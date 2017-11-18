@@ -260,6 +260,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 			fprintf((stderr), "sendto: udp %d \n", x );
 			return 1;
 		}
+		close(sendsd);
 
 
 
@@ -340,6 +341,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
       			
 
 		}
+		close(recvsd);
 
 		
 	}
