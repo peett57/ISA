@@ -633,7 +633,7 @@ int main(int argc, char *argv[]){
 	cout << "byte1 - start : " << final3 << " end : " << end3 << endl;
 	cout << "byte1 - start : " << final4 << " end : " << end4 << endl;
 
-// ziskanie IP adresy MAC z daneho interfacu pre arp scan
+// ziskanie IP adresy MAC z daneho interfacu 
 	int sd;
 	int ifindex;
 	struct ifreq ifr;
@@ -644,7 +644,7 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-	//bude sa robit na konkretnom interface
+	//bude sa robit na konkretnom interface vzchodzi interface je eth1
 	if(interface_set == true){
 		strcpy(ifr.ifr_name, interface);
 	}else{
@@ -659,13 +659,14 @@ int main(int argc, char *argv[]){
 	}
 	ifindex = ifr.ifr_ifindex;
 
+	//ziskanie mojej IP adresy na danom interface
 	if (ioctl(sd, SIOCGIFADDR, &ifr) == -1) {
 		fprintf((stderr), "SIOCGIFINDEX  - moja ip adresa na interface\n" );
 		return 1;
 	}
 	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
 	
-	cout << my_addr << endl;
+	//cout << my_addr << endl;
 
 
 	// ziskanie MAC
@@ -676,6 +677,7 @@ int main(int argc, char *argv[]){
 
 	close(sd);
 
+	//spracovanie adresy a zistenie ci je moja adresa v sieti
 	dot1_index = 0;
 	dot2_index = 0;
 	dot3_index = 0;
@@ -719,6 +721,8 @@ int main(int argc, char *argv[]){
 	cout<< byte2_myaddr << endl;
 	cout<< byte3_myaddr << endl;
 	cout<< byte4_myaddr << endl;*/
+
+	// ak je adresa v sieti tak nastavim scan lokalnej adresy
 	bool local_network = false;
 	for(int i = final1 ; i <= end1 ; i++){
 		for(int j = final2; j <= end2; j++){
@@ -966,8 +970,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		cout << "closed" << endl;
+		tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//cout << "closed" << endl;
 	}
 
 
