@@ -226,7 +226,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
 	}
-	const char *protocol = "udp";
+	const char *protocol = "udpn";
 
 	int port_start = 1;
 	int port_end = 200;
@@ -319,7 +319,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
-   					cout << ip << " UDP " << x << "name " << srvport->s_name << endl;
+   					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    				}
    				
    				break;
@@ -1037,8 +1037,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 	}
