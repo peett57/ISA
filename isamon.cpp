@@ -545,6 +545,7 @@ int main(int argc, char *argv[]){
 	cout << "ip adresa koniec : " << ip_str << endl;
 
 	//kontrola ci je maska v rozsahu 4-30
+	cout << mask_int << endl;
 	if(mask_int < 4 || mask_int > 30){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
