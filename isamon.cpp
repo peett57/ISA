@@ -34,7 +34,7 @@
 #include <fcntl.h>
 #include <sys/select.h>
 
-#include <ip_icmp.h>
+#include <icmp.h>
 
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
