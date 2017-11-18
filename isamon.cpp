@@ -328,7 +328,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	    		int iplen = iphdr->ip_hl << 2;
 
 	    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
-
+	    		cout <<"port : " << x << " " << icmp_type << endl; 
 	    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
 	    			break;
 	    		}else{
