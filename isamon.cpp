@@ -212,7 +212,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 
 int udp_check(const char * ip, long int port_arg, long int wait){
 	//open UDP socket
-	/*unsigned char buffer[BUF_SIZE];
+	unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
 	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
 		fprintf((stderr), "socket: DGRAM - %d\n" , x);
@@ -269,12 +269,16 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 				timeout.tv_sec = wait /1000;
 	    		timeout.tv_usec = (wait % 1000) * 1000;	
 		}
+		else{
+			fprintf((stderr), "pri UDP musi byt wait:   \n");
+			return 1;
+		}
 
 		while(1){
 			int length = 0;
 
     		
-    		length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
+    		/*length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
     		if(length == -1){
     			fprintf((stderr), "recvfrom:  %d \n", x );
 				return 1;
@@ -291,14 +295,54 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     			break;
     		}else{
     			cout << ip << " UDP " << x << endl;
-    		}
+    		}*/
+
+
+    		fd_set set;
+   			FD_ZERO(&set);
+   			FD_SET(sd, &set);
+   			int rv = 0;
+   			rv = select(recvsd + 1 , &set, NULL, NULL, &timeout);
+   			if(rv == -1){
+   				fprintf((stderr), "select -1:  %d\n", x );
+				return 1;
+   			}
+   			else if(rv == 0){
+   				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
+
+   				
+   				break;
+
+   			}else{
+   				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
+
+   				length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
+
+   				if (length == -1){
+                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
+					return 1;
+                }
+
+                struct iphdr *iphdr = (struct ip *)buffer;
+	    		int iplen = iphdr->ip_hl << 2;
+
+	    		struct icmphdr *icmp = (struct icmp *)(buffer + iplen);
+
+	    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
+	    			break;
+	    		}else{
+	    			cout << ip << " UDP " << x << endl;
+	    		}
+                
+            
+   			}
 
       			
 
 		}
 
 		
-	}*/
+	}
 	cout << "UDP" << endl;
 	return 0;
 }
@@ -971,9 +1015,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		//tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
-		cout << "closed" << endl;
+		//cout << "closed" << endl;
 	}
 
 
