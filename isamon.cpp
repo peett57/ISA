@@ -236,6 +236,15 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		port_end = port_arg;
 	}
 
+	struct timeval timeout;
+	if(wait > 0){
+			
+			timeout.tv_sec = wait /1000;
+    		timeout.tv_usec = (wait % 1000) * 1000;	
+
+    		cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
+	}
+
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
 		
@@ -268,12 +277,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 
 
-		struct timeval timeout;
-		if(wait > 0){
-				
-				timeout.tv_sec = wait /1000;
-	    		timeout.tv_usec = (wait % 1000) * 1000;	
-		}
+
 		else{
 			fprintf((stderr), "pri UDP musi byt wait:   \n");
 			return 1;
@@ -281,26 +285,6 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		while(1){
 			int length = 0;
-
-    		
-    		/*length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
-    		if(length == -1){
-    			fprintf((stderr), "recvfrom:  %d \n", x );
-				return 1;
-    		}
-    		
-    		
-    		
-    		struct iphdr *iphdr = (struct ip *)buffer;
-    		int iplen = iphdr->ip_hl << 2;
-
-    		struct icmphdr *icmp = (struct icmp *)(buffer + iplen);
-
-    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-    			break;
-    		}else{
-    			cout << ip << " UDP " << x << endl;
-    		}*/
 
     		struct servent *srvport;
     		fd_set set;
