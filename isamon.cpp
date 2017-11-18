@@ -976,7 +976,8 @@ int main(int argc, char *argv[]){
    	if(family == AF_INET){
    		cout << ifa->ifa_name << endl;
    		for(int i = 0; i < strlen(ifa->ifa_name) ; i++){
-   			interfaces[n] += ifa->ifa_name[i];
+   			//interfaces[n] += ifa->ifa_name[i];
+   			cout << ifa->ifa_name[i] << endl;
    		}
    	}
 
@@ -987,9 +988,9 @@ int main(int argc, char *argv[]){
 
 	
   
-   for(int i = 0; i < sizeof(interfaces) ; i++){
+   /*for(int i = 0; i < sizeof(interfaces) ; i++){
    	cout << "interface : " << i << " - " << interfaces[i] << endl;
-   }
+   }*/
 	
 
 	return 0;
