@@ -795,7 +795,7 @@ int main(int argc, char *argv[]){
 		cout << "mimo lokalnu siet - icmp scan" << endl;;
 	}
 	
-	bool closed = true;
+	bool closed = false;
 	if(closed == false){
 	//if(local_network == true){
 		stringstream convert;
@@ -1030,9 +1030,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
-		tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
+		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 	}
 
