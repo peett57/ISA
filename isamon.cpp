@@ -328,11 +328,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
             struct ip *iphdr = (struct ip *)buffer;
     		int iplen = iphdr->ip_hl << 2;
-    		if(x == 2){
-				for(int g = 0 ; g < 60; g++){
-					cout << buffer[g] << endl;
-				}
-			}
+    		
 
     		struct icmp *icmp = (struct icmp *)(buffer + iplen);
 
