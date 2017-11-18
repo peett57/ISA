@@ -973,6 +973,7 @@ int main(int argc, char *argv[]){
    	family = ifa->ifa_addr->sa_family;
    	cout << ifa->ifa_name << endl;
    }
+   freeifaddrs(ifaddr);
 
 	
 
