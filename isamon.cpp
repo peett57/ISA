@@ -727,7 +727,7 @@ int main(int argc, char *argv[]){
 	}
 	
 
-	bool vypnutie = true;
+	bool vypnutie = false;
 	if(vypnutie == false){
 		stringstream convert;
 		string str_ip_for_scan;
