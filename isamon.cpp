@@ -972,8 +972,8 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		//tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
-		//cout << "closed" << endl;
+		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
+		cout << "closed" << endl;
 	}
 
 
