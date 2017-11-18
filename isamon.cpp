@@ -228,13 +228,15 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 	const char *protocol = "udp";
 
-	int port_start = 1;
+	/*int port_start = 1;
 	int port_end = 200;
 
 	if(port_arg != 0){
 		port_start = port_arg;
 		port_end = port_arg;
-	}
+	}*/
+	int port_start = port_arg;
+	int port_end = port_arg;	
 
 	int length = 0;
 	
@@ -1029,7 +1031,14 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		if(argumenty.port == 0){
+			for(int z = 1; z <= 200; z++){
+				udp_check("10.190.22.250",z,argumenty.wait); 
+			}
+		}else{
+			udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		}
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//udp_check("10.190.23.178",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
