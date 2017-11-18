@@ -132,11 +132,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 
 	struct timeval timeout;
 
-	if(wait > 0){
-			
-			timeout.tv_sec = wait /1000;
-    		timeout.tv_usec = (wait % 1000) * 1000;	
-	}
+	
 
 	int port_start = 1;
 	//int port_end = 65535;
@@ -151,7 +147,11 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 		
 		int portno = x;
 		
-
+		if(wait > 0){
+			
+			timeout.tv_sec = wait /1000;
+    		timeout.tv_usec = (wait % 1000) * 1000;	
+		}
 		
 		const char *hostname = ip;
 		const char *protocol = "tcp";
@@ -480,12 +480,12 @@ int main(int argc, char *argv[]){
 		cout << "tcp" << endl;
 	}*/
 
-	struct timeval timeout;
+	/*struct timeval timeout;
 	if(argumenty.wait > 0){
 			
 			timeout.tv_sec = argumenty.wait /1000;
     		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
-	}
+	}*/
 
 	string str = string(network);
 
@@ -795,7 +795,7 @@ int main(int argc, char *argv[]){
 		cout << "mimo lokalnu siet - icmp scan" << endl;;
 	}
 	
-	bool closed = true;
+	bool closed = false;
 	if(closed == false){
 	//if(local_network == true){
 		stringstream convert;
@@ -911,6 +911,13 @@ int main(int argc, char *argv[]){
 				        }
 
 				       	memset(buffer,0x00,60);
+
+				       	struct timeval timeout;
+						if(argumenty.wait > 0){
+								
+								timeout.tv_sec = argumenty.wait /1000;
+					    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
+						}
 
 				       	//prijatie odpovedi
 				       	while(1){
