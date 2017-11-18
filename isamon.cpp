@@ -959,7 +959,7 @@ int main(int argc, char *argv[]){
 	struct ifaddrs *ifaddr, *ifa;
 	int family, s, n;
 	char host_test[NI_MAXHOST];
-	char interfaces[];
+	char *interfaces;
 
 	if (getifaddrs(&ifaddr) == -1) {
         fprintf((stderr), "getifaddrs  \n" );
