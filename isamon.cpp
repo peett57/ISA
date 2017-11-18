@@ -404,7 +404,7 @@ int main(int argc, char *argv[]){
 		//interface_set = true;
 		//zatial takto
 		cout << "nezadany interface - nastavenie defaultneho int na eth1" << endl;
-		interface = "eth1";
+		interface = 'eth1';
 	}else{
 		interface = argv[argumenty.interface];
 		cout << interface <<endl;
