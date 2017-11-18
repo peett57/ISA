@@ -326,11 +326,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     		int iplen = iphdr->ip_hl << 2;
 
     		struct icmp *icmp = (struct icmp *)(buffer + iplen);
-    		memset(buffer,0x00,60);
+
     		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-    			cout << x << " Unreachable" << endl; 
+    			cout << x << " Unreachable" << endl;
+    			memset(buffer,0x00,60); 
     			break;              
         
 			}
