@@ -720,7 +720,7 @@ int main(int argc, char *argv[]){
 		cout << "mimo lokalnu siet - icmp scan" << endl;;
 	}
 	
-	bool close = true
+	bool close = true;
 	if(close == false){
 	//if(local_network == true){
 		stringstream convert;
