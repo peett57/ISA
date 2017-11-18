@@ -112,7 +112,7 @@ typedef struct{
 }Arguments;
 
 int tcp_check(const char * ip, long int port_arg, long int wait){
-	struct hostent *he;
+	
 	struct in_addr **addr_list;
 	
 	/*if((he = gethostbyname(ip)) == NULL){
@@ -146,7 +146,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 		port_start = port_arg;
 		port_end = port_arg;
 	}
-
+	struct servent *srvport;
 	for(int x = port_start ; x <= port_end; x++){
 		
 		int portno = x;
@@ -194,9 +194,12 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
-			struct servent *srvport = getservbyport(htons(x), protocol);
+			srvport = getservbyport(htons(x), protocol);
 			 
-			cout << ip << " TCP " << x << endl;
+			if(srvport != NULL){
+				cout << ip << " TCP " << x << endl;
+			}
+			
 			
 		}
 		
@@ -223,6 +226,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
 	}
+	const char *protocol = "udp";
 
 	int port_start = 1;
 	int port_end = 200;
@@ -298,7 +302,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     			cout << ip << " UDP " << x << endl;
     		}*/
 
-
+    		struct servent *srvport;
     		fd_set set;
    			FD_ZERO(&set);
    			FD_SET(recvsd, &set);
@@ -311,7 +315,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			else if(!FD_ISSET(recvsd, &set)){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
-   				cout << ip << " UDP " << x << endl;
+   				
+
+   				srvport = getservbyport(htons(x), protocol);
+   				if(srvport != NULL){
+   					cout << ip << " UDP " << x << endl;
+   				}
    				
    				break;
 
