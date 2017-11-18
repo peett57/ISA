@@ -974,9 +974,9 @@ int main(int argc, char *argv[]){
    	family = ifa->ifa_addr->sa_family;
    	
    	if(family == AF_INET){
-   		char *help;
-   		cout << ifa->ifa_name << endl;
    		
+   		cout << ifa->ifa_name << endl;
+   		interfaces += ifa->ifa_name;
    		
    	}
 
@@ -987,7 +987,7 @@ int main(int argc, char *argv[]){
 
 	
   
-   
+   cout<< interfaces << endl;
 	
 
 	return 0;
