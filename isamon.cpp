@@ -285,7 +285,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 		memset(buffer,0x00,60);
-		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
+		fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
 
@@ -321,6 +321,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    				if (length == -1){
                     fprintf((stderr), "receive: %d\n", x );
+                    close(sendsd);
+					close(recvsd);
 					return 1;
                 }
             }
