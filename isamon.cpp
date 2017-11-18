@@ -288,10 +288,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
-		cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
+		
 		while(1){
 
-			cout << timeout.tv_sec << " in " << timeout.tv_usec << endl;
+
     		struct servent *srvport;
     		fd_set set;
    			FD_ZERO(&set);
@@ -343,6 +343,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     			break;              
         
 			}
+			cout<< x << " here " << endl;
    			
 
       			
