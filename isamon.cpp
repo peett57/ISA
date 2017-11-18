@@ -288,10 +288,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
-		struct ip *iphdr;
-		int iplen  ;
-
-		struct icmp *icmp ;
+		
 		while(1){
 			
 
@@ -319,7 +316,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    			}else{
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
-
+   				memset(buffer,0x00,60);
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
 
    				if (length == -1){
@@ -328,10 +325,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
                 }
             }
 
-            iphdr = (struct ip *)buffer;
-    		iplen = iphdr->ip_hl << 2;
+            struct ip *iphdr = (struct ip *)buffer;
+    		int iplen = iphdr->ip_hl << 2;
 
-    		icmp = (struct icmp *)(buffer + iplen);
+    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
 
     		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
 
