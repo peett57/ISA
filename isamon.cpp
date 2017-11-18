@@ -977,7 +977,7 @@ int main(int argc, char *argv[]){
    		
    		cout << ifa->ifa_name << endl;
    		for(int i = 0; i < strlen(ifa->ifa_name) ; i++){
-   			interfaces[cnt][i] += ifa->ifa_name[i];
+   			interfaces[cnt][i] = ifa->ifa_name[i];
 
    			//cout << ifa->ifa_name[i] << endl;
    		}
