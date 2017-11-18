@@ -308,12 +308,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
-   			else if(!FD_ISSET(recvsd, &set)){
+   			else if(rv == 0){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
-   				cout <<"port : " << x << " FD_ISSET "  << endl;
+   				cout <<"port : " << x << " timeout "  << endl;
    				
-   				return 1;
+   				break;
 
    			}else{
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
@@ -329,7 +329,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	    		int iplen = iphdr->ip_hl << 2;
 
 	    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
-	    		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
+	    		cout <<"port : " << x << " " << icmp->icmp_code << endl;
 
 	    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
 	    			break;
@@ -1022,10 +1022,7 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		if(udp_check("127.0.0.1",argumenty.port,argumenty.wait) != 0){
-			fprintf((stderr), "UDP  \n" );
-			return 1;
-		} 
+		udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 	}
