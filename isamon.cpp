@@ -622,13 +622,6 @@ int main(int argc, char *argv[]){
 
 // ziskanie IP adresy MAC z daneho interfacu pre arp scan
 	int sd;
-	unsigned char buffer[BUF_SIZE];
-	struct ifreq ifr;
-	struct ethhdr *send_req = (struct ethhdr *)buffer;
-	struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
-	struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
-	struct arp_header *arp_resp = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
-	struct sockaddr_ll socket_address;
 	int ifindex;
 
 	sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
@@ -727,8 +720,8 @@ int main(int argc, char *argv[]){
 	}
 	
 
-	bool vypnutie = false;
-	if(vypnutie == false){
+	
+	if(local_network == true){
 		stringstream convert;
 		string str_ip_for_scan;
 		const char * char_ip_for_scan;
@@ -736,7 +729,6 @@ int main(int argc, char *argv[]){
 			for(int j = final2; j <= end2; j++){
 				for(int k = final3; k <= end3; k++){
 					for(int l = final4; l <= end4 ; l++){
-						//cout << "IP address: " << i << "." << j << "." << k << "." << l << endl; 
 						//vsetky ip adresy ktore mam prechadzat na danom networku 
 						convert << i;
 						str_ip_for_scan += convert.str();
@@ -768,6 +760,14 @@ int main(int argc, char *argv[]){
 						unsigned char target_ip[4] = {i,j,k,l};
 						
 						int ret,length = 0;
+
+						unsigned char buffer[BUF_SIZE];
+						struct ifreq ifr;
+						struct ethhdr *send_req = (struct ethhdr *)buffer;
+						struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
+						struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
+						struct arp_header *arp_resp = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
+						struct sockaddr_ll socket_address;
 
 
 						memset(buffer,0x00,60);
@@ -948,7 +948,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		cout << "mimo siet"
 	}
 
 
