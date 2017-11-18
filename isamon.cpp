@@ -965,7 +965,7 @@ int main(int argc, char *argv[]){
         fprintf((stderr), "getifaddrs  \n" );
 		return 1;
    }
-   
+   cnt =0;
    for(ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++){
 
    	if(ifa->ifa_addr == NULL){
@@ -976,8 +976,8 @@ int main(int argc, char *argv[]){
    	if(family == AF_INET){
    		
    		cout << ifa->ifa_name << endl;
-   		interfaces = ifa->ifa_name;
-   		
+   		interfaces[cnt] = ifa->ifa_name.c_str();
+   		cnt++;
    	}
 
 
@@ -987,7 +987,7 @@ int main(int argc, char *argv[]){
 
 	
   
-   cout<< interfaces << endl;
+   cout<< interfaces[0] << endl;
 	
 
 	return 0;
