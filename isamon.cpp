@@ -226,7 +226,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
 	}
-	const char *protocol = "udpn";
+	const char *protocol = "udp";
 
 	int port_start = 1;
 	int port_end = 200;
