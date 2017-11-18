@@ -336,12 +336,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
       			
 
 		}
-		
+		close(recvsd);
 
 		
 	}
 	close(sendsd);
-	close(recvsd);
+	
 	cout << "UDP" << endl;
 	return 0;
 }
