@@ -399,14 +399,17 @@ int main(int argc, char *argv[]){
 	char *network = argv[argumenty.network];
 
 	
-
+	char *interface;
 	if(argumenty.interface == 0){
 		//interface_set = true;
 		//zatial takto
-		fprintf((stderr), "Wrong arguments! no interface\n");
-		return 1;
+		cout << "nezadany interface - nastavenie defaultneho int na eth1" << endl;
+		interface = "eth1";
+	}else{
+		interface = argv[argumenty.interface];
+		cout << interface <<endl;
 	}
-	char *interface = argv[argumenty.interface];
+		
 	
 
 	/*cout << "port:" << argumenty.port << endl;
@@ -956,7 +959,7 @@ int main(int argc, char *argv[]){
 	}
 
 
-	struct ifaddrs *ifaddr, *ifa;
+	/*struct ifaddrs *ifaddr, *ifa;
 	int family, s, n;
 	char host_test[NI_MAXHOST];
 	char *interfaces;
@@ -984,7 +987,7 @@ int main(int argc, char *argv[]){
 
    }
    freeifaddrs(ifaddr);
-
+	*/
 	
   
    
