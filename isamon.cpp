@@ -319,7 +319,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
-   					cout << ip << " UDP " << x << endl;
+   					<< x << "name " << srvport->s_name << endl;
    				}
    				
    				break;
