@@ -139,7 +139,8 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 	}
 
 	int port_start = 1;
-	int port_end = 65535;
+	//int port_end = 65535;
+	int port_end = 200;
 
 	if(port_arg != 0){
 		port_start = port_arg;
@@ -970,7 +971,8 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//tcp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 	}
 
