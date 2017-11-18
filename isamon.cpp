@@ -203,7 +203,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 
 int udp_check(const char * ip, long int port_arg, long int wait){
 	//open UDP socket
-	unsigned char buffer[BUF_SIZE];
+	/*unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
 	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
 		fprintf((stderr), "socket: DGRAM - %d\n" , x);
@@ -289,7 +289,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 		
-	}
+	}*/
 	cout << "UDP" << endl;
 	return 0;
 }
