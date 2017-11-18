@@ -311,7 +311,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			else if(!FD_ISSET(recvsd, &set)){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
-   				
+   				cout << ip << " UDP " << x << endl;
    				
    				break;
 
@@ -332,7 +332,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	    		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
 
 	    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-	    			cout << x << " Unreachable" << endl; 
+	    			//cout << x << " Unreachable" << endl; 
 	    			break;              
             
    				}
