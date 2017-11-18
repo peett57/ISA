@@ -139,7 +139,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 	}
 
 	int port_start = 1;
-	int port_end = 200;
+	int port_end = 65535;
 
 	if(port_arg != 0){
 		port_start = port_arg;
