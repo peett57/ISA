@@ -293,15 +293,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			FD_SET(recvsd, &set);
    			
    			
-   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) > 0 ){
-   				
-
-				length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
-
-   				if (length == -1){
-                    fprintf((stderr), "receive: %d\n", x );
-					return 1;
-                }
+   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
+   				fprintf((stderr), "select -1:  %d\n", x );
+				return 1;
    			}
    			else if(!FD_ISSET(recvsd, &set)){
 
@@ -317,9 +311,13 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    			}else{
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
-   				fprintf((stderr), "select -1:  %d\n", x );
-				return 1;
-   				
+
+   				length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
+
+   				if (length == -1){
+                    fprintf((stderr), "receive: %d\n", x );
+					return 1;
+                }
             }
 
             struct ip *iphdr = (struct ip *)buffer;
@@ -1031,10 +1029,11 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
 		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
+		udp_check("192.168.2.1",argumenty.port,argumenty.wait);
 	}
 
 
