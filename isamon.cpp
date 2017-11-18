@@ -237,7 +237,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 
 	int length = 0;
-	struct timeval timeout;
+	
 
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
@@ -271,7 +271,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 
-		
+		struct timeval timeout;
 		if(wait > 0){
 				
 				timeout.tv_sec = wait /1000;
@@ -311,6 +311,19 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				if(srvport != NULL){
    					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    				}
+
+   				struct timeval timeout;
+				if(wait > 0){
+						
+						timeout.tv_sec = wait /1000;
+			    		timeout.tv_usec = (wait % 1000) * 1000;	
+
+			    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
+				}
+				else{
+					fprintf((stderr), "pri UDP musi byt wait:   \n");
+					return 1;
+				}
    				
    				break;
 
