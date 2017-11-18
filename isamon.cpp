@@ -975,14 +975,13 @@ int main(int argc, char *argv[]){
 			                					cout << char_ip_for_scan << endl;
 			                					if(argumenty.t == true){
 			                						// HP nejake random tu mam
-			                						if(i == 10 && j == 190 && k == 20 && l == 159){
-			                							;
-			                						}else{
+			                						
+			                						
 				                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 				                							fprintf((stderr), "TCP  \n" );
 															return 1;
 				                						}
-				                					}
+				                					
 			                					}
 			                				}
 			                			}
