@@ -34,6 +34,9 @@
 #include <fcntl.h>
 #include <sys/select.h>
 
+ #include <ifaddrs.h>
+ #include <linux/if_link.h>
+
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
@@ -949,9 +952,27 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		cout << "mimo siet" << endl;
+		cout << "closed" << endl;
 	}
 
+
+	struct ifaddrs *ifaddr, *ifa;
+	int family, s, n;
+	char host_test[NI_MAXHOST];
+
+	if (getifaddrs(&ifaddr) == -1) {
+        fprintf((stderr), "getifaddrs  \n" );
+		return 1;
+   }
+
+   for(ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++){
+
+   	if(ifa->ifa_addr == NULL){
+   		continue;
+   	}
+   	family = ifa->ifa_addr->sa_family;
+   	cout << ifa->name << endl;
+   }
 
 	
 
