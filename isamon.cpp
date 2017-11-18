@@ -263,7 +263,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		memset(buffer,0x00,60);
 
-		if(sendto(sendsd, buffer, sizeof(buffer), 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+		buffer[32] = 0x00;
+
+		if(sendto(sendsd, buffer, BUF_SIZE, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
 			fprintf((stderr), "sendto: udp %d \n", x );
 			return 1;
 		}
@@ -312,7 +314,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			}else{
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
 
-   				length = recvfrom(recvsd, &buffer, sizeof(buffer), 0x0, NULL, NULL);
+   				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
 
    				if (length == -1){
                     fprintf((stderr), "receive: %d\n", x );
