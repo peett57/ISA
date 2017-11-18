@@ -297,7 +297,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
-   			else if(/*!FD_ISSET(recvsd, &set)*/ rv == 0){
+   			else if(!FD_ISSET(recvsd, &set)){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
    				
@@ -1030,9 +1030,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
+		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
 		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
-		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
+		tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
 		//cout << "closed" << endl;
 	}
 
