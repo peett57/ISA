@@ -291,7 +291,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		
 		while(1){
 
-
+			timeout.tv_sec = wait /1000;
+    		timeout.tv_usec = (wait % 1000) * 1000;	
     		struct servent *srvport;
     		fd_set set;
    			FD_ZERO(&set);
@@ -300,30 +301,20 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			
    			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
    				fprintf((stderr), "select -1:  %d\n", x );
+   				close(sendsd);
+				close(recvsd);
 				return 1;
    			}
    			else if(!FD_ISSET(recvsd, &set)){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
    				
-
+   				timeout.tv_sec = wait /1000;
+	    		timeout.tv_usec = (wait % 1000) * 1000;	
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
    					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    				}
-   				if(wait > 0){
-						
-						timeout.tv_sec = wait /1000;
-			    		timeout.tv_usec = (wait % 1000) * 1000;	
-
-			    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-				}
-				else{
-					fprintf((stderr), "pri UDP musi byt wait:   \n");
-					return 1;
-				}
-
-
    				
    				break;
 
@@ -331,7 +322,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
 
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
-
+   				timeout.tv_sec = wait /1000;
+	    		timeout.tv_usec = (wait % 1000) * 1000;	
    				if (length == -1){
                     fprintf((stderr), "receive: %d\n", x );
                     close(sendsd);
@@ -353,40 +345,19 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
     			cout << x << " Unreachable" << endl;
-
-    			if(wait > 0){
-						
-						timeout.tv_sec = wait /1000;
-			    		timeout.tv_usec = (wait % 1000) * 1000;	
-
-			    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-				}
-				else{
-					fprintf((stderr), "pri UDP musi byt wait:   \n");
-					return 1;
-				}
+    			timeout.tv_sec = wait /1000;
+	    		timeout.tv_usec = (wait % 1000) * 1000;	
     			break;              
         
 			}
-			if(wait > 0){
-					
-					timeout.tv_sec = wait /1000;
-		    		timeout.tv_usec = (wait % 1000) * 1000;	
-
-		    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-			}
-			else{
-				fprintf((stderr), "pri UDP musi byt wait:   \n");
-				return 1;
-			}
+			timeout.tv_sec = wait /1000;
+    		timeout.tv_usec = (wait % 1000) * 1000;	
 
    			
 
       			
 
 		}
-
-
 		
 
 		
