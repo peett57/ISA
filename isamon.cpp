@@ -228,7 +228,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 	const char *protocol = "udp";
 
-	int port_start = 107;
+	int port_start = 1;
 	int port_end = 120;
 
 	if(port_arg != 0){
@@ -284,7 +284,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 			return 1;
 		}
 
-		//memset(buffer,0x00,60);
+		memset(buffer,0x00,60);
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
