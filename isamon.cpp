@@ -265,7 +265,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		buffer[32] = 0x00;
 
-		if(sendto(sendsd, buffer, BUF_SIZE, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
+		if(sendto(sendsd, buffer, 42, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
 			fprintf((stderr), "sendto: udp %d \n", x );
 			return 1;
 		}
