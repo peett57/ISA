@@ -971,15 +971,13 @@ int main(int argc, char *argv[]){
    		continue;
    	}
    	family = ifa->ifa_addr->sa_family;
-   	printf("%-8s %s (%d)\n",
-      ifa->ifa_name,
-      (family == AF_PACKET) ? "AF_PACKET" :
-      (family == AF_INET) ? "AF_INET" :
-      (family == AF_INET6) ? "AF_INET6" : "???",
-      family);
-
-
    	
+   	if(family == AF_INET){
+   		cout << ifa->ifa_name << endl;
+   	}
+
+
+
    }
    freeifaddrs(ifaddr);
 
