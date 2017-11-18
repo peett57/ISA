@@ -330,11 +330,11 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
             struct ip *iphdr = (struct ip *)buffer;
             //cout << iphdr->ip_hl << endl;
-    		int iplen = iphdr->ip_hl << 4;
+    		int iplen = iphdr->ip_hl << 2;
     		//cout << iplen << endl;
 
 
-    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
+    		struct icmp *icmp = (struct icmp *)(/*buffer +*/ iplen + buffer);
 
     		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
 
