@@ -312,18 +312,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    				}
 
-   				struct timeval timeout;
-				if(wait > 0){
-						
-						timeout.tv_sec = wait /1000;
-			    		timeout.tv_usec = (wait % 1000) * 1000;	
 
-			    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-				}
-				else{
-					fprintf((stderr), "pri UDP musi byt wait:   \n");
-					return 1;
-				}
    				
    				break;
 
@@ -353,7 +342,22 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
     			cout << x << " Unreachable" << endl;
-    			break;              
+    			
+
+    			struct timeval timeout;
+				if(wait > 0){
+						
+						timeout.tv_sec = wait /1000;
+			    		timeout.tv_usec = (wait % 1000) * 1000;	
+
+			    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
+				}
+				else{
+					fprintf((stderr), "pri UDP musi byt wait:   \n");
+					return 1;
+				} 
+
+				break;             
         
 			}
 
