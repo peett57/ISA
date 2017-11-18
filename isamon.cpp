@@ -217,7 +217,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	//open UDP socket
 	unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
-	/*if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
+	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
 		fprintf((stderr), "socket: DGRAM - \n" );
 		return 1;
 	}
@@ -225,7 +225,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
 		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
-	}*/
+	}
 	const char *protocol = "udp";
 
 	int port_start = 1;
@@ -241,16 +241,6 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
-
-		if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
-			fprintf((stderr), "socket: DGRAM - \n" );
-			return 1;
-		}
-		//open receive socket pre ICMP response packet
-		if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
-			fprintf((stderr), "socket: RAW - \n" );
-			return 1;
-		}
 		
 		const char *hostname = ip;
 
@@ -293,7 +283,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 
-
+		fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 		while(1){
 			
 
@@ -316,7 +306,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				if(srvport != NULL){
    					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    				}
-   				close(recvsd);
+   				
    				break;
 
    			}else{
@@ -338,7 +328,6 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
     			//cout << x << " Unreachable" << endl; 
-    			close(recvsd);
     			break;              
         
 			}
@@ -347,7 +336,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
       			
 
 		}
-		close(recvsd);
+		
 
 		
 	}
