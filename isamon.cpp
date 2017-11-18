@@ -623,6 +623,7 @@ int main(int argc, char *argv[]){
 // ziskanie IP adresy MAC z daneho interfacu pre arp scan
 	int sd;
 	int ifindex;
+	struct ifreq ifr;
 
 	sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (sd == -1) {
@@ -762,7 +763,6 @@ int main(int argc, char *argv[]){
 						int ret,length = 0;
 
 						unsigned char buffer[BUF_SIZE];
-						struct ifreq ifr;
 						struct ethhdr *send_req = (struct ethhdr *)buffer;
 						struct ethhdr *rcv_resp= (struct ethhdr *)buffer;
 						struct arp_header *arp_req = (struct arp_header *)(buffer+ETH2_HEADER_LEN);
@@ -949,7 +949,7 @@ int main(int argc, char *argv[]){
 	}
 	else{
 		//udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		cout << "mimo siet"
+		cout << "mimo siet" << endl;
 	}
 
 
