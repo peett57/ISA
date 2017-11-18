@@ -410,7 +410,7 @@ int main(int argc, char *argv[]){
 		interface[2] = "h";
 		interface[3] = "1";
 		
-		}
+	}
 	}else{
 		interface = argv[argumenty.interface];
 		cout << interface <<endl;
