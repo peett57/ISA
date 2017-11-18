@@ -297,7 +297,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
-   			else if(/*!FD_ISSET(recvsd, &set*/ rv == 0)){
+   			else if(/*!FD_ISSET(recvsd, &set)*/ rv == 0){
 
    				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
    				
