@@ -1051,7 +1051,7 @@ int main(int argc, char *argv[]){
 		udp_check("10.190.22.250",1,argumenty.wait); 
 		udp_check("10.190.22.250",17,argumenty.wait); 
 		udp_check("10.190.22.250",44,argumenty.wait); 
-		udp_check("10.190.22.250",68,argumenty.wait); 
+		udp_check("10.190.22.250",69,argumenty.wait); 
 		udp_check("10.190.22.250",55,argumenty.wait); 
 		udp_check("10.190.22.250",93,argumenty.wait); 
 		udp_check("10.190.22.250",147,argumenty.wait); 
