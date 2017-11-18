@@ -228,7 +228,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 	const char *protocol = "udp";
 
-	int port_start = 108;
+	int port_start = 107;
 	int port_end = 120;
 
 	if(port_arg != 0){
@@ -271,11 +271,11 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 
 
-		struct timeval tout;
+		struct timeval timeout;
 		if(wait > 0){
 				
-				tout.tv_sec = wait /1000;
-	    		tout.tv_usec = (wait % 1000) * 1000;	
+				timeout.tv_sec = wait /1000;
+	    		timeout.tv_usec = (wait % 1000) * 1000;	
 
 	    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
 		}
@@ -298,7 +298,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			FD_SET(recvsd, &set);
    			
    			
-   			if((select(recvsd + 1 , &set, NULL, NULL, &tout)) < 0 ){
+   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
    				fprintf((stderr), "select -1:  %d\n", x );
 				return 1;
    			}
