@@ -37,6 +37,8 @@
  #include <ifaddrs.h>
  #include <linux/if_link.h>
 
+#include <netinet/ip_icmp.h>
+
 #define PROTO_ARP 0x0806
 #define ETH2_HEADER_LEN 14
 #define HW_TYPE 1
@@ -46,6 +48,9 @@
 #define ARP_REQUEST 0x01
 #define ARP_REPLY 0x02
 #define BUF_SIZE 60
+
+#define IP4_HDRLEN 20         // IPv4 header length
+#define ICMP_HDRLEN 8         // ICMP header length for echo request, excludes data
 
 
 
