@@ -399,7 +399,7 @@ int main(int argc, char *argv[]){
 	char *network = argv[argumenty.network];
 
 	
-	char *interface;
+	const char *interface;
 	if(argumenty.interface == 0){
 		//interface_set = true;
 		//zatial takto
