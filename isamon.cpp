@@ -334,7 +334,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	char *pEnd;
 	//prechadzam vsetky argumenty a nastavujem flagy
 	for(int i = 1; i < argc; i++){
-		if(!strcmp(argv[i], "-p")){
+		if(!strcmp(argv[i], "-p") || !strcmp(argv[i], "--port")){
 			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->port != 0){
 				return EXIT_FAILURE;
 			}
@@ -344,32 +344,32 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 			}
 			i++;
 		}
-		else if(!strcmp(argv[i], "-t")){
+		else if(!strcmp(argv[i], "-t") || !strcmp(argv[i], "--tcp")){
 			if(arguments->t == true){
 				return EXIT_FAILURE;
 			}
 			arguments->t = true;
 		}
-		else if(!strcmp(argv[i], "-u")){
+		else if(!strcmp(argv[i], "-u") || !strcmp(argv[i], "--udp")){
 			if(arguments->u == true){
 				return EXIT_FAILURE;
 			}
 			arguments->u = true;
 		}
-		else if(!strcmp(argv[i], "-w")){
+		else if(!strcmp(argv[i], "-w") || !strcmp(argv[i], "--wait")){
 			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->wait != 0  ){
 				return EXIT_FAILURE;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
 			i++;
 		}
-		else if(!strcmp(argv[i], "-i")){
+		else if(!strcmp(argv[i], "-i") || !strcmp(argv[i], "--interface")){
 			if(argc == i +1 || arguments->interface != 0){
 				return EXIT_FAILURE;
 			}
 			arguments->interface = ++i;
 		}
-		else if(!strcmp(argv[i], "-n")){
+		else if(!strcmp(argv[i], "-n") || !strcmp(argv[i], "--network")){
 			if(argc == i +1 || arguments->network != 0){
 				return EXIT_FAILURE;
 			}
