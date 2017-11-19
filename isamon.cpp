@@ -272,7 +272,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		memset(buffer,0x00,60);
 		struct timeval timeout;
-		/*if(wait > 0){
+		if(wait > 0){
 				
 				timeout.tv_sec = wait /1000;
 	    		timeout.tv_usec = (wait % 1000) * 1000;	
@@ -282,14 +282,13 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		else{
 			fprintf((stderr), "pri UDP musi byt wait:   \n");
 			return 1;
-		}*/
+		}
 
 		
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
-		timeout.tv_sec = 1;
-	    timeout.tv_usec = 0;	
+		
 		while(1){
 
 			
@@ -312,7 +311,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
-   					cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
+   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
+   					cout << ip << " UDP " << x << endl;
    				}
    				
    				break;
@@ -342,7 +342,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-    			cout << x << " Unreachable" << endl;
+    			//cout << x << " Unreachable" << endl;
     			break;              
         
 			}
@@ -811,7 +811,7 @@ int main(int argc, char *argv[]){
 		cout << "mimo lokalnu siet - icmp scan" << endl;;
 	}
 	
-	bool closed = true;
+	bool closed = false;
 	if(closed == false){
 	//if(local_network == true){
 		stringstream convert;
@@ -993,11 +993,17 @@ int main(int argc, char *argv[]){
 			                						// HP nejake random tu mam
 			                						
 			                						
-				                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
-				                							fprintf((stderr), "TCP  \n" );
-															return 1;
-				                						}
+			                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
+			                							fprintf((stderr), "TCP  \n" );
+														return 1;
+			                						}
 				                					
+			                					}
+			                					if(argumenty.u == true){
+			                						if(udp_check(char_ip_for_scan,argumenty.port,argumenty.wait) !=0){
+			                							fprintf((stderr), "UDP  \n" );
+														return 1;
+			                						}
 			                					}
 			                				}
 			                			}
@@ -1025,6 +1031,12 @@ int main(int argc, char *argv[]){
 	                							fprintf((stderr), "TCP  \n" );
 												return 1;
 	                						}
+	                						if(argumenty.u == true){
+		                						if(udp_check(char_ip_for_scan,argumenty.port,argumenty.wait) !=0){
+		                							fprintf((stderr), "UDP  \n" );
+													return 1;
+		                						}
+		                					}
 	                					}
 	                				}
 	                			}
