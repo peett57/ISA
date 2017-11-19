@@ -270,7 +270,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 			return 1;
 		}
 
-
+		memset(buffer,0x00,60);
 		struct timeval timeout;
 		if(wait > 0){
 				
@@ -284,7 +284,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 			return 1;
 		}
 
-		memset(buffer,0x00,60);
+		
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
