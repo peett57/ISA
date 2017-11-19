@@ -208,8 +208,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 	const char *protocol = "udp";
 
-	int port_start = 65;
-	int port_end = 80;
+	int port_start = 1;
+	int port_end = 200;
 
 	if(port_arg != 0){
 		port_start = port_arg;
@@ -271,12 +271,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		
 		while(1){
 
-			
     		struct servent *srvport;
     		fd_set set;
    			FD_ZERO(&set);
    			FD_SET(recvsd, &set);
-   			
    			
    			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
    				fprintf((stderr), "select -1:  %d\n", x );
@@ -284,22 +282,16 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 				close(recvsd);
 				return 1;
    			}
-   			else if(!FD_ISSET(recvsd, &set)){
+   			else if(!FD_ISSET(recvsd, &set)){  				
 
-   				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
-   				
-
-   				srvport = getservbyport(htons(x), protocol);
+   				/*srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
    					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    					cout << ip << " UDP " << x << endl;
-   				}
-   				
+   				}*/
    				break;
 
    			}else{
-   				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
-
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
 
    				if (length == -1){
@@ -310,27 +302,95 @@ int udp_check(const char * ip, long int port_arg, long int wait){
                 }
             }
 
-
             struct ip *iphdr = (struct ip *)buffer;
-            //cout << iphdr->ip_hl << endl;
     		unsigned char iplen = iphdr->ip_hl << 2;
-    		//cout << iplen << endl;
-
-
     		struct icmp *icmp = (struct icmp *)(buffer + iplen);
 
-    		//cout <<"port : " << x << " " << icmp->icmp_code << endl;
+    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
+    			break;              
+			}
+		}
+		while(1){
+
+    		struct servent *srvport;
+    		fd_set set;
+   			FD_ZERO(&set);
+   			FD_SET(recvsd, &set);
+   			
+   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
+   				fprintf((stderr), "select -1:  %d\n", x );
+   				close(sendsd);
+				close(recvsd);
+				return 1;
+   			}
+   			else if(!FD_ISSET(recvsd, &set)){  				
+
+   				/*srvport = getservbyport(htons(x), protocol);
+   				if(srvport != NULL){
+   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
+   					cout << ip << " UDP " << x << endl;
+   				}*/
+   				break;
+
+   			}else{
+   				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
+
+   				if (length == -1){
+                    fprintf((stderr), "receive: %d\n", x );
+                    close(sendsd);
+					close(recvsd);
+					return 1;
+                }
+            }
+
+            struct ip *iphdr = (struct ip *)buffer;
+    		unsigned char iplen = iphdr->ip_hl << 2;
+    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-    			//cout << x << " Unreachable" << endl;
     			break;              
-        
 			}
+		}
+		while(1){
 
+    		struct servent *srvport;
+    		fd_set set;
+   			FD_ZERO(&set);
+   			FD_SET(recvsd, &set);
    			
+   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
+   				fprintf((stderr), "select -1:  %d\n", x );
+   				close(sendsd);
+				close(recvsd);
+				return 1;
+   			}
+   			else if(!FD_ISSET(recvsd, &set)){  				
 
-      			
+   				srvport = getservbyport(htons(x), protocol);
+   				if(srvport != NULL){
+   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
+   					cout << ip << " UDP " << x << endl;
+   				}
+   				break;
 
+   			}else{
+   				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
+
+   				if (length == -1){
+                    fprintf((stderr), "receive: %d\n", x );
+                    close(sendsd);
+					close(recvsd);
+					return 1;
+                }
+            }
+
+            struct ip *iphdr = (struct ip *)buffer;
+    		unsigned char iplen = iphdr->ip_hl << 2;
+    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
+
+    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
+    			break;              
+			}
 		}
 		
 
