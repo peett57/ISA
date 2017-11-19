@@ -1021,10 +1021,10 @@ int main(int argc, char *argv[]){
 				       	close(sd);
 				       	
 
-				       	if(10 == i){
-	                		if(190 == j){
-	                			if(23 == k){
-	                				if(178 == l){
+				       	if(byte1_myaddr == i){
+	                		if(byte2_myaddr == j){
+	                			if(byte3_myaddr == k){
+	                				if(byte4_myaddr == l){
 	                					cout << char_ip_for_scan << endl;
 	                					if(argumenty.t == true){
 	                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
