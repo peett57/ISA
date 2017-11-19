@@ -267,7 +267,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
-
+		int cnt =0;
 		
 		while(1){
 
@@ -283,54 +283,15 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 				return 1;
    			}
    			else if(!FD_ISSET(recvsd, &set)){  				
-
-   				/*srvport = getservbyport(htons(x), protocol);
-   				if(srvport != NULL){
-   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
-   					cout << ip << " UDP " << x << endl;
-   				}*/
-   				break;
-
-   			}else{
-   				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
-
-   				if (length == -1){
-                    fprintf((stderr), "receive: %d\n", x );
-                    close(sendsd);
-					close(recvsd);
-					return 1;
-                }
-            }
-
-            struct ip *iphdr = (struct ip *)buffer;
-    		unsigned char iplen = iphdr->ip_hl << 2;
-    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
-
-    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-    			break;              
-			}
-		}
-		while(1){
-
-    		struct servent *srvport;
-    		fd_set set;
-   			FD_ZERO(&set);
-   			FD_SET(recvsd, &set);
-   			
-   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
-   				fprintf((stderr), "select -1:  %d\n", x );
-   				close(sendsd);
-				close(recvsd);
-				return 1;
-   			}
-   			else if(!FD_ISSET(recvsd, &set)){  				
-
-   				/*srvport = getservbyport(htons(x), protocol);
-   				if(srvport != NULL){
-   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
-   					cout << ip << " UDP " << x << endl;
-   				}*/
-   				break;
+   				if(cnt == 3){
+	   				srvport = getservbyport(htons(x), protocol);
+	   				if(srvport != NULL){
+	   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
+	   					cout << ip << " UDP " << x << endl;
+	   				}
+	   				break;
+	   			}
+	   			cnt++;
 
    			}else{
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
@@ -351,47 +312,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     			break;              
 			}
 		}
-		while(1){
 
-    		struct servent *srvport;
-    		fd_set set;
-   			FD_ZERO(&set);
-   			FD_SET(recvsd, &set);
-   			
-   			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
-   				fprintf((stderr), "select -1:  %d\n", x );
-   				close(sendsd);
-				close(recvsd);
-				return 1;
-   			}
-   			else if(!FD_ISSET(recvsd, &set)){  				
-
-   				srvport = getservbyport(htons(x), protocol);
-   				if(srvport != NULL){
-   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
-   					cout << ip << " UDP " << x << endl;
-   				}
-   				break;
-
-   			}else{
-   				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
-
-   				if (length == -1){
-                    fprintf((stderr), "receive: %d\n", x );
-                    close(sendsd);
-					close(recvsd);
-					return 1;
-                }
-            }
-
-            struct ip *iphdr = (struct ip *)buffer;
-    		unsigned char iplen = iphdr->ip_hl << 2;
-    		struct icmp *icmp = (struct icmp *)(buffer + iplen);
-
-    		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
-    			break;              
-			}
-		}
 		
 
 		
