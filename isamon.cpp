@@ -228,8 +228,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 	const char *protocol = "udp";
 
-	int port_start = 106;
-	int port_end = 120;
+	int port_start = 65;
+	int port_end = 80;
 
 	if(port_arg != 0){
 		port_start = port_arg;
@@ -272,7 +272,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		memset(buffer,0x00,60);
 		struct timeval timeout;
-		if(wait > 0){
+		/*if(wait > 0){
 				
 				timeout.tv_sec = wait /1000;
 	    		timeout.tv_usec = (wait % 1000) * 1000;	
@@ -282,13 +282,14 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		else{
 			fprintf((stderr), "pri UDP musi byt wait:   \n");
 			return 1;
-		}
+		}*/
 
 		
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
 
 
-		
+		timeout.tv_sec = 1;
+	    timeout.tv_usec = 0;	
 		while(1){
 
 			
