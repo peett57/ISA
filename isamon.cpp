@@ -166,12 +166,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 		bzero(&serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
-
-
-
 		serv_addr.sin_port = htons(portno);
-
-
 
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
 			srvport = getservbyport(htons(x), protocol);
@@ -183,10 +178,6 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 			
 			
 		}
-		
-		
-			
-		
 
 		close(sockfd);
 
@@ -393,10 +384,6 @@ int main(int argc, char *argv[]){
 	argumenty.interface = 0;
 	argumenty.network = 0;
 
-	/*int port_start = 1;
-	int port_end = 200;*/
-
-
 	//arguments
 	if(arguments(argc,argv, &argumenty)){
 		fprintf((stderr), "Wrong arguments!\n");
@@ -408,10 +395,6 @@ int main(int argc, char *argv[]){
 		printhelp();
 		return 0;
 	}
-
-	/*if(argumenty.port != 0){
-
-	}*/
 
 	//argument network nezadany
 	if(argumenty.network == 0){
