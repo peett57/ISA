@@ -68,9 +68,7 @@ struct arp_header
 };
 
 
-/**
-* Funkcia printhelp
-*/	
+// funkcia printhelp ktora vypise napovedu pre obsluhu programu
 void printhelp(){
 	printf("Usage:\n");
 	printf("\n");
@@ -107,6 +105,9 @@ typedef struct{
 	long int wait;
 }Arguments;
 
+//funkcia ktora zistuje ci je na danej ip adrese aktivny TCP port
+//v pripade zadania argumentu -p sa scanuje len na tomto porte
+//v pripade argumentu -w sa scanuje s waitom
 int tcp_check(const char * ip, long int port_arg, long int wait){
 	
 	struct in_addr **addr_list;
@@ -123,10 +124,13 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 		port_end = port_arg;
 	}
 	struct servent *srvport;
+
+	//prechadzam kazdy port
 	for(int x = port_start ; x <= port_end; x++){
 		
 		int portno = x;
 		
+		//nastavenie timeoutu
 		if(wait > 0){
 			
 			timeout.tv_sec = wait /1000;
@@ -140,11 +144,14 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 		struct sockaddr_in serv_addr;
 		struct hostent *server;
 
+		//vytvorenie socketu pre pripojenie na port
 		sockfd = socket(AF_INET, SOCK_STREAM, 0);
 		if(sockfd < 0 ){
 			fprintf((stderr), "socket:  - %d\n" , x);
 			return 1;
 		}
+
+		//nastavenie timeoutu v pripade ze je zadany argument wait
 		if(wait > 0){
 			if (setsockopt (sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout)) < 0){
 				fprintf((stderr), "setsockopt:  \n" );
@@ -156,18 +163,20 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 			}
 		}
 
+		//ulozenie ip adresy do struktury server
 		server = gethostbyname(hostname);
 		if(server == NULL){
 			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
 		
-
+		//priprava potrebnych hodnout v strukture serv_addr
 		bzero(&serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
 		serv_addr.sin_port = htons(portno);
 
+		// pokus o pripojenie na port
 		if(connect(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) == 0){
 			srvport = getservbyport(htons(x), protocol);
 			 
@@ -185,15 +194,20 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 	return 0;
 }
 
+//funkcia ktora zistuje ci je na danej ip adrese aktivny UDP port
+//v pripade zadania argumentu -p sa scanuje len na tomto porte
+//v pripade argumentu -w sa scanuje s waitom
 int udp_check(const char * ip, long int port_arg, long int wait){
-	//open UDP socket
+	
 	unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
+
+	// vytvori socket ktory posle UDP spravu na dany port
 	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
 		fprintf((stderr), "socket: DGRAM - \n" );
 		return 1;
 	}
-	//open receive socket pre ICMP response packet
+	//vytvorim raw socket pre prijimanie odpovedi 
 	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
 		fprintf((stderr), "socket: RAW - \n" );
 		return 1;
@@ -219,24 +233,23 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		struct sockaddr_in serv_addr;
 		struct hostent *server;
 
+		//ulozenie ip adresy do struktury server
 		server = gethostbyname(hostname);
 		if(server == NULL){
 			fprintf((stderr), "gethostbyname:  \n" );
 			return 1;
 		}
 
+		//priprava potrebnych hodnout v strukture serv_addr
 		bzero(&serv_addr, sizeof(serv_addr));
 		serv_addr.sin_family = AF_INET;
 		serv_addr.sin_addr = *((struct in_addr *)server->h_addr);
-
-
-
 		serv_addr.sin_port = htons(portno);
 
 		memset(buffer,0x00,60);
 
 		
-
+		//odoslanie spravy na dany port
 		if(sendto(sendsd, buffer, BUF_SIZE, 0, (struct sockaddr *)&serv_addr, sizeof(serv_addr)) < 0){
 			fprintf((stderr), "sendto: udp %d \n", x );
 			return 1;
@@ -245,18 +258,9 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		memset(buffer,0x00,60);
 		struct timeval timeout;
 		
-				
+		//nastavenie timeoutu	
 		timeout.tv_sec = wait /1000;
 	    timeout.tv_usec = (wait % 1000) * 1000;	
-
-	    		
-		
-		
-
-		
-		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
-
-
 		
 		while(1){
 
@@ -265,23 +269,26 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    			FD_ZERO(&set);
    			FD_SET(recvsd, &set);
    			
+   			//v chyba v timeoutovani
    			if((select(recvsd + 1 , &set, NULL, NULL, &timeout)) < 0 ){
    				fprintf((stderr), "select -1:  %d\n", x );
    				close(sendsd);
 				close(recvsd);
 				return 1;
    			}
+   			//vyprsi cas na prijatie odpovedi
    			else if(!FD_ISSET(recvsd, &set)){  				
 
+   				//ak je tento port evidovany ako existujuci znamena to ze je aktivny
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
-   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
    					/*cout << ip << " UDP " << x << endl;*/
    					fprintf(stdout, "%s UDP %d\n", ip,x);
    				}
    				break;
 
    			}else{
+   				// prijimam odpoved
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
 
    				if (length == -1){
@@ -292,10 +299,12 @@ int udp_check(const char * ip, long int port_arg, long int wait){
                 }
             }
 
+            //ukladam si odpoved do struktury
             struct ip *iphdr = (struct ip *)buffer;
     		unsigned char iplen = iphdr->ip_hl << 2;
     		struct icmp *icmp = (struct icmp *)(buffer + iplen);
 
+    		//ak je odpoved v spravnom tvare, port je uzavrety 
     		if((icmp->icmp_type == ICMP_UNREACH) && (icmp->icmp_code == ICMP_UNREACH_PORT)){
     			break;              
 			}
@@ -306,13 +315,13 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	}
 	close(sendsd);
 	close(recvsd);
-	//cout << "UDP" << endl;
 	return 0;
 }
 
 
 //funkcia na kontrolu validity argumentov
 int arguments(int argc, char *argv[], Arguments *arguments){
+	//help
 	if((argc == 2) && ((!strcmp(argv[1], "-h")) || (!strcmp(argv[1], "--help")))){
 		arguments->help = true;
 		return EXIT_SUCCESS;
@@ -323,6 +332,7 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	}
 
 	char *pEnd;
+	//prechadzam vsetky argumenty a nastavujem flagy
 	for(int i = 1; i < argc; i++){
 		if(!strcmp(argv[i], "-p")){
 			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->port != 0){
@@ -374,7 +384,9 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 }
 
 int main(int argc, char *argv[]){
+
 	bool interface_set = false;
+	//inicializacia pre pracu s argumentami
 	Arguments argumenty;
 	argumenty.port = 0;
 	argumenty.wait = 0;
@@ -405,11 +417,9 @@ int main(int argc, char *argv[]){
 
 	
 	char *interface;
+	//v pripade nezadaneho interfacu sa bude povazovat za defaultny eth1 na ktorom sa bude scanovat
 	if(argumenty.interface == 0){
 		interface_set = false;
-		//zatial takto
-		/*cout << "nezadany interface - nastavenie defaultneho int na eth1" << endl;*/
-		
 		
 	}else{
 		interface_set = true;
@@ -417,16 +427,19 @@ int main(int argc, char *argv[]){
 		
 	}
 
+	//argument -p musi byt aspon s -t alebo -u
 	if(argumenty.port != 0 && argumenty.t == false && argumenty.u == false ){
 		fprintf((stderr), "Wrong arguments! -p bez protokolu TCP alebo UDP\n");
 		return 1;
 	}
 
+	//-u musi byt na konkretnom porte
 	if(argumenty.u == true && argumenty.port == 0){
 		fprintf((stderr), "Wrong arguments! UDP protocol bez specifikovania portu\n");
 		return 1;
 	}
 
+	//-u musi byt s waitom
 	if(argumenty.u == true && argumenty.wait == 0){
 		fprintf((stderr), "Wrong arguments! UDP protocol bez specifikovania waitu\n");
 		return 1;
@@ -441,6 +454,7 @@ int main(int argc, char *argv[]){
 	string ip_address ;
 	string mask ;
 	bool lomitko = false;
+	//rozdelenie argumentu ip_network/maska
 	for(int i = 0; i < strlen(network) ; i++){
 		if(network[i] == '/'){
 			lomitko = true;
@@ -464,14 +478,7 @@ int main(int argc, char *argv[]){
 	int mask_int = atoi(mask.c_str());
 	const char * ip_char = ip_address.c_str();
 
-	/*cout << "ip adresa : " << ip_address << endl;*/
-
-	
-
-
 	struct sockaddr_in sa;
-
-	
 
 	//kontrola validnej IP adresy
 	if(inet_pton(AF_INET, ip_char , &(sa.sin_addr)) != 1){
@@ -483,21 +490,19 @@ int main(int argc, char *argv[]){
 
 	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRSTRLEN);
 
-	/*cout << "ip adresa koniec : " << ip_str << endl;*/
-
 	//kontrola ci je maska v rozsahu 4-30
-	
 	if(mask_int < 4 || mask_int > 30){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
-	/*cout << "maska : " << mask_int << endl;*/
+	
 
 
 
 	int dot1_index = 0;
 	int dot2_index = 0;
 	int dot3_index = 0;
+	//rozdelenie ip adresy na 4 casti podla znaku "."
 	for(int i = 0 ; i < strlen(ip_str); i++){
 		if(ip_str[i] == '.'){
 			if(dot1_index == 0){
@@ -529,15 +534,11 @@ int main(int argc, char *argv[]){
 
 
 	int byte1,byte2,byte3,byte4;
+	//prevod na integer
 	byte1 = atoi(byte1_s.c_str());
 	byte2 = atoi(byte2_s.c_str());
 	byte3 = atoi(byte3_s.c_str());
 	byte4 = atoi(byte4_s.c_str());
-
-	/*cout << "1  " << byte1 << endl;
-	cout << "2  " << byte2 << endl;
-	cout << "3  " << byte3 << endl;
-	cout << "4  " << byte4 << endl;*/
 
 	int final1=byte1;
 	int final2=byte2;
@@ -551,8 +552,7 @@ int main(int argc, char *argv[]){
 
 
 	int maska_na_cislo;
-	int mask_help = mask_int;
-	
+	int mask_help = mask_int;	
 
 
 	int mask_byte;
@@ -587,7 +587,7 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 
-
+	//nastavenie rozsahu siete v ktorej sa bude konat scan
 	if(mask_byte == 1){
 		final1 = byte1 & maska_na_cislo;
 		end1 = byte1 | (255 - maska_na_cislo);
@@ -621,19 +621,6 @@ int main(int argc, char *argv[]){
 	}
 
 
-	
-	/*cout << "mask byte : " << mask_byte << endl;
-	cout << "1  " << final1 << endl;
-	cout << "2  " << final2 << endl;
-	cout << "3  " << final3 << endl;
-	cout << "4  " << final4 << endl;
-	
-	// vypis
-	cout << "byte1 - start : " << final1 << " end : " << end1 << endl;
-	cout << "byte1 - start : " << final2 << " end : " << end2 << endl;
-	cout << "byte1 - start : " << final3 << " end : " << end3 << endl;
-	cout << "byte1 - start : " << final4 << " end : " << end4 << endl;*/
-
 // ziskanie IP adresy MAC z daneho interfacu 
 	int sd;
 	int ifindex;
@@ -666,9 +653,6 @@ int main(int argc, char *argv[]){
 		return 7;
 	}
 	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
-	
-	//cout << my_addr << endl;
-
 
 	// ziskanie MAC
 	if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
@@ -697,7 +681,7 @@ int main(int argc, char *argv[]){
 	}
 
 	string byte1_s_myaddr,byte2_s_myaddr,byte3_s_myaddr,byte4_s_myaddr;
-
+	//rozdelenie mojej adresy na 4 casti podla znaku "."
 	for(int i = 0; i < dot1_index ; i++){
 		byte1_s_myaddr += my_addr[i];
 	}
@@ -713,15 +697,11 @@ int main(int argc, char *argv[]){
 
 
 	int byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr;
+	//prevod na integer
 	byte1_myaddr = atoi(byte1_s_myaddr.c_str());
 	byte2_myaddr = atoi(byte2_s_myaddr.c_str());
 	byte3_myaddr = atoi(byte3_s_myaddr.c_str());
 	byte4_myaddr = atoi(byte4_s_myaddr.c_str());
-
-	/*cout<< byte1_myaddr << endl;
-	cout<< byte2_myaddr << endl;
-	cout<< byte3_myaddr << endl;
-	cout<< byte4_myaddr << endl;*/
 
 	// ak je adresa v sieti tak nastavim scan lokalnej adresy
 	bool local_network = false;
@@ -737,23 +717,19 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	/*if(local_network == true){
-		cout << "lokalna siet - arp scan" << endl;
-	}else{
-		cout << "mimo lokalnu siet - icmp scan" << endl;;
-	}*/
 	
-	/*bool closed = true;
-	if(closed == false){*/
+	
+	//scanovanie lokalnej siete
 	if(local_network == true){
 		stringstream convert;
 		string str_ip_for_scan;
 		const char * char_ip_for_scan;
+		//scanujem postupne kazdu adresu v sieti
 		for(int i = final1 ; i <= end1 ; i++){
 			for(int j = final2; j <= end2; j++){
 				for(int k = final3; k <= end3; k++){
 					for(int l = final4; l <= end4 ; l++){
-						//vsetky ip adresy ktore mam prechadzat na danom networku 
+						
 						convert << i;
 						str_ip_for_scan += convert.str();
 						convert.str("");
@@ -776,7 +752,7 @@ int main(int argc, char *argv[]){
 						str_ip_for_scan += convert.str();
 						convert.str("");
 
-						//
+						//vysledna spojena ip adresa na ktorej sa bude robit scan
 						char_ip_for_scan = str_ip_for_scan.c_str();
 
 												
@@ -795,7 +771,7 @@ int main(int argc, char *argv[]){
 
 						memset(buffer,0x00,60);
 
-
+						//naplnenie arp hlavicky potrebnymi datami
 						for (int index = 0; index < 6; index++){
 							send_req->h_dest[index] = (unsigned char)0xff;
 							arp_req->target_mac[index] = (unsigned char)0x00;
@@ -828,8 +804,9 @@ int main(int argc, char *argv[]){
 						arp_req->opcode = htons(ARP_REQUEST);
 						unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
 
+						//naplnenie sender ip do arp hlavicky
 						for(int index=0;index<5;index++)
-					    {
+					    {		
 					            arp_req->sender_ip[index]=(unsigned char)source_ip[index];
 					    }
 
@@ -861,6 +838,7 @@ int main(int argc, char *argv[]){
 				       	memset(buffer,0x00,60);
 
 				       	struct timeval timeout;
+				       	//nastavenie timeoutu
 						if(argumenty.wait > 0){
 								
 								timeout.tv_sec = argumenty.wait /1000;
@@ -869,10 +847,8 @@ int main(int argc, char *argv[]){
 
 				       	//prijatie odpovedi
 				       	while(1){
-
-
-				       		//length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
-				       		if(argumenty.wait > 0){
+				       		//v pripade nastaveneho waitu
+				      		if(argumenty.wait > 0){
 				       			fd_set set;
 				       			FD_ZERO(&set);
 				       			FD_SET(sd, &set);
@@ -883,14 +859,11 @@ int main(int argc, char *argv[]){
 									return 3;
 				       			}
 				       			else if(rv == 0){
-				       				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
-
-				       				
+				       				//timeout			       				
 				       				break;
 
 				       			}else{
-				       				//fprintf((stderr), "no timeout:  %d.%d.%d.%d\n", i,j,k,l );
-
+				       				//prijimam data
 				       				length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
 				       				if (length == -1){
@@ -901,6 +874,7 @@ int main(int argc, char *argv[]){
 					            
 				       			}
 				       		}else{
+				       			//default timeout
 				       			length = recvfrom(sd, buffer, BUF_SIZE, 0, NULL, NULL);
 
 					       		if (length == -1){
@@ -910,21 +884,17 @@ int main(int argc, char *argv[]){
 
 				       		}
 
-			                /*if (length == -1){
-			                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
-								return 1;
-			                }*/
+			               // ak je odpoved arp protocol
 			                if(htons(rcv_resp->h_proto) == PROTO_ARP){
 
+			                	//ak je ip adresa zhodna s ip adresou odpovedi tak je aktivna
 				                if(arp_resp->sender_ip[0] == i){
 			                		if(arp_resp->sender_ip[1] == j){
 			                			if(arp_resp->sender_ip[2] == k){
 			                				if(arp_resp->sender_ip[3] == l){
-			                					/*cout << char_ip_for_scan << endl;*/
-			                					fprintf(stdout, "%s\n", char_ip_for_scan);
-			                					if(argumenty.t == true){
-			                						// HP nejake random tu mam
-			                						
+				            					fprintf(stdout, "%s\n", char_ip_for_scan);
+				            					//TCP scan na danej IP adrese
+			                					if(argumenty.t == true){		                							                						
 			                						
 			                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 			                							fprintf((stderr), "TCP  \n" );
@@ -932,6 +902,7 @@ int main(int argc, char *argv[]){
 			                						}
 				                					
 			                					}
+			                					//UDP scan na danej IP adrese
 			                					if(argumenty.u == true){
 			                						if(udp_check(char_ip_for_scan,argumenty.port,argumenty.wait) !=0){
 			                							fprintf((stderr), "UDP  \n" );
@@ -953,12 +924,11 @@ int main(int argc, char *argv[]){
 				       	}
 				       	close(sd);
 				       	
-
+				       	//na moju ip adresu nepride ziadna odpoved preto ju musim pridat rucne lebo viem ze je aktivna
 				       	if(byte1_myaddr == i){
 	                		if(byte2_myaddr == j){
 	                			if(byte3_myaddr == k){
 	                				if(byte4_myaddr == l){
-	                					/*cout << char_ip_for_scan << endl;*/
 	                					fprintf(stdout, "%s\n", char_ip_for_scan);
 	                					if(argumenty.t == true){
 	                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
@@ -991,6 +961,7 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
+		//scanovanie mimo siet nie je podporovane 
 		fprintf((stderr), "Mimo siet  \n" );
 		return 6;
 	}
