@@ -197,15 +197,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	//open UDP socket
 	unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
-	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
-		fprintf((stderr), "socket: DGRAM - \n" );
-		return 1;
-	}
-	//open receive socket pre ICMP response packet
-	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
-		fprintf((stderr), "socket: RAW - \n" );
-		return 1;
-	}
+	
 	const char *protocol = "udp";
 
 	int port_start = 1;
@@ -221,6 +213,16 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
+
+		if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
+			fprintf((stderr), "socket: DGRAM - \n" );
+			return 1;
+		}
+		//open receive socket pre ICMP response packet
+		if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
+			fprintf((stderr), "socket: RAW - \n" );
+			return 1;
+		}
 		
 		const char *hostname = ip;
 
@@ -312,10 +314,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 		
 
-		
-	}
 	close(sendsd);
-	close(recvsd);
+	close(recvsd);	
+	}
+	
 	//cout << "UDP" << endl;
 	return 0;
 }
