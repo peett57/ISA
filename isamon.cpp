@@ -181,7 +181,7 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 			srvport = getservbyport(htons(x), protocol);
 			 
 			if(srvport != NULL){
-				/*cout << ip << " TCP " << x << endl;*/
+				
 				fprintf(stdout, "%s TCP %d\n", ip,x);
 			}
 			
@@ -282,7 +282,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				//ak je tento port evidovany ako existujuci znamena to ze je aktivny
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
-   					/*cout << ip << " UDP " << x << endl;*/
+   					
    					fprintf(stdout, "%s UDP %d\n", ip,x);
    				}
    				break;
@@ -324,11 +324,11 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	//help
 	if((argc == 2) && ((!strcmp(argv[1], "-h")) || (!strcmp(argv[1], "--help")))){
 		arguments->help = true;
-		return EXIT_SUCCESS;
+		return 0;
 	}
 
 	if(argc == 1){
-		return EXIT_FAILURE;
+		return 1;
 	}
 
 	char *pEnd;
@@ -336,51 +336,51 @@ int arguments(int argc, char *argv[], Arguments *arguments){
 	for(int i = 1; i < argc; i++){
 		if(!strcmp(argv[i], "-p") || !strcmp(argv[i], "--port")){
 			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->port != 0){
-				return EXIT_FAILURE;
+				return 1;
 			}
 			arguments->port = strtol(argv[i+1],&pEnd, 10);
 			if(arguments->port < 1 || arguments->port > 65535){
-				return EXIT_FAILURE;
+				return 1;
 			}
 			i++;
 		}
 		else if(!strcmp(argv[i], "-t") || !strcmp(argv[i], "--tcp")){
 			if(arguments->t == true){
-				return EXIT_FAILURE;
+				return 1;
 			}
 			arguments->t = true;
 		}
 		else if(!strcmp(argv[i], "-u") || !strcmp(argv[i], "--udp")){
 			if(arguments->u == true){
-				return EXIT_FAILURE;
+				return 1;
 			}
 			arguments->u = true;
 		}
 		else if(!strcmp(argv[i], "-w") || !strcmp(argv[i], "--wait")){
 			if(argc == i +1 || (jetocislo(argv[i+1]) == 0) || arguments->wait != 0  ){
-				return EXIT_FAILURE;
+				return 11;
 			}
 			arguments->wait = strtol(argv[i+1],&pEnd, 10);
 			i++;
 		}
 		else if(!strcmp(argv[i], "-i") || !strcmp(argv[i], "--interface")){
 			if(argc == i +1 || arguments->interface != 0){
-				return EXIT_FAILURE;
+				return 1;
 			}
 			arguments->interface = ++i;
 		}
 		else if(!strcmp(argv[i], "-n") || !strcmp(argv[i], "--network")){
 			if(argc == i +1 || arguments->network != 0){
-				return EXIT_FAILURE;
+				return 1;
 			}
 			arguments->network = ++i;
 		}
 		else{
-			return EXIT_FAILURE;
+			return 1;
 		}		
 
 	}
-	return EXIT_SUCCESS;	
+	return 0;	
 }
 
 int main(int argc, char *argv[]){
