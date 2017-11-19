@@ -283,7 +283,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 				return 1;
    			}
    			else if(!FD_ISSET(recvsd, &set)){  				
-   				if(cnt == 5){
+   				if(cnt == 20){
 	   				srvport = getservbyport(htons(x), protocol);
 	   				if(srvport != NULL){
 	   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
