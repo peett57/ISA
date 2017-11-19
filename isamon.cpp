@@ -34,8 +34,8 @@
 #include <fcntl.h>
 #include <sys/select.h>
 
- #include <ifaddrs.h>
- #include <linux/if_link.h>
+#include <ifaddrs.h>
+#include <linux/if_link.h>
 
 #include <netinet/ip_icmp.h>
 
@@ -48,12 +48,6 @@
 #define ARP_REQUEST 0x01
 #define ARP_REPLY 0x02
 #define BUF_SIZE 60
-
-#define IP4_HDRLEN 20         // IPv4 header length
-#define ICMP_HDRLEN 8         // ICMP header length for echo request, excludes data
-
-
-
 
 
 using namespace std;
@@ -74,7 +68,9 @@ struct arp_header
 };
 
 
-//help	
+/**
+* Funkcia printhelp
+*/	
 void printhelp(){
 	printf("Usage:\n");
 	printf("\n");
@@ -114,22 +110,6 @@ typedef struct{
 int tcp_check(const char * ip, long int port_arg, long int wait){
 	
 	struct in_addr **addr_list;
-	
-	/*if((he = gethostbyname(ip)) == NULL){
-		fprintf((stderr), "gethostbyname: TCP  \n" );
-		return 1;
-	}
-
-	string test;
-	addr_list = (struct in_addr **) he->h_addr_list;
-	for(int i = 0; addr_list[i] != NULL; i++){
-		test = inet_ntoa(*addr_list[i]);
-	}
-	cout << "test :" << test << endl;*/
-
-
-	//http://www.matveev.se/cpp/portscaner.htm
-
 	struct timeval timeout;
 
 	
@@ -482,26 +462,6 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 		
-	
-
-	/*cout << "port:" << argumenty.port << endl;
-	cout << "wait:" << argumenty.wait << endl;
-	cout << "int:" << interface << endl;
-	cout << "network:" << network << endl;*/
-
-	/*if(argumenty.u == true){
-		cout << "udp" << endl;
-	}
-	if(argumenty.t == true){
-		cout << "tcp" << endl;
-	}*/
-
-	/*struct timeval timeout;
-	if(argumenty.wait > 0){
-			
-			timeout.tv_sec = argumenty.wait /1000;
-    		timeout.tv_usec = (argumenty.wait % 1000) * 1000;	
-	}*/
 
 	string str = string(network);
 
