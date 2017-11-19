@@ -177,7 +177,8 @@ int tcp_check(const char * ip, long int port_arg, long int wait){
 			srvport = getservbyport(htons(x), protocol);
 			 
 			if(srvport != NULL){
-				cout << ip << " TCP " << x << endl;
+				/*cout << ip << " TCP " << x << endl;*/
+				fprintf(stdout, "%s TCP %d\n", ip,x);
 			}
 			
 			
@@ -197,7 +198,15 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 	//open UDP socket
 	unsigned char buffer[BUF_SIZE];
 	int sendsd, recvsd;
-	
+	if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
+		fprintf((stderr), "socket: DGRAM - \n" );
+		return 1;
+	}
+	//open receive socket pre ICMP response packet
+	if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
+		fprintf((stderr), "socket: RAW - \n" );
+		return 1;
+	}
 	const char *protocol = "udp";
 
 	int port_start = 1;
@@ -213,16 +222,6 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
-
-		if((sendsd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP)) < 0){
-			fprintf((stderr), "socket: DGRAM - \n" );
-			return 1;
-		}
-		//open receive socket pre ICMP response packet
-		if((recvsd = socket(AF_INET, SOCK_RAW, IPPROTO_ICMP)) < 0){
-			fprintf((stderr), "socket: RAW - \n" );
-			return 1;
-		}
 		
 		const char *hostname = ip;
 
@@ -254,17 +253,14 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 		memset(buffer,0x00,60);
 		struct timeval timeout;
-		if(wait > 0){
+		
 				
-				timeout.tv_sec = wait /1000;
-	    		timeout.tv_usec = (wait % 1000) * 1000;	
+		timeout.tv_sec = wait /1000;
+	    timeout.tv_usec = (wait % 1000) * 1000;	
 
-	    		//cout << timeout.tv_sec << " - " << timeout.tv_usec << endl;
-		}
-		else{
-			fprintf((stderr), "pri UDP musi byt wait:   \n");
-			return 1;
-		}
+	    		
+		
+		
 
 		
 		//fcntl(recvsd, F_SETFL, O_NONBLOCK); 
@@ -289,7 +285,8 @@ int udp_check(const char * ip, long int port_arg, long int wait){
    				srvport = getservbyport(htons(x), protocol);
    				if(srvport != NULL){
    					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
-   					cout << ip << " UDP " << x << endl;
+   					/*cout << ip << " UDP " << x << endl;*/
+   					fprintf(stdout, "%s UDP %d\n", ip,x);
    				}
    				break;
 
@@ -314,10 +311,10 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 		}
 		
 
-	close(sendsd);
-	close(recvsd);	
+		
 	}
-	
+	close(sendsd);
+	close(recvsd);
 	//cout << "UDP" << endl;
 	return 0;
 }
@@ -428,7 +425,7 @@ int main(int argc, char *argv[]){
 	if(argumenty.interface == 0){
 		interface_set = false;
 		//zatial takto
-		cout << "nezadany interface - nastavenie defaultneho int na eth1" << endl;
+		/*cout << "nezadany interface - nastavenie defaultneho int na eth1" << endl;*/
 		
 		
 	}else{
@@ -441,6 +438,18 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong arguments! -p bez protokolu TCP alebo UDP\n");
 		return 1;
 	}
+
+	if(argumenty.u == true && argumenty.port == 0){
+		fprintf((stderr), "Wrong arguments! UDP protocol bez specifikovania portu\n");
+		return 1;
+	}
+
+	if(argumenty.u == true && argumenty.wait == 0){
+		fprintf((stderr), "Wrong arguments! UDP protocol bez specifikovania waitu\n");
+		return 1;
+	}
+
+
 		
 
 	string str = string(network);
@@ -472,7 +481,7 @@ int main(int argc, char *argv[]){
 	int mask_int = atoi(mask.c_str());
 	const char * ip_char = ip_address.c_str();
 
-	cout << "ip adresa : " << ip_address << endl;
+	/*cout << "ip adresa : " << ip_address << endl;*/
 
 	
 
@@ -491,7 +500,7 @@ int main(int argc, char *argv[]){
 
 	inet_ntop(AF_INET, &(sa.sin_addr), ip_str, INET_ADDRSTRLEN);
 
-	cout << "ip adresa koniec : " << ip_str << endl;
+	/*cout << "ip adresa koniec : " << ip_str << endl;*/
 
 	//kontrola ci je maska v rozsahu 4-30
 	
@@ -499,7 +508,7 @@ int main(int argc, char *argv[]){
 		fprintf((stderr), "Wrong Mask\n");
 		return 1;
 	}
-	cout << "maska : " << mask_int << endl;
+	/*cout << "maska : " << mask_int << endl;*/
 
 
 
@@ -542,10 +551,10 @@ int main(int argc, char *argv[]){
 	byte3 = atoi(byte3_s.c_str());
 	byte4 = atoi(byte4_s.c_str());
 
-	cout << "1  " << byte1 << endl;
+	/*cout << "1  " << byte1 << endl;
 	cout << "2  " << byte2 << endl;
 	cout << "3  " << byte3 << endl;
-	cout << "4  " << byte4 << endl;
+	cout << "4  " << byte4 << endl;*/
 
 	int final1=byte1;
 	int final2=byte2;
@@ -630,7 +639,7 @@ int main(int argc, char *argv[]){
 
 
 	
-	cout << "mask byte : " << mask_byte << endl;
+	/*cout << "mask byte : " << mask_byte << endl;
 	cout << "1  " << final1 << endl;
 	cout << "2  " << final2 << endl;
 	cout << "3  " << final3 << endl;
@@ -640,7 +649,7 @@ int main(int argc, char *argv[]){
 	cout << "byte1 - start : " << final1 << " end : " << end1 << endl;
 	cout << "byte1 - start : " << final2 << " end : " << end2 << endl;
 	cout << "byte1 - start : " << final3 << " end : " << end3 << endl;
-	cout << "byte1 - start : " << final4 << " end : " << end4 << endl;
+	cout << "byte1 - start : " << final4 << " end : " << end4 << endl;*/
 
 // ziskanie IP adresy MAC z daneho interfacu 
 	int sd;
@@ -650,7 +659,7 @@ int main(int argc, char *argv[]){
 	sd = socket(AF_PACKET, SOCK_RAW, htons(ETH_P_ALL));
 	if (sd == -1) {
 		fprintf((stderr), "socket:  \n");
-		return 1;
+		return 2;
 	}
 
 	//bude sa robit na konkretnom interface vzchodzi interface je eth1
@@ -664,14 +673,14 @@ int main(int argc, char *argv[]){
 	//ethernet index
 	if (ioctl(sd, SIOCGIFINDEX, &ifr) == -1) {
 		fprintf((stderr), "SIOCGIFINDEX  - index interfacu - -i \n" );
-		return 1;
+		return 7;
 	}
 	ifindex = ifr.ifr_ifindex;
 
 	//ziskanie mojej IP adresy na danom interface
 	if (ioctl(sd, SIOCGIFADDR, &ifr) == -1) {
 		fprintf((stderr), "SIOCGIFINDEX  - moja ip adresa na interface\n" );
-		return 1;
+		return 7;
 	}
 	char * my_addr = inet_ntoa(((struct sockaddr_in *)&ifr.ifr_addr)->sin_addr);
 	
@@ -681,7 +690,7 @@ int main(int argc, char *argv[]){
 	// ziskanie MAC
 	if (ioctl(sd, SIOCGIFHWADDR, &ifr) == -1) {
 		perror("SIOCGIFINDEX - ziskanie MAC na interface");
-		exit(1);
+		return 7;
 	}
 
 	close(sd);
@@ -745,15 +754,15 @@ int main(int argc, char *argv[]){
 		}
 	}
 
-	if(local_network == true){
+	/*if(local_network == true){
 		cout << "lokalna siet - arp scan" << endl;
 	}else{
 		cout << "mimo lokalnu siet - icmp scan" << endl;;
-	}
+	}*/
 	
-	bool closed = true;
-	if(closed == false){
-	//if(local_network == true){
+	/*bool closed = true;
+	if(closed == false){*/
+	if(local_network == true){
 		stringstream convert;
 		string str_ip_for_scan;
 		const char * char_ip_for_scan;
@@ -853,7 +862,7 @@ int main(int argc, char *argv[]){
 				        // vytvorenie raw socketu na request
 				        if ((sd = socket (PF_PACKET, SOCK_RAW, htons (ETH_P_ALL))) < 0) {
 						    fprintf((stderr), "socket:  %d.%d.%d.%d\n", i,j,k,l );
-							return 1;
+							return 2;
 						}
 							
 						buffer[32] = 0x00;
@@ -863,7 +872,7 @@ int main(int argc, char *argv[]){
 				        if (ret == -1)
 				        {
 				            fprintf((stderr), "sendto:  %d.%d.%d.%d\n", i,j,k,l );
-							return 1;
+							return 2;
 				        }
 
 				       	memset(buffer,0x00,60);
@@ -888,7 +897,7 @@ int main(int argc, char *argv[]){
 				       			rv = select(sd + 1 , &set, NULL, NULL, &timeout);
 				       			if(rv == -1){
 				       				fprintf((stderr), "select -1:  %d.%d.%d.%d\n", i,j,k,l );
-									return 1;
+									return 3;
 				       			}
 				       			else if(rv == 0){
 				       				//fprintf((stderr), "timeout:  %d.%d.%d.%d\n", i,j,k,l );
@@ -903,7 +912,7 @@ int main(int argc, char *argv[]){
 
 				       				if (length == -1){
 					                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
-										return 1;
+										return 2;
 					                }
 					                
 					            
@@ -913,7 +922,7 @@ int main(int argc, char *argv[]){
 
 					       		if (length == -1){
 				                    fprintf((stderr), "receive:  %d.%d.%d.%d\n", i,j,k,l );
-									return 1;
+									return 2;
 				                }
 
 				       		}
@@ -928,21 +937,22 @@ int main(int argc, char *argv[]){
 			                		if(arp_resp->sender_ip[1] == j){
 			                			if(arp_resp->sender_ip[2] == k){
 			                				if(arp_resp->sender_ip[3] == l){
-			                					cout << char_ip_for_scan << endl;
+			                					/*cout << char_ip_for_scan << endl;*/
+			                					fprintf(stdout, "%s\n", char_ip_for_scan);
 			                					if(argumenty.t == true){
 			                						// HP nejake random tu mam
 			                						
 			                						
 			                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 			                							fprintf((stderr), "TCP  \n" );
-														return 1;
+														return 4;
 			                						}
 				                					
 			                					}
 			                					if(argumenty.u == true){
 			                						if(udp_check(char_ip_for_scan,argumenty.port,argumenty.wait) !=0){
 			                							fprintf((stderr), "UDP  \n" );
-														return 1;
+														return 5;
 			                						}
 			                					}
 			                				}
@@ -965,16 +975,17 @@ int main(int argc, char *argv[]){
 	                		if(byte2_myaddr == j){
 	                			if(byte3_myaddr == k){
 	                				if(byte4_myaddr == l){
-	                					cout << char_ip_for_scan << endl;
+	                					/*cout << char_ip_for_scan << endl;*/
+	                					fprintf(stdout, "%s\n", char_ip_for_scan);
 	                					if(argumenty.t == true){
 	                						if(tcp_check(char_ip_for_scan,argumenty.port,argumenty.wait) != 0){
 	                							fprintf((stderr), "TCP  \n" );
-												return 1;
+												return 4;
 	                						}
 	                						if(argumenty.u == true){
 		                						if(udp_check(char_ip_for_scan,argumenty.port,argumenty.wait) !=0){
 		                							fprintf((stderr), "UDP  \n" );
-													return 1;
+													return 5;
 		                						}
 		                					}
 	                					}
@@ -997,58 +1008,9 @@ int main(int argc, char *argv[]){
 		}
 	}
 	else{
-		udp_check("10.190.22.250",argumenty.port,argumenty.wait); 
-		//udp_check("10.190.23.178",argumenty.port,argumenty.wait); 
-		//udp_check("127.0.0.1",argumenty.port,argumenty.wait); 
-		//tcp_check("10.0.2.3",argumenty.port,argumenty.wait); 
-		//cout << "closed" << endl;
-		//udp_check("192.168.2.1",argumenty.port,argumenty.wait);
-
-		
-
-
+		fprintf((stderr), "Mimo siet  \n" );
+		return 6;
 	}
-
-
-	/*struct ifaddrs *ifaddr, *ifa;
-	int family, s, n;
-	char host_test[NI_MAXHOST];
-	char *interfaces;
-
-	if (getifaddrs(&ifaddr) == -1) {
-        fprintf((stderr), "getifaddrs  \n" );
-		return 1;
-   }
-   
-   for(ifa = ifaddr, n = 0; ifa != NULL; ifa = ifa->ifa_next, n++){
-
-   	if(ifa->ifa_addr == NULL){
-   		continue;
-   	}
-   	family = ifa->ifa_addr->sa_family;
-   	
-   	if(family == AF_INET){
-   		
-   		cout << ifa->ifa_name << endl;
-   		
-   		
-   	}
-
-
-
-   }
-   freeifaddrs(ifaddr);
-	*/
 	
-  
-   
-	
-
-	return 0;
-
-	
-
-
-
-	
+	return 0;	
 }
