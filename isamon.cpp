@@ -218,7 +218,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 
 	int length = 0;
 	
-
+	int cnt = 0;
 	for(int x = port_start ; x <= port_end; x++){
 		int portno = x;
 		
@@ -283,13 +283,16 @@ int udp_check(const char * ip, long int port_arg, long int wait){
 				return 1;
    			}
    			else if(!FD_ISSET(recvsd, &set)){  				
-
-   				srvport = getservbyport(htons(x), protocol);
-   				if(srvport != NULL){
-   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
-   					cout << ip << " UDP " << x << endl;
-   				}
-   				break;
+   				if(cnt == 5){
+	   				srvport = getservbyport(htons(x), protocol);
+	   				if(srvport != NULL){
+	   					//cout << ip << " UDP " << x << " name " << srvport->s_name << endl;
+	   					cout << ip << " UDP " << x << endl;
+	   				}
+	   				break;
+	   			}
+	   			cnt ++;
+	   			x--;
 
    			}else{
    				length = recvfrom(recvsd, &buffer, BUF_SIZE, 0x0, NULL, NULL);
@@ -310,7 +313,7 @@ int udp_check(const char * ip, long int port_arg, long int wait){
     			break;              
 			}
 		}
-		
+
 		
 
 		
