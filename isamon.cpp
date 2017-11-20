@@ -757,7 +757,7 @@ int main(int argc, char *argv[]){
 
 												
 						
-						unsigned char target_ip[4] = {i,j,k,l};
+						unsigned char target_ip[4] = {(unsigned char)i,(unsigned char)j,(unsigned char)k,(unsigned char)l};
 						
 						int ret,length = 0;
 
@@ -802,7 +802,7 @@ int main(int argc, char *argv[]){
 						arp_req->hardware_len = MAC_LENGTH;
 						arp_req->protocol_len =IPV4_LENGTH;
 						arp_req->opcode = htons(ARP_REQUEST);
-						unsigned char source_ip[4] = {byte1_myaddr,byte2_myaddr,byte3_myaddr,byte4_myaddr};
+						unsigned char source_ip[4] = {(unsigned char)byte1_myaddr,(unsigned char)byte2_myaddr,(unsigned char)byte3_myaddr,(unsigned char)byte4_myaddr};
 
 						//naplnenie sender ip do arp hlavicky
 						for(int index=0;index<5;index++)
